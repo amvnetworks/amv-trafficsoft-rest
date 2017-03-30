@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class org.amv.trafficsoft.rest.client.xfcd.XfcdClientIT</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class org.amv.trafficsoft.rest.client.xfcd.XfcdClientIT</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/org.amv.trafficsoft.rest.client.xfcd.html">org.amv.trafficsoft.rest.client.xfcd</a> &gt; XfcdClientIT</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">5</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.121s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">itShouldConfirmDelivieries</td>
+<td>0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">itShouldGetData</td>
+<td>0.046s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">itShouldGetDataAndConfirmDelivieries</td>
+<td>0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">itShouldGetLastData</td>
+<td>0.041s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">itShouldThrowExceptionOnMismatchingContractId</td>
+<td>0.017s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>Mär 30, 2017 5:09:36 PM org.springframework.boot.test.context.SpringBootTestContextBootstrapper buildDefaultMergedContextConfiguration
+INFORMATION: Neither @ContextConfiguration nor @ContextHierarchy found for test class [org.amv.trafficsoft.rest.client.xfcd.XfcdClientIT], using SpringBootContextLoader
+Mär 30, 2017 5:09:36 PM org.springframework.test.context.support.AbstractContextLoader generateDefaultLocations
+INFORMATION: Could not detect default resource locations for test class [org.amv.trafficsoft.rest.client.xfcd.XfcdClientIT]: no resource found for suffixes {-context.xml, Context.groovy}.
+Mär 30, 2017 5:09:36 PM org.springframework.test.context.support.AnnotationConfigContextLoaderUtils detectDefaultConfigurationClasses
+INFORMATION: Could not detect default configuration classes for test class [org.amv.trafficsoft.rest.client.xfcd.XfcdClientIT]: XfcdClientIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+Mär 30, 2017 5:09:36 PM org.springframework.boot.test.context.SpringBootTestContextBootstrapper getOrFindConfigurationClasses
+INFORMATION: Found @SpringBootConfiguration org.amv.trafficsoft.rest.client.FeignClientDemoApplication for test class org.amv.trafficsoft.rest.client.xfcd.XfcdClientIT
+Mär 30, 2017 5:09:36 PM org.springframework.boot.test.context.SpringBootTestContextBootstrapper getDefaultTestExecutionListenerClassNames
+INFORMATION: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+Mär 30, 2017 5:09:36 PM org.springframework.boot.test.context.SpringBootTestContextBootstrapper instantiateListeners
+INFORMATION: Could not instantiate TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [org/springframework/transaction/interceptor/TransactionAttribute]
+Mär 30, 2017 5:09:36 PM org.springframework.boot.test.context.SpringBootTestContextBootstrapper instantiateListeners
+INFORMATION: Could not instantiate TestExecutionListener [org.springframework.test.context.transaction.TransactionalTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [org/springframework/transaction/interceptor/TransactionAttributeSource]
+Mär 30, 2017 5:09:36 PM org.springframework.boot.test.context.SpringBootTestContextBootstrapper getTestExecutionListeners
+INFORMATION: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6aebdef2, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@64594166, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@8a9881b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6ec5ab5b, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5a6df43f, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@7491cc65, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@30bc7bbc, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@73608183, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@46195fdc, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3c11419e]
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).circuitBreaker.enabled to use NEXT property: hystrix.command.default.circuitBreaker.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).circuitBreaker.requestVolumeThreshold to use NEXT property: hystrix.command.default.circuitBreaker.requestVolumeThreshold = 20
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).circuitBreaker.sleepWindowInMilliseconds to use NEXT property: hystrix.command.default.circuitBreaker.sleepWindowInMilliseconds = 5000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).circuitBreaker.errorThresholdPercentage to use NEXT property: hystrix.command.default.circuitBreaker.errorThresholdPercentage = 50
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).circuitBreaker.forceOpen to use NEXT property: hystrix.command.default.circuitBreaker.forceOpen = false
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).circuitBreaker.forceClosed to use NEXT property: hystrix.command.default.circuitBreaker.forceClosed = false
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).execution.isolation.strategy to use it's current value:THREAD
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).execution.isolation.thread.timeoutInMilliseconds to use it's current value:30000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).execution.timeout.enabled to use it's current value:true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).execution.isolation.thread.interruptOnTimeout to use it's current value:true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).execution.isolation.semaphore.maxConcurrentRequests to use NEXT property: hystrix.command.default.execution.isolation.semaphore.maxConcurrentRequests = 10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).fallback.isolation.semaphore.maxConcurrentRequests to use NEXT property: hystrix.command.default.fallback.isolation.semaphore.maxConcurrentRequests = 10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).fallback.enabled to use it's current value:false
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.rollingStats.timeInMilliseconds to use NEXT property: hystrix.command.default.metrics.rollingStats.timeInMilliseconds = 10000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.rollingStats.numBuckets to use NEXT property: hystrix.command.default.metrics.rollingStats.numBuckets = 10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.rollingPercentile.enabled to use NEXT property: hystrix.command.default.metrics.rollingPercentile.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.rollingPercentile.timeInMilliseconds to use NEXT property: hystrix.command.default.metrics.rollingPercentile.timeInMilliseconds = 60000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.rollingPercentile.numBuckets to use NEXT property: hystrix.command.default.metrics.rollingPercentile.numBuckets = 6
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.rollingPercentile.bucketSize to use NEXT property: hystrix.command.default.metrics.rollingPercentile.bucketSize = 100
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).metrics.healthSnapshot.intervalInMilliseconds to use NEXT property: hystrix.command.default.metrics.healthSnapshot.intervalInMilliseconds = 500
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).requestCache.enabled to use NEXT property: hystrix.command.default.requestCache.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getLastData(long,List).requestLog.enabled to use NEXT property: hystrix.command.default.requestLog.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.threadpool.XfcdClient.coreSize to use it's current value:10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.threadpool.XfcdClient.keepAliveTimeMinutes to use NEXT property: hystrix.threadpool.default.keepAliveTimeMinutes = 1
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.threadpool.XfcdClient.maxQueueSize to use NEXT property: hystrix.threadpool.default.maxQueueSize = -1
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.threadpool.XfcdClient.queueSizeRejectionThreshold to use NEXT property: hystrix.threadpool.default.queueSizeRejectionThreshold = 5
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.threadpool.XfcdClient.metrics.rollingStats.timeInMilliseconds to use NEXT property: hystrix.threadpool.default.metrics.rollingStats.timeInMilliseconds = 10000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.threadpool.XfcdClient.metrics.rollingStats.numBuckets to use NEXT property: hystrix.threadpool.default.metrics.rollingStats.numBuckets = 10
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] ---&gt; POST /1255963697284248650/xfcd/last HTTP/1.1
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] Accept: application/json;charset=UTF-8
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] User-Agent: amv-rest-client v0.0.1-SNAPSHOT
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] Content-Type: application/json;charset=UTF-8
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] Content-Length: 44
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] 
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] [ 7960342031213689088, 9131383689738195467 ]
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] ---&gt; END HTTP (44-byte body)
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] &lt;--- HTTP/1.1 200 Mocked (0ms)
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] 
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] [{&quot;deliveryId&quot;:0,&quot;track&quot;:[{&quot;id&quot;:0,&quot;nodes&quot;:[{&quot;id&quot;:0,&quot;xfcds&quot;:[{}],&quot;states&quot;:[]}]}]}]
+[hystrix-XfcdClient-1] DEBUG feign.Logger - [XfcdClient#getLastData] &lt;--- END HTTP (81-byte body)
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).circuitBreaker.enabled to use NEXT property: hystrix.command.default.circuitBreaker.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).circuitBreaker.requestVolumeThreshold to use NEXT property: hystrix.command.default.circuitBreaker.requestVolumeThreshold = 20
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).circuitBreaker.sleepWindowInMilliseconds to use NEXT property: hystrix.command.default.circuitBreaker.sleepWindowInMilliseconds = 5000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).circuitBreaker.errorThresholdPercentage to use NEXT property: hystrix.command.default.circuitBreaker.errorThresholdPercentage = 50
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).circuitBreaker.forceOpen to use NEXT property: hystrix.command.default.circuitBreaker.forceOpen = false
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).circuitBreaker.forceClosed to use NEXT property: hystrix.command.default.circuitBreaker.forceClosed = false
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).execution.isolation.strategy to use it's current value:THREAD
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).execution.isolation.thread.timeoutInMilliseconds to use it's current value:30000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).execution.timeout.enabled to use it's current value:true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).execution.isolation.thread.interruptOnTimeout to use it's current value:true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).execution.isolation.semaphore.maxConcurrentRequests to use NEXT property: hystrix.command.default.execution.isolation.semaphore.maxConcurrentRequests = 10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).fallback.isolation.semaphore.maxConcurrentRequests to use NEXT property: hystrix.command.default.fallback.isolation.semaphore.maxConcurrentRequests = 10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).fallback.enabled to use it's current value:false
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.rollingStats.timeInMilliseconds to use NEXT property: hystrix.command.default.metrics.rollingStats.timeInMilliseconds = 10000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.rollingStats.numBuckets to use NEXT property: hystrix.command.default.metrics.rollingStats.numBuckets = 10
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.rollingPercentile.enabled to use NEXT property: hystrix.command.default.metrics.rollingPercentile.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.rollingPercentile.timeInMilliseconds to use NEXT property: hystrix.command.default.metrics.rollingPercentile.timeInMilliseconds = 60000
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.rollingPercentile.numBuckets to use NEXT property: hystrix.command.default.metrics.rollingPercentile.numBuckets = 6
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.rollingPercentile.bucketSize to use NEXT property: hystrix.command.default.metrics.rollingPercentile.bucketSize = 100
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).metrics.healthSnapshot.intervalInMilliseconds to use NEXT property: hystrix.command.default.metrics.healthSnapshot.intervalInMilliseconds = 500
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).requestCache.enabled to use NEXT property: hystrix.command.default.requestCache.enabled = true
+[Test worker] DEBUG com.netflix.hystrix.strategy.properties.HystrixPropertiesChainedArchaiusProperty - Flipping property: hystrix.command.XfcdClient#getData(long).requestLog.enabled to use NEXT property: hystrix.command.default.requestLog.enabled = true
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] ---&gt; GET /1255963697284248650/xfcd HTTP/1.1
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] Accept: application/json;charset=UTF-8
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] User-Agent: amv-rest-client v0.0.1-SNAPSHOT
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] ---&gt; END HTTP (0-byte body)
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] &lt;--- HTTP/1.1 200 Mocked (0ms)
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] 
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] [{&quot;deliveryId&quot;:0,&quot;track&quot;:[{&quot;id&quot;:0,&quot;nodes&quot;:[{&quot;id&quot;:0,&quot;xfcds&quot;:[{}],&quot;states&quot;:[]}]}]}]
+[hystrix-XfcdClient-2] DEBUG feign.Logger - [XfcdClient#getData] &lt;--- END HTTP (81-byte body)
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] ---&gt; GET /-1/xfcd HTTP/1.1
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] Accept: application/json;charset=UTF-8
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] User-Agent: amv-rest-client v0.0.1-SNAPSHOT
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] ---&gt; END HTTP (0-byte body)
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] &lt;--- HTTP/1.1 500 Internal Server Error (0ms)
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] 
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] {}
+[hystrix-XfcdClient-3] DEBUG feign.Logger - [XfcdClient#getData] &lt;--- END HTTP (2-byte body)
+[hystrix-XfcdClient-3] DEBUG com.netflix.hystrix.AbstractCommand - Error executing HystrixCommand.run(). Proceeding to fallback logic ...
+feign.FeignException: status 500 reading XfcdClient#getData(long); content:
+{}
+	at feign.FeignException.errorStatus(FeignException.java:62)
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:91)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:138)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:76)
+	at feign.hystrix.HystrixInvocationHandler$1.run(HystrixInvocationHandler.java:108)
+	at com.netflix.hystrix.HystrixCommand$1.call(HystrixCommand.java:294)
+	at com.netflix.hystrix.HystrixCommand$1.call(HystrixCommand.java:289)
+	at rx.Observable$2.call(Observable.java:162)
+	at rx.Observable$2.call(Observable.java:154)
+	at rx.Observable$2.call(Observable.java:162)
+	at rx.Observable$2.call(Observable.java:154)
+	at rx.Observable$2.call(Observable.java:162)
+	at rx.Observable$2.call(Observable.java:154)
+	at rx.Observable.unsafeSubscribe(Observable.java:8314)
+	at com.netflix.hystrix.AbstractCommand$5.call(AbstractCommand.java:521)
+	at com.netflix.hystrix.AbstractCommand$5.call(AbstractCommand.java:499)
+	at rx.Observable.unsafeSubscribe(Observable.java:8314)
+	at rx.internal.operators.OperatorSubscribeOn$1.call(OperatorSubscribeOn.java:94)
+	at com.netflix.hystrix.strategy.concurrency.HystrixContexSchedulerAction$1.call(HystrixContexSchedulerAction.java:56)
+	at com.netflix.hystrix.strategy.concurrency.HystrixContexSchedulerAction$1.call(HystrixContexSchedulerAction.java:47)
+	at com.netflix.hystrix.strategy.concurrency.HystrixContexSchedulerAction.call(HystrixContexSchedulerAction.java:69)
+	at rx.internal.schedulers.ScheduledAction.run(ScheduledAction.java:55)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[hystrix-XfcdClient-3] DEBUG com.netflix.hystrix.AbstractCommand - Fallback disabled for HystrixCommand so will throw HystrixRuntimeException. 
+feign.FeignException: status 500 reading XfcdClient#getData(long); content:
+{}
+	at feign.FeignException.errorStatus(FeignException.java:62)
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:91)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:138)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:76)
+	at feign.hystrix.HystrixInvocationHandler$1.run(HystrixInvocationHandler.java:108)
+	at com.netflix.hystrix.HystrixCommand$1.call(HystrixCommand.java:294)
+	at com.netflix.hystrix.HystrixCommand$1.call(HystrixCommand.java:289)
+	at rx.Observable$2.call(Observable.java:162)
+	at rx.Observable$2.call(Observable.java:154)
+	at rx.Observable$2.call(Observable.java:162)
+	at rx.Observable$2.call(Observable.java:154)
+	at rx.Observable$2.call(Observable.java:162)
+	at rx.Observable$2.call(Observable.java:154)
+	at rx.Observable.unsafeSubscribe(Observable.java:8314)
+	at com.netflix.hystrix.AbstractCommand$5.call(AbstractCommand.java:521)
+	at com.netflix.hystrix.AbstractCommand$5.call(AbstractCommand.java:499)
+	at rx.Observable.unsafeSubscribe(Observable.java:8314)
+	at rx.internal.operators.OperatorSubscribeOn$1.call(OperatorSubscribeOn.java:94)
+	at com.netflix.hystrix.strategy.concurrency.HystrixContexSchedulerAction$1.call(HystrixContexSchedulerAction.java:56)
+	at com.netflix.hystrix.strategy.concurrency.HystrixContexSchedulerAction$1.call(HystrixContexSchedulerAction.java:47)
+	at com.netflix.hystrix.strategy.concurrency.HystrixContexSchedulerAction.call(HystrixContexSchedulerAction.java:69)
+	at rx.internal.schedulers.ScheduledAction.run(ScheduledAction.java:55)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 3.1</a> at 30.03.2017 17:09:37</p>
+</div>
+</div>
+</body>
+</html>

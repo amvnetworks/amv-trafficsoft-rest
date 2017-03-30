@@ -11,7 +11,11 @@ repositories {
 
 dependencies {
     compile 'io.swagger:swagger-annotations:1.5.13'
+
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.7'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
+
     compile 'com.google.guava:guava:21.0'
 
     compileOnly 'org.projectlombok:lombok:1.16.16'

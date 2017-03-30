@@ -5,19 +5,19 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
 
+import static java.util.Objects.requireNonNull;
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = RegisterAsgResponseRestDto.Builder.class)
-@ApiModel(description = "A resource representing the response after initializing a vehicle with OEM/series/model data.")
-public class RegisterAsgResponseRestDto {
+@JsonDeserialize(builder = VehicleKeyResponseDto.Builder.class)
+@ApiModel(description = "A resource representing a container for vehicle key data.")
+public class VehicleKeyResponseDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
     }
 
-    @ApiModelProperty(notes = "A resource representing a vehicle.")
-    private VehicleRestDto vehicle;
+    @ApiModelProperty(notes = "A resource representing a vehicle key.")
+    private final VehicleKeyRestDto vehicleKey;
 }

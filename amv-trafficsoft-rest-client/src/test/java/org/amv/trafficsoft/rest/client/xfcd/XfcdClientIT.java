@@ -1,14 +1,30 @@
 package org.amv.trafficsoft.rest.client.xfcd;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
-import org.amv.trafficsoft.rest.xfcd.model.*;
+import feign.Response;
+import feign.Target;
+import feign.mock.HttpMethod;
+import feign.mock.MockClient;
+import feign.mock.MockTarget;
+import org.amv.trafficsoft.rest.client.ClientConfig;
+import org.amv.trafficsoft.rest.client.TrafficsoftClients;
+import org.amv.trafficsoft.rest.xfcd.model.DeliveryDto;
+import org.amv.trafficsoft.rest.xfcd.model.NodeDto;
+import org.amv.trafficsoft.rest.xfcd.model.ParameterDto;
+import org.amv.trafficsoft.rest.xfcd.model.TrackDto;
+import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
@@ -26,19 +42,55 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest
 public class XfcdClientIT {
     private static final long NON_EXISTING_CONTRACT_ID = -1L;
-    private static final long VALID_CONTRACT_ID = 16075364L;
-    private static final List<Long> VALID_VEHICLE_IDS = ImmutableList.of(1041L, 1045L);
+    private static final long ANY_CONTRACT_ID = RandomUtils.nextLong();
+    private static final List<Long> VALID_VEHICLE_IDS = ImmutableList.of(RandomUtils.nextLong(), RandomUtils.nextLong());
 
-    @Autowired
-    private XfcdClient xfcdClient;
 
     private TestScheduler testScheduler = Schedulers.test();
+
+    private XfcdClient sut;
+
+    @Before
+    public void setUp() throws JsonProcessingException {
+        ObjectMapper jsonMapper = new ObjectMapper();
+
+        ParameterDto parameterDto = new ParameterDto();
+        NodeDto nodeDto = new NodeDto();
+        nodeDto.setXfcds(Lists.newArrayList(parameterDto));
+        TrackDto trackDto = new TrackDto();
+        trackDto.setNodes(Lists.newArrayList(nodeDto));
+        DeliveryDto deliveryDto = new DeliveryDto();
+        deliveryDto.setTrack(Lists.newArrayList(trackDto));
+
+        String deliveryDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
+        String nodeDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
+
+        MockClient mockClient = new MockClient()
+                .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.create(
+                        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                        HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                        Collections.emptyMap(),
+                        "{}",
+                        Charsets.UTF_8)
+                )
+                .ok(HttpMethod.GET, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
+                .ok(HttpMethod.POST, String.format("/%d/xfcd/last", ANY_CONTRACT_ID), nodeDtoListAsJson);
+
+        Target<XfcdClient> mockTarget = new MockTarget<>(XfcdClient.class);
+
+        ClientConfig<XfcdClient> config = ClientConfig.ConfigurableClientConfig.<XfcdClient>builder()
+                .client(mockClient)
+                .target(mockTarget)
+                .build();
+
+        this.sut = TrafficsoftClients.xfcd(config);
+    }
 
     @Test
     public void itShouldThrowExceptionOnMismatchingContractId() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         AtomicBoolean onErrorCalled = new AtomicBoolean(false);
-        xfcdClient.getData(NON_EXISTING_CONTRACT_ID)
+        sut.getData(NON_EXISTING_CONTRACT_ID)
                 .toObservable()
                 .subscribeOn(testScheduler)
                 .subscribe(new TestSubscriber<List<DeliveryDto>>() {
@@ -65,8 +117,18 @@ public class XfcdClientIT {
     }
 
     @Test
+    public void itShouldGetDataAndConfirmDelivieries() {
+        // TODO: implement me
+    }
+
+    @Test
+    public void itShouldConfirmDelivieries() {
+        // TODO: implement me
+    }
+
+    @Test
     public void itShouldGetData() {
-        List<DeliveryDto> deliveries = xfcdClient.getData(VALID_CONTRACT_ID).execute();
+        List<DeliveryDto> deliveries = sut.getData(ANY_CONTRACT_ID).execute();
 
         assertThat(deliveries, is(notNullValue()));
         assertThat(deliveries, hasSize(greaterThan(0)));
@@ -92,15 +154,8 @@ public class XfcdClientIT {
     }
 
     @Test
-    public void itShouldReturnEmptyListOnGetLastDataWithoutVehicleIds() {
-        List<NodeDto> nodes = xfcdClient.getLastData(VALID_CONTRACT_ID, Collections.emptyList()).execute();
-
-        assertThat(nodes, is(notNullValue()));
-    }
-
-    @Test
     public void itShouldGetLastData() {
-        List<NodeDto> nodes = xfcdClient.getLastData(VALID_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
+        List<NodeDto> nodes = sut.getLastData(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(nodes, is(notNullValue()));
     }
