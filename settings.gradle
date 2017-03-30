@@ -1,0 +1,5 @@
+rootProject.name = 'amv-trafficsoft-rest'
+
+include 'amv-trafficsoft-rest-client'
+include 'amv-trafficsoft-rest-model'
+

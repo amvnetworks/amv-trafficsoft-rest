@@ -1,0 +1,33 @@
+group 'org.amv.trafficsoft.rest'
+version '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile project(':amv-trafficsoft-rest-model')
+
+    compile 'io.github.openfeign:feign-core:9.4.0'
+    compile 'io.github.openfeign:feign-okhttp:9.4.0'
+    compile 'io.github.openfeign:feign-hystrix:9.4.0'
+    compile 'io.github.openfeign:feign-jackson:9.4.0'
+    compile 'io.github.openfeign:feign-slf4j:9.4.0'
+
+    compile 'com.google.guava:guava:21.0'
+
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+
+    testCompile 'com.marvinformatics.feign:feign-mock:0.4'
+    testCompile 'org.slf4j:slf4j-simple:1.7.25'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.2.RELEASE'
+    testCompile('org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE') {
+        exclude module: 'spring-boot-starter-logging'
+    }
+
+}

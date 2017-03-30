@@ -1,0 +1,21 @@
+group 'org.amv.trafficsoft.rest'
+version '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.swagger:swagger-annotations:1.5.13'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.7'
+    compile 'com.google.guava:guava:21.0'
+
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+
+    testCompile 'org.slf4j:slf4j-simple:1.7.25'
+    testCompile 'junit:junit:4.12'
+}
