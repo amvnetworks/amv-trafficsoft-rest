@@ -6,11 +6,8 @@ import com.google.common.collect.ImmutableList;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Singular;
-import lombok.Value;
 
-import java.util.Collections;
 import java.util.List;
 
 @Builder(builderClassName = "Builder")
@@ -24,7 +21,7 @@ public class ModelsResponseDto {
 
     @Singular("addModel")
     @ApiModelProperty(notes = "A list of vehicle models.")
-    private List<ModelRestDto> models = Collections.emptyList();
+    private List<ModelRestDto> models;
 
     public List<ModelRestDto> getModels() {
         return ImmutableList.copyOf(models);

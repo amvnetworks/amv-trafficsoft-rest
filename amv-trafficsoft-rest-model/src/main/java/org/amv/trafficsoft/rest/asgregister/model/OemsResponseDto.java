@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Singular;
 
-import java.util.Collections;
 import java.util.List;
 
 @Builder(builderClassName = "Builder")
@@ -22,7 +21,7 @@ public class OemsResponseDto {
 
     @Singular("addOem")
     @ApiModelProperty(notes = "A list of vehicle oems.")
-    private List<OemRestDto> oems = Collections.emptyList();
+    private List<OemRestDto> oems;
 
     public List<OemRestDto> getOems() {
         return ImmutableList.copyOf(oems);
