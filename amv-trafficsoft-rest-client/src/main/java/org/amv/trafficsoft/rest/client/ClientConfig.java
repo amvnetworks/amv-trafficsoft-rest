@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Value;
 import lombok.experimental.Accessors;
 
 import java.lang.reflect.Method;
@@ -35,6 +36,14 @@ public interface ClientConfig<T> {
         String username();
 
         String password();
+    }
+
+    @Value
+    @Builder(builderClassName = "Builder")
+    @Accessors(fluent = true)
+    class BasicAuthImpl implements BasicAuth {
+        String username;
+        String password;
     }
 
     Target<T> target();

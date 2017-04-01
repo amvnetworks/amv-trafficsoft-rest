@@ -24,8 +24,16 @@ public final class TrafficsoftClients {
                 .build();
     }
 
+    public static AsgRegisterClient asgRegister(String baseUrl, ClientConfig.BasicAuth basicAuth) {
+        return asgRegister(config(AsgRegisterClient.class, baseUrl, basicAuth));
+    }
+
     public static AsgRegisterClient asgRegister(ClientConfig<AsgRegisterClient> clientConfig) {
         return Clients.create(clientConfig);
+    }
+
+    public static XfcdClient xfcd(String baseUrl, ClientConfig.BasicAuth basicAuth) {
+        return xfcd(config(XfcdClient.class, baseUrl, basicAuth));
     }
 
     public static XfcdClient xfcd(ClientConfig<XfcdClient> clientConfig) {
