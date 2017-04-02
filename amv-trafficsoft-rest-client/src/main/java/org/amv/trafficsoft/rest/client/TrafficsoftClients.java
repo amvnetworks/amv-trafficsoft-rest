@@ -15,6 +15,7 @@ public final class TrafficsoftClients {
     public static <T> ClientConfig<T> config(Class<T> clazz, String baseUrl, ClientConfig.BasicAuth basicAuth) {
         requireNonNull(clazz, "`clazz` must not be null.");
         requireNonNull(baseUrl, "`baseUrl` must not be null.");
+        requireNonNull(basicAuth, "`basicAuth` must not be null.");
 
         Target<T> hardCodedTarget = new Target.HardCodedTarget<>(clazz, baseUrl);
 

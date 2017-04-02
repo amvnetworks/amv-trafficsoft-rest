@@ -16,11 +16,8 @@ import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
-import lombok.Builder;
+import lombok.*;
 import lombok.Builder.Default;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Value;
 import lombok.experimental.Accessors;
 
 import java.lang.reflect.Method;
@@ -89,16 +86,15 @@ public interface ClientConfig<T> {
     @Accessors(fluent = true)
     @EqualsAndHashCode
     class ConfigurableClientConfig<T> implements ClientConfig<T> {
+        private static final ObjectMapper defaultObjectMapper = new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .configure(SerializationFeature.INDENT_OUTPUT, true)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         private Decoder decoder;
         private Encoder encoder;
         private Target<T> target;
         private BasicAuth basicAuth;
-
-        @Default
-        private ObjectMapper objectMapper = new ObjectMapper()
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                .configure(SerializationFeature.INDENT_OUTPUT, true)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         @Default
         private SetterFactory setterFactory = new DefaultSetterFactory();
@@ -124,8 +120,8 @@ public interface ClientConfig<T> {
         @Default
         private Request.Options options = new Request.Options();
 
-        @Default
-        private Collection<RequestInterceptor> requestInterceptors = Collections.emptyList();
+        @Singular
+        private Collection<RequestInterceptor> requestInterceptors;
 
         @Override
         public Optional<BasicAuth> basicAuth() {
@@ -134,12 +130,12 @@ public interface ClientConfig<T> {
 
         @Override
         public Decoder decoder() {
-            return Optional.ofNullable(decoder).orElseGet(() -> new JacksonDecoder(objectMapper()));
+            return Optional.ofNullable(decoder).orElseGet(() -> new JacksonDecoder(defaultObjectMapper));
         }
 
         @Override
         public Encoder encoder() {
-            return Optional.ofNullable(encoder).orElseGet(() -> new JacksonEncoder(objectMapper()));
+            return Optional.ofNullable(encoder).orElseGet(() -> new JacksonEncoder(defaultObjectMapper));
         }
 
         private static final class DefaultSetterFactory implements SetterFactory {
