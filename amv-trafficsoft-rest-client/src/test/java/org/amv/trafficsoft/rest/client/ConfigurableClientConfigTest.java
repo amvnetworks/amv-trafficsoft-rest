@@ -1,5 +1,6 @@
 package org.amv.trafficsoft.rest.client;
 
+import com.google.common.collect.ImmutableMap;
 import com.netflix.hystrix.*;
 import feign.*;
 import feign.hystrix.SetterFactory;
@@ -58,7 +59,15 @@ public class ConfigurableClientConfigTest {
                 .requestInterceptor(new RequestInterceptor() {
                     @Override
                     public void apply(RequestTemplate template) {
-                        template.header("X-MyCustomHeader", "MyCustomValue");
+                        template.header("X-MyCustomHeader", "myCustomValue");
+                    }
+                })
+                .requestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void apply(RequestTemplate template) {
+                        template.replaceQueryValues(ImmutableMap.<String, String>builder()
+                                .put("myQueryParam", "myQueryValue")
+                        .build());
                     }
                 })
                 .setterFactory(new SetterFactory() {
@@ -90,6 +99,6 @@ public class ConfigurableClientConfigTest {
 
         assertThat(customConfig.logLevel(), is(Logger.Level.HEADERS));
         assertThat(customConfig.retryer(), is(Retryer.NEVER_RETRY));
-        assertThat(customConfig.requestInterceptors(), hasSize(1));
+        assertThat(customConfig.requestInterceptors(), hasSize(2));
     }
 }
