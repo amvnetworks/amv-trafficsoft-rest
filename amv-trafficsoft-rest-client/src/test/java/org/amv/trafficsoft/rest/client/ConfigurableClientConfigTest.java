@@ -1,14 +1,14 @@
 package org.amv.trafficsoft.rest.client;
 
-import com.google.common.net.HttpHeaders;
 import com.netflix.hystrix.*;
 import feign.*;
 import feign.hystrix.SetterFactory;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
+import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Optional;
 
 import static com.netflix.hystrix.HystrixCommandProperties.ExecutionIsolationStrategy.THREAD;
@@ -18,15 +18,20 @@ import static org.junit.Assert.assertThat;
 
 public class ConfigurableClientConfigTest {
 
+    @Test(expected = NullPointerException.class)
+    public void itShouldNotBePossibleToCreateConfigWithoutTarget() {
+        ConfigurableClientConfig.builder().build();
+        Assert.fail("Should have thrown NullPointerException.");
+    }
+
     @Test
     public void itShouldBePossibleToCreateADefaultConfig() {
-        ConfigurableClientConfig<Object> defaultConfig = ConfigurableClientConfig.builder()
+        ConfigurableClientConfig<AsgRegisterClient> defaultConfig = ConfigurableClientConfig.<AsgRegisterClient>builder()
+                .target(new Target.HardCodedTarget<>(AsgRegisterClient.class, "https://www.example.com"))
                 .build();
 
         assertThat(defaultConfig, is(notNullValue()));
-
-        assertThat(defaultConfig.target(), is(nullValue()));
-
+        assertThat(defaultConfig.target(), is(notNullValue()));
         assertThat(defaultConfig.basicAuth(), is(Optional.empty()));
         assertThat(defaultConfig.basicAuthRequestInterceptor(), is(Optional.empty()));
         assertThat(defaultConfig.client(), is(notNullValue()));
@@ -46,7 +51,8 @@ public class ConfigurableClientConfigTest {
 
     @Test
     public void itShouldBePossibleToCustomizeClientConfiguration() {
-        ConfigurableClientConfig<Object> customConfig = ConfigurableClientConfig.builder()
+        ConfigurableClientConfig<AsgRegisterClient> customConfig = ConfigurableClientConfig.<AsgRegisterClient>builder()
+                .target(new Target.HardCodedTarget<>(AsgRegisterClient.class, "https://www.example.com"))
                 .logLevel(Logger.Level.HEADERS)
                 .retryer(Retryer.NEVER_RETRY)
                 .requestInterceptor(new RequestInterceptor() {

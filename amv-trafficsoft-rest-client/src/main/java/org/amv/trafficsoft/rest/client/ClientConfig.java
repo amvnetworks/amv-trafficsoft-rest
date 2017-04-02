@@ -91,9 +91,10 @@ public interface ClientConfig<T> {
                 .configure(SerializationFeature.INDENT_OUTPUT, true)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+        @NonNull
+        private Target<T> target;
         private Decoder decoder;
         private Encoder encoder;
-        private Target<T> target;
         private BasicAuth basicAuth;
 
         @Default
