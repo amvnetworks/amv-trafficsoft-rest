@@ -53,7 +53,13 @@ public class AsgRegisterClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = new ObjectMapper();
 
-        String registerAsgResponseRestDtoAsJson = jsonMapper.writeValueAsString(RegisterAsgResponseRestDto.builder()
+        String registerAsgResponseDtoAsJson = jsonMapper.writeValueAsString(RegisterAsgResponseRestDto.builder()
+                .vehicle(VehicleRestDto.builder()
+                        .id(ANY_VEHICLE_ID)
+                        .oemCode(ANY_OEM_CODE)
+                        .seriesCode(ANY_SERIES_CODE)
+                        .modelCode(ANY_MODEL_CODE)
+                        .build())
                 .build());
         String oemsResponseDtoAsJson = jsonMapper.writeValueAsString(OemsResponseDto.builder()
                 .addOem(OemRestDto.builder()
@@ -75,9 +81,19 @@ public class AsgRegisterClientIT {
                 .build());
 
         String vehicleResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleResponseDto.builder()
+                .vehicle(VehicleRestDto.builder()
+                        .oemCode(ANY_OEM_CODE)
+                        .seriesCode(ANY_SERIES_CODE)
+                        .modelCode(ANY_MODEL_CODE)
+                        .build())
                 .build());
 
         String vehicleKeyResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleKeyResponseDto.builder()
+                .vehicleKey(VehicleKeyRestDto.builder()
+                        .key(ANY_VEHICLE_KEY)
+                        .valid(true)
+                        .vehicleId(ANY_VEHICLE_ID)
+                        .build())
                 .build());
 
         MockClient mockClient = new MockClient()
@@ -87,7 +103,7 @@ public class AsgRegisterClientIT {
                         .headers(Collections.emptyMap())
                         .body("{}", Charsets.UTF_8)
                         .build())
-                .ok(HttpMethod.POST, String.format("/%d/asg-register", ANY_CONTRACT_ID), registerAsgResponseRestDtoAsJson)
+                .ok(HttpMethod.POST, String.format("/%d/asg-register", ANY_CONTRACT_ID), registerAsgResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem/%s/series", ANY_CONTRACT_ID, ANY_OEM_CODE), seriesResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem/%s/series/%s/model", ANY_CONTRACT_ID, ANY_OEM_CODE, ANY_SERIES_CODE), modelResponseDtoAsJson)
@@ -136,12 +152,39 @@ public class AsgRegisterClientIT {
 
     @Test
     public void itShouldRegisterAsg() {
-        // TODO: implement me
+        RegisterAsgRequestRestDto registerAsgRequest = RegisterAsgRequestRestDto.builder()
+                .vehicleKey(ANY_VEHICLE_KEY)
+                .oemCode(ANY_OEM_CODE)
+                .seriesCode(ANY_SERIES_CODE)
+                .modelCode(ANY_MODEL_CODE)
+                .build();
+
+        RegisterAsgResponseRestDto registerAsgResponse = sut.registerAsg(ANY_CONTRACT_ID, registerAsgRequest)
+                .execute();
+
+        assertThat(registerAsgResponse, is(notNullValue()));
+        VehicleRestDto vehicle = registerAsgResponse.getVehicle();
+
+        assertThat(vehicle, is(notNullValue()));
+        assertThat(vehicle.getId(), is(equalTo(ANY_VEHICLE_ID)));
+        assertThat(vehicle.getOemCode(), is(equalTo(registerAsgRequest.getOemCode())));
+        assertThat(vehicle.getSeriesCode(), is(equalTo(registerAsgRequest.getSeriesCode())));
+        assertThat(vehicle.getModelCode(), is(equalTo(registerAsgRequest.getModelCode())));
+
     }
 
     @Test
     public void itShouldLoadVehicle() {
-        // TODO: implement me
+        VehicleResponseDto anyVehicleResponse = sut.getVehicle(ANY_CONTRACT_ID, ANY_VEHICLE_ID)
+                .execute();
+
+        assertThat(anyVehicleResponse, is(notNullValue()));
+
+        VehicleRestDto vehicle = anyVehicleResponse.getVehicle();
+        assertThat(vehicle, is(notNullValue()));
+        assertThat(vehicle.getOemCode(), is(equalTo(ANY_OEM_CODE)));
+        assertThat(vehicle.getSeriesCode(), is(equalTo(ANY_SERIES_CODE)));
+        assertThat(vehicle.getModelCode(), is(equalTo(ANY_MODEL_CODE)));
     }
 
     @Test
