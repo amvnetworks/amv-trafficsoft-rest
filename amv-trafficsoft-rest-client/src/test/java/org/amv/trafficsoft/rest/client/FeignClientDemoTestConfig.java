@@ -26,7 +26,7 @@ public class FeignClientDemoTestConfig {
 
     @Bean
     public ClientConfig<AsgRegisterClient> asgRegisterClientConfig() {
-        return TrafficsoftClients.config(AsgRegisterClient.class, "https://example.com", basicAuth());
+        return TrafficsoftClients.config(AsgRegisterClient.class, "https://example.com", basicAuth()).build();
     }
 
     @Bean
@@ -36,7 +36,7 @@ public class FeignClientDemoTestConfig {
 
     @Bean
     public ClientConfig<XfcdClient> xfcdClientClientConfig() {
-        return TrafficsoftClients.config(XfcdClient.class, "https://example.com", basicAuth());
+        return TrafficsoftClients.config(XfcdClient.class, "https://example.com", basicAuth()).build();
     }
 
     @Bean
