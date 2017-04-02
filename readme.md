@@ -7,6 +7,11 @@ amv-trafficsoft-rest
 ./gradlew clean build
 ```
 
+## release to ossrh
+```
+./gradlew clean build  -Prelease uploadArchives closeAndPromoteRepository
+```
+
 # usage
 
 ## xfcd
@@ -43,7 +48,7 @@ BasicAuth basicAuth = BasicAuthImpl.builder()
     .password("mysupersecretpassword")
     .build();
     
-ClientConfig<AsgRegisterClient> customConfig = TrafficsoftClients.config(AsgRegisterClient.class, baseUrl, basicAuth)
+ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.class, baseUrl, basicAuth)
     .logLevel(Logger.Level.HEADERS)
     .retryer(Retryer.NEVER_RETRY)
     .requestInterceptor(new RequestInterceptor() {
@@ -85,7 +90,7 @@ BasicAuth basicAuth = BasicAuthImpl.builder()
     .password("mysupersecretpassword")
     .build();
     
-ClientConfig<AsgRegisterClient> customConfig = TrafficsoftClients.config(AsgRegisterClient.class, baseUrl, basicAuth)
+ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.class, baseUrl, basicAuth)
     .setterFactory(new SetterFactory() {
         @Override
         public HystrixCommand.Setter create(Target<?> target, Method method) {

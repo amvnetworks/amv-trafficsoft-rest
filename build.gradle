@@ -1,11 +1,41 @@
-group 'org.amv.trafficsoft.rest'
-version '0.0.1-SNAPSHOT'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
 
-apply plugin: 'java'
+apply plugin: 'maven'
 
+group = 'com.amvnetworks.trafficsoft'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    version = rootProject.version
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    tasks.withType(Jar).all { jarTask ->
+        manifest {
+            attributes(
+                    "Artifact": project.name,
+                    "Group": rootProject.group,
+                    "Build-Version": rootProject.version
+            )
+        }
+    }
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc
+    }
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allSource
+        classifier = 'sources'
+    }
+    artifacts {
+        archives javadocJar, sourcesJar
+    }
 }

@@ -135,7 +135,7 @@ public class XfcdClientIT {
     }
 
     @Test
-    public void itShouldGetDataAndConfirmDelivieries() {
+    public void itShouldGetDataAndConfirmDeliveries() {
         List<DeliveryDto> deliveries = sut.getDataAndConfirmDeliveries(ANY_CONTRACT_ID, LongStream.range(1L, 10L)
                 .boxed()
                 .collect(toList()))
@@ -165,7 +165,7 @@ public class XfcdClientIT {
     }
 
     @Test
-    public void itShouldConfirmDelivieries() {
+    public void itShouldConfirmDeliveries() {
         Void returnValue = sut.confirmDeliveries(ANY_CONTRACT_ID, LongStream.range(1L, 10L)
                 .boxed()
                 .collect(toList()))
