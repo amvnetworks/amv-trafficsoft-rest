@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 public class SeriesResponseDtoTest {
 
     @Test
-    public void itShouldHaveEmptyListsAsDefault() throws Exception {
+    public void itShouldBePossibleToCreateObjectWithBuilder() throws Exception {
         SeriesResponseDto modelsResponseDto = SeriesResponseDto.builder()
                 .build();
 
