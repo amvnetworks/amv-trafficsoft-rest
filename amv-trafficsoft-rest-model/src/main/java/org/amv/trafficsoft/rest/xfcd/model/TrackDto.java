@@ -2,41 +2,43 @@
 package org.amv.trafficsoft.rest.xfcd.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableList;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Singular;
+import lombok.Value;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
  * One vehicle contains the vehicle ID = ASG ID and the corresponding data
  * nodes.
- *
- * @author <a href='mailto:elisabeth.rosemann@amv-networks.com'>Elisabeth
- *         Rosemann</a>
- * @version $Revision: 3582 $
- * @since 13.06.2016
  */
-@Data
+@Value
+@Builder(builderClassName = "Builder")
+@JsonDeserialize(builder = TrackDto.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "The data for one vehicle.")
 public class TrackDto {
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class Builder {
+
+    }
+
     @ApiModelProperty(notes = "Required. The ID of the track.", required = true)
     private long id;
 
     @ApiModelProperty(notes = "Optional. The ID of the vehicle.")
     private Long vehicleId;
 
+    @Singular("addNode")
     @ApiModelProperty(notes = "Required. The actual data nodes of the vehicle.", required = true)
-    private List<NodeDto> nodes = Collections.emptyList();
+    private List<NodeDto> nodes;
 
     public List<NodeDto> getNodes() {
         return ImmutableList.copyOf(this.nodes);
-    }
-
-    public void setNodes(List<NodeDto> nodes) {
-        this.nodes = ImmutableList.copyOf(nodes);
     }
 }

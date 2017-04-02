@@ -30,6 +30,9 @@ import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -54,25 +57,33 @@ public class XfcdClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = new ObjectMapper();
 
-        ParameterDto parameterDto = new ParameterDto();
-        NodeDto nodeDto = new NodeDto();
-        nodeDto.setXfcds(Lists.newArrayList(parameterDto));
-        TrackDto trackDto = new TrackDto();
-        trackDto.setNodes(Lists.newArrayList(nodeDto));
-        DeliveryDto deliveryDto = new DeliveryDto();
-        deliveryDto.setTrack(Lists.newArrayList(trackDto));
+        ParameterDto parameterDto = ParameterDto.builder()
+                .latitude(BigDecimal.ONE)
+                .longitude(BigDecimal.ONE)
+                .timestamp(Date.valueOf(LocalDate.now()))
+                .param("anyParam")
+                .value("anyValue")
+                .build();
+        NodeDto nodeDto = NodeDto.builder()
+                .addXfcd(parameterDto)
+                .build();
+        TrackDto trackDto = TrackDto.builder()
+                .addNode(nodeDto)
+                .build();
+        DeliveryDto deliveryDto = DeliveryDto.builder()
+                .addTrack(trackDto)
+                .build();
 
         String deliveryDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
         String nodeDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
 
         MockClient mockClient = new MockClient()
-                .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.create(
-                        HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                        HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                        Collections.emptyMap(),
-                        "{}",
-                        Charsets.UTF_8)
-                )
+                .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                        .headers(Collections.emptyMap())
+                        .body("{}", Charsets.UTF_8)
+                        .build())
                 .ok(HttpMethod.GET, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
                 .ok(HttpMethod.POST, String.format("/%d/xfcd/last", ANY_CONTRACT_ID), nodeDtoListAsJson);
 

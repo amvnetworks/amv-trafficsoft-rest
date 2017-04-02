@@ -81,13 +81,12 @@ public class AsgRegisterClientIT {
                 .build());
 
         MockClient mockClient = new MockClient()
-                .add(HttpMethod.POST, String.format("/%d/asg-register", NON_EXISTING_CONTRACT_ID), Response.create(
-                        HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                        HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                        Collections.emptyMap(),
-                        "{}",
-                        Charsets.UTF_8)
-                )
+                .add(HttpMethod.POST, String.format("/%d/asg-register", NON_EXISTING_CONTRACT_ID), Response.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                        .headers(Collections.emptyMap())
+                        .body("{}", Charsets.UTF_8)
+                        .build())
                 .ok(HttpMethod.POST, String.format("/%d/asg-register", ANY_CONTRACT_ID), registerAsgResponseRestDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem/%s/series", ANY_CONTRACT_ID, ANY_OEM_CODE), seriesResponseDtoAsJson)
