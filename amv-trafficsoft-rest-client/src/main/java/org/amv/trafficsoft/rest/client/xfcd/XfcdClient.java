@@ -28,8 +28,8 @@ public interface XfcdClient extends TrafficsoftClient {
     @Headers({
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
-    @RequestLine("POST /{contractId}/xfcd")
-    HystrixCommand<List<DeliveryDto>> confirmDeliveries(
+    @RequestLine("POST /{contractId}/xfcd/confirm")
+    HystrixCommand<Void> confirmDeliveries(
             @Param("contractId") long contractId,
             List<Long> deliveryIds);
 

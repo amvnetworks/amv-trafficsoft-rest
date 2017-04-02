@@ -37,7 +37,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.LongStream;
 
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -47,7 +49,6 @@ public class XfcdClientIT {
     private static final long NON_EXISTING_CONTRACT_ID = -1L;
     private static final long ANY_CONTRACT_ID = RandomUtils.nextLong();
     private static final List<Long> VALID_VEHICLE_IDS = ImmutableList.of(RandomUtils.nextLong(), RandomUtils.nextLong());
-
 
     private TestScheduler testScheduler = Schedulers.test();
 
@@ -84,6 +85,12 @@ public class XfcdClientIT {
                         .headers(Collections.emptyMap())
                         .body("{}", Charsets.UTF_8)
                         .build())
+                .add(HttpMethod.POST, String.format("/%d/xfcd/confirm", ANY_CONTRACT_ID), Response.builder()
+                        .status(HttpStatus.OK.value())
+                        .reason(HttpStatus.OK.getReasonPhrase())
+                        .headers(Collections.emptyMap())
+                        .build())
+                .ok(HttpMethod.POST, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
                 .ok(HttpMethod.POST, String.format("/%d/xfcd/last", ANY_CONTRACT_ID), nodeDtoListAsJson);
 
@@ -129,12 +136,42 @@ public class XfcdClientIT {
 
     @Test
     public void itShouldGetDataAndConfirmDelivieries() {
-        // TODO: implement me
+        List<DeliveryDto> deliveries = sut.getDataAndConfirmDeliveries(ANY_CONTRACT_ID, LongStream.range(1L, 10L)
+                .boxed()
+                .collect(toList()))
+                .execute();
+
+        assertThat(deliveries, is(notNullValue()));
+        assertThat(deliveries, hasSize(greaterThan(0)));
+
+        DeliveryDto anyDelivery = deliveries.stream().findAny()
+                .orElseThrow(IllegalStateException::new);
+
+        assertThat(anyDelivery, is(notNullValue()));
+        assertThat(anyDelivery.getTrack(), is(notNullValue()));
+        assertThat(anyDelivery.getTrack(), hasSize(greaterThan(0)));
+
+        TrackDto anyTrack = anyDelivery.getTrack().stream().findAny()
+                .orElseThrow(IllegalStateException::new);
+
+        assertThat(anyTrack, is(notNullValue()));
+        assertThat(anyTrack.getNodes(), is(notNullValue()));
+        assertThat(anyTrack.getNodes(), hasSize(greaterThan(0)));
+
+        NodeDto anyNode = anyTrack.getNodes().stream().findAny()
+                .orElseThrow(IllegalStateException::new);
+
+        assertThat(anyNode, is(notNullValue()));
     }
 
     @Test
     public void itShouldConfirmDelivieries() {
-        // TODO: implement me
+        Void returnValue = sut.confirmDeliveries(ANY_CONTRACT_ID, LongStream.range(1L, 10L)
+                .boxed()
+                .collect(toList()))
+                .execute();
+
+        assertThat(returnValue, is(nullValue()));
     }
 
     @Test
