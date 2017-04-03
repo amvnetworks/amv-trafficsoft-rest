@@ -26,7 +26,7 @@ BasicAuth basicAuth = BasicAuthImpl.builder()
     .password("mysupersecretpassword")
     .build();
     
-XfcdClient xfcdClient = TrafficsoftClients.xfcd(basicAuth);
+XfcdClient xfcdClient = TrafficsoftClients.xfcd(baseUrl, basicAuth);
 // ...
 ```
 
@@ -38,21 +38,31 @@ BasicAuth basicAuth = BasicAuthImpl.builder()
     .password("mysupersecretpassword")
     .build();
     
-AsgRegisterClient asgRegisterClient = TrafficsoftClients.asgRegister(basicAuth);
+AsgRegisterClient asgRegisterClient = TrafficsoftClients.asgRegister(baseUrl, basicAuth);
 // ...
 ```
 
 # install
 ## gradle
+### repo
 ```
 repositories {
+    jcenter()
+    // ... or add bintray repo
     maven {
         url  "http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest" 
     }
 }
 ```
+### dependency
+```
+dependencies {
+    compile 'org.amv.trafficsoft:amv-trafficsoft-rest-model:${version}'
+}
+```
 
 ## maven 
+### repo
 ```
 <profiles>
     <profile>
@@ -82,6 +92,14 @@ repositories {
 <activeProfiles>
     <activeProfile>bintray</activeProfile>
 </activeProfiles>
+```
+### dependency
+```
+<dependency>
+  <groupId>org.amv.trafficsoft</groupId>
+  <artifactId>amv-trafficsoft-rest-client</artifactId>
+  <version>${version}</version>
+</dependency>
 ```
 
 # custom configuration
@@ -122,7 +140,6 @@ ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.cla
     .build();
     
 XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
-
 // ...
 ```
 
@@ -164,6 +181,5 @@ ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.cla
     .build();
     
 XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
-
 // ...
 ```
