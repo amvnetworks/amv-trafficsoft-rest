@@ -17,7 +17,7 @@ import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
 import org.amv.trafficsoft.rest.xfcd.model.NodeRestDto;
 import org.amv.trafficsoft.rest.xfcd.model.ParameterRestDto;
-import org.amv.trafficsoft.rest.xfcd.model.TrackDto;
+import org.amv.trafficsoft.rest.xfcd.model.TrackRestDto;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,7 +68,7 @@ public class XfcdClientIT {
         NodeRestDto nodeDto = NodeRestDto.builder()
                 .addXfcd(parameterDto)
                 .build();
-        TrackDto trackDto = TrackDto.builder()
+        TrackRestDto trackDto = TrackRestDto.builder()
                 .addNode(nodeDto)
                 .build();
         DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
@@ -151,7 +151,7 @@ public class XfcdClientIT {
         assertThat(anyDelivery.getTrack(), is(notNullValue()));
         assertThat(anyDelivery.getTrack(), hasSize(greaterThan(0)));
 
-        TrackDto anyTrack = anyDelivery.getTrack().stream().findAny()
+        TrackRestDto anyTrack = anyDelivery.getTrack().stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyTrack, is(notNullValue()));
@@ -188,7 +188,7 @@ public class XfcdClientIT {
         assertThat(anyDelivery.getTrack(), is(notNullValue()));
         assertThat(anyDelivery.getTrack(), hasSize(greaterThan(0)));
 
-        TrackDto anyTrack = anyDelivery.getTrack().stream().findAny()
+        TrackRestDto anyTrack = anyDelivery.getTrack().stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyTrack, is(notNullValue()));

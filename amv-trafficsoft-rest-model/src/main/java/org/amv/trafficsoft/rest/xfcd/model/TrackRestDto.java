@@ -19,10 +19,10 @@ import java.util.List;
  */
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = TrackDto.Builder.class)
+@JsonDeserialize(builder = TrackRestDto.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "The data for one vehicle.")
-public class TrackDto {
+public class TrackRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 

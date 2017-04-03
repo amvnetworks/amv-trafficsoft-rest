@@ -36,7 +36,7 @@ public class DeliveryRestDto {
 
     @Singular("addTrack")
     @ApiModelProperty(notes = "The list of currently active vehicles with a subscription to the given contract. Empty list if there are no active vehicles.")
-    private List<TrackDto> track;
+    private List<TrackRestDto> track;
 
     public Date getTimestamp() {
         return Optional.ofNullable(timestamp)
@@ -45,7 +45,7 @@ public class DeliveryRestDto {
                 .orElse(null);
     }
 
-    public List<TrackDto> getTrack() {
+    public List<TrackRestDto> getTrack() {
         return ImmutableList.copyOf(this.track);
     }
 }

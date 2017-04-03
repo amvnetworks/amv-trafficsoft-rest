@@ -5,11 +5,11 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class TrackDtoTest {
+public class TrackRestDtoTest {
 
     @Test
     public void itShouldBePossibleToCreateObjectWithBuilder() throws Exception {
-        TrackDto trackDto = TrackDto.builder()
+        TrackRestDto trackDto = TrackRestDto.builder()
                 .build();
 
         assertThat(trackDto, is(notNullValue()));
