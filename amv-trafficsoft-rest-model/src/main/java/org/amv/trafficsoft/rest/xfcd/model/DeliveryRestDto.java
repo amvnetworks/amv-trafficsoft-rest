@@ -20,9 +20,9 @@ import java.util.Optional;
  */
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = DeliveryDto.Builder.class)
+@JsonDeserialize(builder = DeliveryRestDto.Builder.class)
 @ApiModel(description = "A delivery containing multiple XFCD data nodes for multiple vehicles.")
-public class DeliveryDto {
+public class DeliveryRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 

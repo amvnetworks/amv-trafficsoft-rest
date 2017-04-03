@@ -11,9 +11,9 @@ import lombok.Singular;
 import java.util.List;
 
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = OemsResponseDto.Builder.class)
+@JsonDeserialize(builder = OemsResponseRestDto.Builder.class)
 @ApiModel(description = "A resource representing a container for vehicle oems.")
-public class OemsResponseDto {
+public class OemsResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 

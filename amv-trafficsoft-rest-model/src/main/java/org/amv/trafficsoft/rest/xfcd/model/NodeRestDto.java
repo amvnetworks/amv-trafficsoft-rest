@@ -23,10 +23,10 @@ import java.util.Optional;
  */
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = NodeDto.Builder.class)
+@JsonDeserialize(builder = NodeRestDto.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "One data node for a vehicle - the current position and all parameters the vehicle sends for the current contract.")
-public class NodeDto {
+public class NodeRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
@@ -64,11 +64,11 @@ public class NodeDto {
 
     @Singular("addXfcd")
     @ApiModelProperty(notes = "Optional. A list of XFCD data (e.g. kmrd, speed, or any other Trafficsoft CAN parameter) received from the car.")
-    private List<ParameterDto> xfcds;
+    private List<ParameterRestDto> xfcds;
 
     @Singular("addState")
     @ApiModelProperty(notes = "Optional. A list of state parameters (e.g. vbat, move, or any other Trafficsoft State parameter) received from the car.")
-    private List<ParameterDto> states;
+    private List<ParameterRestDto> states;
 
     public Date getTimestamp() {
         return Optional.ofNullable(timestamp)
@@ -77,11 +77,11 @@ public class NodeDto {
                 .orElse(null);
     }
 
-    public List<ParameterDto> getXfcds() {
+    public List<ParameterRestDto> getXfcds() {
         return ImmutableList.copyOf(this.xfcds);
     }
 
-    public List<ParameterDto> getStates() {
+    public List<ParameterRestDto> getStates() {
         return ImmutableList.copyOf(this.states);
     }
 }

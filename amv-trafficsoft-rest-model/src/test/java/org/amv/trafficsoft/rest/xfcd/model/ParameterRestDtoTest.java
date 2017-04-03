@@ -2,17 +2,15 @@ package org.amv.trafficsoft.rest.xfcd.model;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class ParameterDtoTest {
+public class ParameterRestDtoTest {
 
     @Test
     public void itShouldBePossibleToCreateObjectWithBuilder() throws Exception {
-        ParameterDto parameterDto = ParameterDto.builder()
+        ParameterRestDto parameterDto = ParameterRestDto.builder()
                 .build();
 
         assertThat(parameterDto, is(notNullValue()));

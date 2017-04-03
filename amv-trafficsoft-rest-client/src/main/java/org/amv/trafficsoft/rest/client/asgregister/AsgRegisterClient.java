@@ -20,20 +20,20 @@ public interface AsgRegisterClient extends TrafficsoftClient {
             RegisterAsgRequestRestDto request);
 
     @RequestLine("GET /{contractId}/asg-register/vehicle/{vehicleId}")
-    HystrixCommand<VehicleResponseDto> getVehicle(
+    HystrixCommand<VehicleResponseRestDto> getVehicle(
             @Param("contractId") long contractId,
             @Param("vehicleId") long vehicleId);
 
     @RequestLine("GET /{contractId}/asg-register/oem")
-    HystrixCommand<OemsResponseDto> getOems(@Param("contractId") long contractId);
+    HystrixCommand<OemsResponseRestDto> getOems(@Param("contractId") long contractId);
 
     @RequestLine("GET /{contractId}/asg-register/oem/{oemCode}/series")
-    HystrixCommand<SeriesResponseDto> getSeries(
+    HystrixCommand<SeriesResponseRestDto> getSeries(
             @Param("contractId") long contractId,
             @Param("oemCode") String oemCode);
 
     @RequestLine("GET /{contractId}/asg-register/oem/{oemCode}/series/{seriesCode}/model")
-    HystrixCommand<ModelsResponseDto> getModels(
+    HystrixCommand<ModelsResponseRestDto> getModels(
             @Param("contractId") long contractId,
             @Param("oemCode") String oemCode,
             @Param("seriesCode") String seriesCode);

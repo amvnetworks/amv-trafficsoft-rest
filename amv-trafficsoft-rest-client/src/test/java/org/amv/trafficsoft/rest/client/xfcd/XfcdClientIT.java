@@ -14,9 +14,9 @@ import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
-import org.amv.trafficsoft.rest.xfcd.model.DeliveryDto;
-import org.amv.trafficsoft.rest.xfcd.model.NodeDto;
-import org.amv.trafficsoft.rest.xfcd.model.ParameterDto;
+import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
+import org.amv.trafficsoft.rest.xfcd.model.NodeRestDto;
+import org.amv.trafficsoft.rest.xfcd.model.ParameterRestDto;
 import org.amv.trafficsoft.rest.xfcd.model.TrackDto;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
@@ -58,20 +58,20 @@ public class XfcdClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = new ObjectMapper();
 
-        ParameterDto parameterDto = ParameterDto.builder()
+        ParameterRestDto parameterDto = ParameterRestDto.builder()
                 .latitude(BigDecimal.ONE)
                 .longitude(BigDecimal.ONE)
                 .timestamp(Date.valueOf(LocalDate.now()))
                 .param("anyParam")
                 .value("anyValue")
                 .build();
-        NodeDto nodeDto = NodeDto.builder()
+        NodeRestDto nodeDto = NodeRestDto.builder()
                 .addXfcd(parameterDto)
                 .build();
         TrackDto trackDto = TrackDto.builder()
                 .addNode(nodeDto)
                 .build();
-        DeliveryDto deliveryDto = DeliveryDto.builder()
+        DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
                 .addTrack(trackDto)
                 .build();
 
@@ -111,7 +111,7 @@ public class XfcdClientIT {
         sut.getData(NON_EXISTING_CONTRACT_ID)
                 .toObservable()
                 .subscribeOn(testScheduler)
-                .subscribe(new TestSubscriber<List<DeliveryDto>>() {
+                .subscribe(new TestSubscriber<List<DeliveryRestDto>>() {
                     @Override
                     public void onError(Throwable e) {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
@@ -121,7 +121,7 @@ public class XfcdClientIT {
                     }
 
                     @Override
-                    public void onNext(List<DeliveryDto> deliveryDtos) {
+                    public void onNext(List<DeliveryRestDto> deliveryDtos) {
                         Assert.fail("Should have thrown exception and called onError");
                         latch.countDown();
                     }
@@ -136,7 +136,7 @@ public class XfcdClientIT {
 
     @Test
     public void itShouldGetDataAndConfirmDeliveries() {
-        List<DeliveryDto> deliveries = sut.getDataAndConfirmDeliveries(ANY_CONTRACT_ID, LongStream.range(1L, 10L)
+        List<DeliveryRestDto> deliveries = sut.getDataAndConfirmDeliveries(ANY_CONTRACT_ID, LongStream.range(1L, 10L)
                 .boxed()
                 .collect(toList()))
                 .execute();
@@ -144,7 +144,7 @@ public class XfcdClientIT {
         assertThat(deliveries, is(notNullValue()));
         assertThat(deliveries, hasSize(greaterThan(0)));
 
-        DeliveryDto anyDelivery = deliveries.stream().findAny()
+        DeliveryRestDto anyDelivery = deliveries.stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyDelivery, is(notNullValue()));
@@ -158,7 +158,7 @@ public class XfcdClientIT {
         assertThat(anyTrack.getNodes(), is(notNullValue()));
         assertThat(anyTrack.getNodes(), hasSize(greaterThan(0)));
 
-        NodeDto anyNode = anyTrack.getNodes().stream().findAny()
+        NodeRestDto anyNode = anyTrack.getNodes().stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyNode, is(notNullValue()));
@@ -176,12 +176,12 @@ public class XfcdClientIT {
 
     @Test
     public void itShouldGetData() {
-        List<DeliveryDto> deliveries = sut.getData(ANY_CONTRACT_ID).execute();
+        List<DeliveryRestDto> deliveries = sut.getData(ANY_CONTRACT_ID).execute();
 
         assertThat(deliveries, is(notNullValue()));
         assertThat(deliveries, hasSize(greaterThan(0)));
 
-        DeliveryDto anyDelivery = deliveries.stream().findAny()
+        DeliveryRestDto anyDelivery = deliveries.stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyDelivery, is(notNullValue()));
@@ -195,7 +195,7 @@ public class XfcdClientIT {
         assertThat(anyTrack.getNodes(), is(notNullValue()));
         assertThat(anyTrack.getNodes(), hasSize(greaterThan(0)));
 
-        NodeDto anyNode = anyTrack.getNodes().stream().findAny()
+        NodeRestDto anyNode = anyTrack.getNodes().stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyNode, is(notNullValue()));
@@ -203,7 +203,7 @@ public class XfcdClientIT {
 
     @Test
     public void itShouldGetLastData() {
-        List<NodeDto> nodes = sut.getLastData(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
+        List<NodeRestDto> nodes = sut.getLastData(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(nodes, is(notNullValue()));
     }

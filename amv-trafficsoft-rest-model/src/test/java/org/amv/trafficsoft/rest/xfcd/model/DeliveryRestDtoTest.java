@@ -2,16 +2,14 @@ package org.amv.trafficsoft.rest.xfcd.model;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class DeliveryDtoTest {
+public class DeliveryRestDtoTest {
 
     @Test
     public void itShouldBePossibleToCreateObjectWithBuilder() throws Exception {
-        DeliveryDto deliveryDto = DeliveryDto.builder()
+        DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
                 .build();
 
         assertThat(deliveryDto, is(notNullValue()));

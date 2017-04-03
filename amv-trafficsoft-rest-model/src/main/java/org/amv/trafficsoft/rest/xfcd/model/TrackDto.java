@@ -36,9 +36,9 @@ public class TrackDto {
 
     @Singular("addNode")
     @ApiModelProperty(notes = "Required. The actual data nodes of the vehicle.", required = true)
-    private List<NodeDto> nodes;
+    private List<NodeRestDto> nodes;
 
-    public List<NodeDto> getNodes() {
+    public List<NodeRestDto> getNodes() {
         return ImmutableList.copyOf(this.nodes);
     }
 }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -20,10 +19,10 @@ import java.util.Optional;
  */
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = ParameterDto.Builder.class)
+@JsonDeserialize(builder = ParameterRestDto.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(description = "Encapsulates one parameter, either a CAN or State parameter, which contains a parameter name and value.")
-public class ParameterDto {
+public class ParameterRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 

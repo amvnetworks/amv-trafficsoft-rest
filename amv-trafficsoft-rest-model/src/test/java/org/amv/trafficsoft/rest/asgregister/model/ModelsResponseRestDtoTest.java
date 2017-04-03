@@ -6,15 +6,16 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 
-public class OemsResponseDtoTest {
+public class ModelsResponseRestDtoTest {
 
     @Test
     public void itShouldBePossibleToCreateObjectWithBuilder() throws Exception {
-        OemsResponseDto modelsResponseDto = OemsResponseDto.builder()
+        ModelsResponseRestDto modelsResponseDto = ModelsResponseRestDto.builder()
                 .build();
 
         assertThat(modelsResponseDto, is(notNullValue()));
-        assertThat(modelsResponseDto.getOems(), is(notNullValue()));
-        assertThat(modelsResponseDto.getOems(), hasSize(0));
+        assertThat(modelsResponseDto.getModels(), is(notNullValue()));
+        assertThat(modelsResponseDto.getModels(), hasSize(0));
     }
+
 }

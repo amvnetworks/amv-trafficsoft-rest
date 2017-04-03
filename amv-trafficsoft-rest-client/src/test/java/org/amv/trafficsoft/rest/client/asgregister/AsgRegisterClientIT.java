@@ -61,18 +61,18 @@ public class AsgRegisterClientIT {
                         .modelCode(ANY_MODEL_CODE)
                         .build())
                 .build());
-        String oemsResponseDtoAsJson = jsonMapper.writeValueAsString(OemsResponseDto.builder()
+        String oemsResponseDtoAsJson = jsonMapper.writeValueAsString(OemsResponseRestDto.builder()
                 .addOem(OemRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
                         .build())
                 .build());
-        String seriesResponseDtoAsJson = jsonMapper.writeValueAsString(SeriesResponseDto.builder()
+        String seriesResponseDtoAsJson = jsonMapper.writeValueAsString(SeriesResponseRestDto.builder()
                 .addSeries(SeriesRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
                         .seriesCode(ANY_SERIES_CODE)
                         .build())
                 .build());
-        String modelResponseDtoAsJson = jsonMapper.writeValueAsString(ModelsResponseDto.builder()
+        String modelResponseDtoAsJson = jsonMapper.writeValueAsString(ModelsResponseRestDto.builder()
                 .addModel(ModelRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
                         .seriesCode(ANY_SERIES_CODE)
@@ -80,7 +80,7 @@ public class AsgRegisterClientIT {
                         .build())
                 .build());
 
-        String vehicleResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleResponseDto.builder()
+        String vehicleResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleResponseRestDto.builder()
                 .vehicle(VehicleRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
                         .seriesCode(ANY_SERIES_CODE)
@@ -88,7 +88,7 @@ public class AsgRegisterClientIT {
                         .build())
                 .build());
 
-        String vehicleKeyResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleKeyResponseDto.builder()
+        String vehicleKeyResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleKeyResponseRestDto.builder()
                 .vehicleKey(VehicleKeyRestDto.builder()
                         .key(ANY_VEHICLE_KEY)
                         .valid(true)
@@ -175,7 +175,7 @@ public class AsgRegisterClientIT {
 
     @Test
     public void itShouldLoadVehicle() {
-        VehicleResponseDto anyVehicleResponse = sut.getVehicle(ANY_CONTRACT_ID, ANY_VEHICLE_ID)
+        VehicleResponseRestDto anyVehicleResponse = sut.getVehicle(ANY_CONTRACT_ID, ANY_VEHICLE_ID)
                 .execute();
 
         assertThat(anyVehicleResponse, is(notNullValue()));
@@ -194,7 +194,7 @@ public class AsgRegisterClientIT {
 
     @Test
     public void itShouldLoadAllOems() {
-        OemsResponseDto oemsResponseDto = sut
+        OemsResponseRestDto oemsResponseDto = sut
                 .getOems(ANY_CONTRACT_ID)
                 .execute();
 
@@ -215,7 +215,7 @@ public class AsgRegisterClientIT {
                 .findAny()
                 .orElseThrow(IllegalStateException::new);
 
-        SeriesResponseDto seriesResponseDto = sut
+        SeriesResponseRestDto seriesResponseDto = sut
                 .getSeries(ANY_CONTRACT_ID, anyOem.getOemCode())
                 .execute();
 
@@ -241,7 +241,7 @@ public class AsgRegisterClientIT {
                 .orElseThrow(IllegalStateException::new);
 
 
-        ModelsResponseDto modelsResponseDto = sut
+        ModelsResponseRestDto modelsResponseDto = sut
                 .getModels(ANY_CONTRACT_ID, anySeries.getOemCode(), anySeries.getSeriesCode())
                 .execute();
 

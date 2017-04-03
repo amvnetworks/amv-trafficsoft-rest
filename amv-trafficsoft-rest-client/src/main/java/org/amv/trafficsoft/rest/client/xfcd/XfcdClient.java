@@ -17,12 +17,12 @@ public interface XfcdClient extends TrafficsoftClient {
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
     @RequestLine("POST /{contractId}/xfcd")
-    HystrixCommand<List<DeliveryDto>> getDataAndConfirmDeliveries(
+    HystrixCommand<List<DeliveryRestDto>> getDataAndConfirmDeliveries(
             @Param("contractId") long contractId,
             List<Long> deliveryIds);
 
     @RequestLine("GET /{contractId}/xfcd")
-    HystrixCommand<List<DeliveryDto>> getData(
+    HystrixCommand<List<DeliveryRestDto>> getData(
             @Param("contractId") long contractId);
 
     @Headers({
@@ -37,7 +37,7 @@ public interface XfcdClient extends TrafficsoftClient {
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
     @RequestLine("POST /{contractId}/xfcd/last")
-    HystrixCommand<List<NodeDto>> getLastData(
+    HystrixCommand<List<NodeRestDto>> getLastData(
             @Param("contractId") long contractId,
             List<Long> vehicleIds);
 }

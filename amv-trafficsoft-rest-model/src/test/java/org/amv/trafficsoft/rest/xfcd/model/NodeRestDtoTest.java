@@ -2,17 +2,15 @@ package org.amv.trafficsoft.rest.xfcd.model;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class NodeDtoTest {
+public class NodeRestDtoTest {
 
     @Test
     public void itShouldBePossibleToCreateObjectWithBuilder() throws Exception {
-        NodeDto nodeDto = NodeDto.builder()
+        NodeRestDto nodeDto = NodeRestDto.builder()
                 .build();
 
         assertThat(nodeDto, is(notNullValue()));
