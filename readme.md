@@ -7,10 +7,11 @@ amv-trafficsoft-rest
 ./gradlew clean build
 ```
 
-## release to ossrh
+## release to bintray
 ```
-./gradlew clean build  -Prelease uploadArchives closeAndPromoteRepository
+./gradlew clean build -Prelease -PbintrayUser=${username} -PbintrayApiKey=${apiKey} bintrayUpload
 ```
+
 
 # usage
 
@@ -38,9 +39,52 @@ AsgRegisterClient asgRegisterClient = TrafficsoftClients.asgRegister(basicAuth);
 // ...
 ```
 
+# install
+## gradle
+```
+repositories {
+    maven {
+        url  "http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest" 
+    }
+}
+```
+
+## maven 
+```
+<profiles>
+    <profile>
+        <repositories>
+            <repository>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+                <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
+                <name>bintray</name>
+                <url>http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
+            </repository>
+        </repositories>
+        <pluginRepositories>
+            <pluginRepository>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+                <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
+                <name>bintray-plugins</name>
+                <url>http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
+            </pluginRepository>
+        </pluginRepositories>
+        <id>bintray</id>
+    </profile>
+</profiles>
+<activeProfiles>
+    <activeProfile>bintray</activeProfile>
+</activeProfiles>
+```
+
 # custom configuration
 It is possible to apply a custom configuration and configure the clients to your needs. 
-If you construct your own config you have to provide the `target` property. e.g.
+If you construct your own config you have to provide the `target` property
+or use `TrafficsoftClients.config(clazz, baseUrl, basicAuth)` method. e.g.
 ```
 String baseUrl = "http//www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()

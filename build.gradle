@@ -1,29 +1,38 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
+}
+plugins {
+    id 'com.jfrog.bintray' version '1.7.3'
 }
 
 apply plugin: 'maven'
 
-group = 'com.amvnetworks.trafficsoft'
-version = '0.0.1-SNAPSHOT'
 
-subprojects {
-    apply plugin: 'java'
+allprojects {
+    repositories {
+        jcenter()
+    }
     apply plugin: 'maven'
+    apply plugin: 'java'
 
-    version = rootProject.version
+    group = 'org.amv.trafficsoft'
+    version = '0.0.1'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+}
+
+subprojects {
+    apply plugin: 'com.jfrog.bintray'
 
     tasks.withType(Jar).all { jarTask ->
         manifest {
             attributes(
-                    "Artifact": project.name,
-                    "Group": rootProject.group,
-                    "Build-Version": rootProject.version
+                    'Artifact': project.name,
+                    'Group': rootProject.group,
+                    'Build-Version': rootProject.version
             )
         }
     }
@@ -37,5 +46,27 @@ subprojects {
     }
     artifacts {
         archives javadocJar, sourcesJar
+    }
+
+    if (project.hasProperty('release')) {
+        bintray {
+            user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+            key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+            configurations = ['archives']
+            pkg {
+                repo = 'amv-trafficsoft-rest'
+                name = project.name
+                userOrg = user
+                licenses = ['MIT']
+                vcsUrl = 'https://github.com/amvnetworks/amv-trafficsoft-rest.git'
+                labels = ['amv']
+                publicDownloadNumbers = false
+                version {
+                    name = rootProject.version
+                    desc = project.description
+                    vcsTag = rootProject.version
+                }
+            }
+        }
     }
 }
