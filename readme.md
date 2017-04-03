@@ -1,3 +1,5 @@
+ [ ![Download](https://api.bintray.com/packages/amvnetworks/amv-trafficsoft-rest/amv-trafficsoft-rest-client/images/download.svg) ](https://bintray.com/amvnetworks/amv-trafficsoft-rest/amv-trafficsoft-rest-client/_latestVersion)
+
 amv-trafficsoft-rest
 ========
 
