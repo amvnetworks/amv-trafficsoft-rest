@@ -12,7 +12,6 @@ plugins {
 
 apply plugin: 'maven'
 
-
 allprojects {
     repositories {
         jcenter()
@@ -85,6 +84,10 @@ subprojects {
 
     artifacts {
         archives javadocJar, sourcesJar
+    }
+
+    task allDependencies(type: DependencyReportTask) {
+
     }
 
     if (project.hasProperty('release')) {
