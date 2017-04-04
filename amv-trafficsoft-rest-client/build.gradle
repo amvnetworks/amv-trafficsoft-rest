@@ -13,12 +13,6 @@ dependencies {
     compile 'io.github.openfeign:feign-jackson:9.4.0'
     compile 'io.github.openfeign:feign-slf4j:9.4.0'
 
-    compile 'com.google.guava:guava:21.0'
-
-    compileOnly 'org.projectlombok:lombok:1.16.16'
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'com.marvinformatics.feign:feign-mock:0.4'
     testCompile 'org.slf4j:slf4j-simple:1.7.25'
 

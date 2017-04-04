@@ -5,6 +5,7 @@ buildscript {
 }
 plugins {
     id 'com.jfrog.bintray' version '1.7.3'
+    id 'io.franzbecker.gradle-lombok' version '1.8'
 }
 
 apply plugin: 'maven'
@@ -27,6 +28,20 @@ allprojects {
 subprojects {
     apply plugin: 'com.jfrog.bintray'
 
+    lombok {
+        version = '1.16.16'
+        sha256 = 'fbf682c7ff113e5187a9c4b4cbd7a8ad782abd8ccff91b9fa7289a4a6aa8c19a'
+    }
+
+    dependencies {
+        compile 'com.google.guava:guava:21.0'
+        compileOnly 'org.projectlombok:lombok:1.16.16'
+
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.hamcrest:hamcrest-all:1.3'
+        testCompile 'pl.pragmatists:JUnitParams:1.0.6'
+    }
+    
     tasks.withType(Jar).all { jarTask ->
         manifest {
             attributes(
