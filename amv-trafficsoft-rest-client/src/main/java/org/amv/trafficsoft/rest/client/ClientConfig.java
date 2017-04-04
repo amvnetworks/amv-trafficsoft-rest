@@ -103,7 +103,8 @@ public interface ClientConfig<T> {
     }
 
     /**
-     * A simple and highly configurable implementation of {@link ClientConfig}.
+     * A simple and highly configurable implementation of {@link ClientConfig}
+     * with reasonable default values.
      *
      * @param <T> the type of the client
      * @author Alois Leitner

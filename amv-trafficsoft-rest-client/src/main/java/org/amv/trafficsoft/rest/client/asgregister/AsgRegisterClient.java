@@ -9,6 +9,11 @@ import org.amv.trafficsoft.rest.client.TrafficsoftClient;
 
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 
+/**
+ * A client for accessing the <i>asg-register</i> endpoint.
+ *
+ * @author Alois Leitner
+ */
 public interface AsgRegisterClient extends TrafficsoftClient {
 
     @Headers({

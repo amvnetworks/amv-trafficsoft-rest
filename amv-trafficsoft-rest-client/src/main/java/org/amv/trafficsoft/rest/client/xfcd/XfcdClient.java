@@ -11,6 +11,11 @@ import java.util.List;
 
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 
+/**
+ * A client for accessing the <i>xfcd</i> endpoint.
+ *
+ * @author Alois Leitner
+ */
 public interface XfcdClient extends TrafficsoftClient {
 
     @Headers({

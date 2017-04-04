@@ -30,7 +30,7 @@ final class Clients {
      * @param <T> the type of the client
      * @return the client based on the configuration
      */
-    public static <T> T create(ClientConfig<T> clientConfig) {
+    static <T> T create(ClientConfig<T> clientConfig) {
         requireNonNull(clientConfig, "`clientConfig` must not be null.");
 
         final ImmutableList<RequestInterceptor> requestInterceptors =

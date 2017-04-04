@@ -50,12 +50,12 @@ subprojects {
         outputs.dir(outputDir)
         sourceSets.main.java.srcDirs.each {
             inputs.dir(it)
-            args(it, "-d", outputDir)
+            args(it, '-d', outputDir)
         }
     }
 
     task delombokHelp(type: DelombokTask) {
-        args "--help"
+        args '--help'
     }
 
     javadoc {
@@ -101,7 +101,7 @@ subprojects {
                 userOrg = user
                 licenses = ['MIT']
                 vcsUrl = 'https://github.com/amvnetworks/amv-trafficsoft-rest.git'
-                labels = ['amv']
+                labels = ['amv', 'trafficsoft']
                 publicDownloadNumbers = false
                 version {
                     name = rootProject.version
