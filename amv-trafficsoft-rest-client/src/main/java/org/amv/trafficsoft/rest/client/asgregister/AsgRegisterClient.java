@@ -19,6 +19,11 @@ public interface AsgRegisterClient extends TrafficsoftClient {
             @Param("contractId") long contractId,
             RegisterAsgRequestRestDto request);
 
+    @RequestLine("GET /{contractId}/asg-register/vehiclekey/{vehicleKey}")
+    HystrixCommand<VehicleKeyResponseRestDto> getVehicleKey(
+            @Param("contractId") long contractId,
+            @Param("vehicleKey") String vehicleKey);
+
     @RequestLine("GET /{contractId}/asg-register/vehicle/{vehicleId}")
     HystrixCommand<VehicleResponseRestDto> getVehicle(
             @Param("contractId") long contractId,

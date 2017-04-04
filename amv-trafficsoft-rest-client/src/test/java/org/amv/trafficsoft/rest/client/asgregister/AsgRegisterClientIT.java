@@ -39,9 +39,9 @@ import static org.junit.Assert.assertThat;
 public class AsgRegisterClientIT {
     private static final long NON_EXISTING_CONTRACT_ID = -1L;
     private static final long ANY_CONTRACT_ID = RandomUtils.nextLong();
-    private static final String ANY_OEM_CODE = "AUDI";
-    private static final String ANY_SERIES_CODE = "A1";
-    private static final String ANY_MODEL_CODE = "A1S2";
+    private static final String ANY_OEM_CODE = RandomStringUtils.randomAlphanumeric(10);
+    private static final String ANY_SERIES_CODE = RandomStringUtils.randomAlphanumeric(10);
+    private static final String ANY_MODEL_CODE = RandomStringUtils.randomAlphanumeric(10);
     private static final long ANY_VEHICLE_ID = RandomUtils.nextLong();
     private static final String ANY_VEHICLE_KEY = RandomStringUtils.randomAlphanumeric(10);
 
@@ -91,8 +91,8 @@ public class AsgRegisterClientIT {
         String vehicleKeyResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleKeyResponseRestDto.builder()
                 .vehicleKey(VehicleKeyRestDto.builder()
                         .key(ANY_VEHICLE_KEY)
-                        .valid(true)
                         .vehicleId(ANY_VEHICLE_ID)
+                        .valid(true)
                         .build())
                 .build());
 
@@ -175,12 +175,12 @@ public class AsgRegisterClientIT {
 
     @Test
     public void itShouldLoadVehicle() {
-        VehicleResponseRestDto anyVehicleResponse = sut.getVehicle(ANY_CONTRACT_ID, ANY_VEHICLE_ID)
+        VehicleResponseRestDto vehicleResponse = sut.getVehicle(ANY_CONTRACT_ID, ANY_VEHICLE_ID)
                 .execute();
 
-        assertThat(anyVehicleResponse, is(notNullValue()));
+        assertThat(vehicleResponse, is(notNullValue()));
 
-        VehicleRestDto vehicle = anyVehicleResponse.getVehicle();
+        VehicleRestDto vehicle = vehicleResponse.getVehicle();
         assertThat(vehicle, is(notNullValue()));
         assertThat(vehicle.getOemCode(), is(equalTo(ANY_OEM_CODE)));
         assertThat(vehicle.getSeriesCode(), is(equalTo(ANY_SERIES_CODE)));
@@ -189,7 +189,16 @@ public class AsgRegisterClientIT {
 
     @Test
     public void itShouldLoadVehicleKey() {
-        // TODO: implement me
+        VehicleKeyResponseRestDto vehicleKeyResponse = sut.getVehicleKey(ANY_CONTRACT_ID, ANY_VEHICLE_KEY)
+                .execute();
+
+        assertThat(vehicleKeyResponse, is(notNullValue()));
+
+        VehicleKeyRestDto vehicleKey = vehicleKeyResponse.getVehicleKey();
+        assertThat(vehicleKey, is(notNullValue()));
+        assertThat(vehicleKey.getKey(), is(equalTo(ANY_VEHICLE_KEY)));
+        assertThat(vehicleKey.getVehicleId(), is(equalTo(ANY_VEHICLE_ID)));
+        assertThat(vehicleKey.isValid(), is(true));
     }
 
     @Test
