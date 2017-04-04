@@ -1,3 +1,5 @@
+import io.franzbecker.gradle.lombok.task.DelombokTask
+
 buildscript {
     repositories {
         jcenter()
@@ -23,15 +25,12 @@ allprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+
 }
 
 subprojects {
     apply plugin: 'com.jfrog.bintray'
-
-    lombok {
-        version = '1.16.16'
-        sha256 = 'fbf682c7ff113e5187a9c4b4cbd7a8ad782abd8ccff91b9fa7289a4a6aa8c19a'
-    }
+    apply plugin: 'io.franzbecker.gradle-lombok'
 
     dependencies {
         compile 'com.google.guava:guava:21.0'
@@ -41,7 +40,31 @@ subprojects {
         testCompile 'org.hamcrest:hamcrest-all:1.3'
         testCompile 'pl.pragmatists:JUnitParams:1.0.6'
     }
-    
+
+    lombok {
+        version = '1.16.16'
+        sha256 = 'fbf682c7ff113e5187a9c4b4cbd7a8ad782abd8ccff91b9fa7289a4a6aa8c19a'
+    }
+
+    task delombok(type: DelombokTask, dependsOn: compileJava) {
+        ext.outputDir = file("$buildDir/delombok")
+        outputs.dir(outputDir)
+        sourceSets.main.java.srcDirs.each {
+            inputs.dir(it)
+            args(it, "-d", outputDir)
+        }
+    }
+
+    task delombokHelp(type: DelombokTask) {
+        args "--help"
+    }
+
+    javadoc {
+        dependsOn delombok
+        source = delombok.outputDir
+        failOnError = false
+    }
+
     tasks.withType(Jar).all { jarTask ->
         manifest {
             attributes(
@@ -59,6 +82,7 @@ subprojects {
         from sourceSets.main.allSource
         classifier = 'sources'
     }
+
     artifacts {
         archives javadocJar, sourcesJar
     }
