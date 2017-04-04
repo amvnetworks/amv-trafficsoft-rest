@@ -28,13 +28,34 @@ import java.util.Optional;
 import static com.netflix.hystrix.HystrixCommandProperties.ExecutionIsolationStrategy.THREAD;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+/**
+ * A configuration interface for clients.
+ * <p>
+ * The user of this interface has precise control over
+ * how a client class behaves internally and is able to configure
+ * it to his needs.
+ *
+ * @param <T> the type of the client this class is configuring
+ * @author Alois Leitner
+ */
 public interface ClientConfig<T> {
+    /**
+     * An interface for configuring basic authentication.
+     *
+     * @author Alois Leitner
+     */
     interface BasicAuth {
         String username();
 
         String password();
     }
 
+
+    /**
+     * A simple implementation of {@link BasicAuth}.
+     *
+     * @author Alois Leitner
+     */
     @Value
     @Builder(builderClassName = "Builder")
     @Accessors(fluent = true)
@@ -81,6 +102,12 @@ public interface ClientConfig<T> {
         return Collections.emptyList();
     }
 
+    /**
+     * A simple and highly configurable implementation of {@link ClientConfig}.
+     *
+     * @param <T> the type of the client
+     * @author Alois Leitner
+     */
     @Getter
     @Builder(builderClassName = "Builder")
     @Accessors(fluent = true)

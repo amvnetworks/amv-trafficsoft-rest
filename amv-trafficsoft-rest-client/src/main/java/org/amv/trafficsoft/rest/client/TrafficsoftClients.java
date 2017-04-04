@@ -7,6 +7,11 @@ import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * A factory class for creating client instances.
+ *
+ * @author Alois Leitner
+ */
 public final class TrafficsoftClients {
 
     private TrafficsoftClients() {

@@ -12,14 +12,26 @@ import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * An internal factory class for creating generic client instances.
+ *
+ * @author Alois Leitner
+ */
 final class Clients {
 
     private Clients() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Construct a client instance from a configuration object.
+     *
+     * @param clientConfig the config class for configuring the client
+     * @param <T> the type of the client
+     * @return the client based on the configuration
+     */
     public static <T> T create(ClientConfig<T> clientConfig) {
-        requireNonNull(clientConfig, "`clientConfig` must not be null");
+        requireNonNull(clientConfig, "`clientConfig` must not be null.");
 
         final ImmutableList<RequestInterceptor> requestInterceptors =
                 ImmutableList.<RequestInterceptor>builder()
