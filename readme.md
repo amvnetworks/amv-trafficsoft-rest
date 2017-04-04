@@ -125,12 +125,6 @@ ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.cla
     .requestInterceptor(new RequestInterceptor() {
         @Override
         public void apply(RequestTemplate template) {
-            template.header("X-MyCustomHeader", "MyCustomValue");
-        }
-    })
-    .requestInterceptor(new RequestInterceptor() {
-        @Override
-        public void apply(RequestTemplate template) {
             template.replaceQueryValues(ImmutableMap.<String, String>builder()
                     .put("myQueryParam", "myQueryValue")
             .build());
