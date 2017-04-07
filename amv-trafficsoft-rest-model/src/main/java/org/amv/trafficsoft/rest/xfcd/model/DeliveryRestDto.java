@@ -44,8 +44,4 @@ public class DeliveryRestDto {
                 .map(Date::new)
                 .orElse(null);
     }
-
-    public List<TrackRestDto> getTrack() {
-        return ImmutableList.copyOf(this.track);
-    }
 }

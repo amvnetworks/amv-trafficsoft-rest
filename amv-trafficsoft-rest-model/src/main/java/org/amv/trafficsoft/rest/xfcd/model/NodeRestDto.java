@@ -76,12 +76,4 @@ public class NodeRestDto {
                 .map(Date::new)
                 .orElse(null);
     }
-
-    public List<ParameterRestDto> getXfcds() {
-        return ImmutableList.copyOf(this.xfcds);
-    }
-
-    public List<ParameterRestDto> getStates() {
-        return ImmutableList.copyOf(this.states);
-    }
 }

@@ -1,9 +1,9 @@
 package org.amv.trafficsoft.rest.xfcd.model;
 
+import com.google.common.collect.ImmutableCollection;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class NodeRestDtoTest {
@@ -31,4 +31,13 @@ public class NodeRestDtoTest {
         assertThat(nodeDto.getStates(), hasSize(0));
     }
 
+    @Test
+    public void itShouldMakeUseOfGuavasImmutableClass() throws Exception {
+        NodeRestDto nodeDto = NodeRestDto.builder().build();
+
+        assertThat(nodeDto.getXfcds(), is(notNullValue()));
+        assertThat(nodeDto.getXfcds(), is(instanceOf(ImmutableCollection.class)));
+        assertThat(nodeDto.getStates(), is(notNullValue()));
+        assertThat(nodeDto.getStates(), is(instanceOf(ImmutableCollection.class)));
+    }
 }
