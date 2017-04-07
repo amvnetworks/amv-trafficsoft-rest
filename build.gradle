@@ -61,6 +61,7 @@ subprojects {
     javadoc {
         dependsOn delombok
         source = delombok.outputDir
+        exclude 'lombok.config'
         failOnError = false
     }
 
