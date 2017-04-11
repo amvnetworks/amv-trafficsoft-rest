@@ -57,7 +57,7 @@ repositories {
 ### dependency
 ```
 dependencies {
-    compile 'org.amv.trafficsoft:amv-trafficsoft-rest-model:${version}'
+    compile 'org.amv.trafficsoft:amv-trafficsoft-rest-client:${version}'
 }
 ```
 
