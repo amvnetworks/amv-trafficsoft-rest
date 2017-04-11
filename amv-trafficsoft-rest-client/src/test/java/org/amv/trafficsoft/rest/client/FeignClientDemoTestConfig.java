@@ -11,17 +11,10 @@ public class FeignClientDemoTestConfig {
 
     @Bean
     public ClientConfig.BasicAuth basicAuth() {
-        return new ClientConfig.BasicAuth() {
-            @Override
-            public String username() {
-                return RandomStringUtils.randomAscii(10);
-            }
-
-            @Override
-            public String password() {
-                return RandomStringUtils.randomAscii(120);
-            }
-        };
+        return ClientConfig.BasicAuthImpl.builder()
+                .username(RandomStringUtils.randomAscii(10))
+                .password(RandomStringUtils.randomAscii(120))
+                .build();
     }
 
     @Bean
