@@ -3,7 +3,9 @@
 
 amv-trafficsoft-rest
 ========
+amv-trafficsoft-rest is a Java client library for accessing the AMV Trafficsoft API.
 
+amv-trafficsoft-rest requires Java version 1.8 or greater.
 
 # build
 ```
@@ -18,7 +20,11 @@ amv-trafficsoft-rest
 
 # usage
 
-## xfcd
+## constructing clients
+
+Construct a new client for the various services to access different parts of the AMV Trafficsoft API.
+
+### xfcd
 ```
 String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
@@ -30,7 +36,7 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(baseUrl, basicAuth);
 // ...
 ```
 
-## asg-register
+### asg-register
 ```
 String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
@@ -41,6 +47,16 @@ BasicAuth basicAuth = BasicAuthImpl.builder()
 AsgRegisterClient asgRegisterClient = TrafficsoftClients.asgRegister(baseUrl, basicAuth);
 // ...
 ```
+
+## examples
+Take a look at the [test/](amv-trafficsoft-rest-client/src/test/java/org/amv/trafficsoft/rest/client/) directory 
+as a good way of getting started and a quick overview of the key client features and concepts.
+
+### demo application
+See [amv-trafficsoft-restclient-demo](https://github.com/amvnetworks/amv-trafficsoft-restclient-demo) repository for a
+simple demo application.
+
+###
 
 # install
 ## gradle
@@ -107,11 +123,8 @@ It is possible to apply a custom configuration and configure the clients to your
 If you construct your own config you have to provide the `target` property
 or use `TrafficsoftClients.config(clazz, baseUrl, basicAuth)` method. e.g.
 ```
-String baseUrl = "http://www.example.com";
-BasicAuth basicAuth = BasicAuthImpl.builder()
-    .username("john_doe")
-    .password("mysupersecretpassword")
-    .build();
+String baseUrl = ...
+BasicAuth basicAuth = ...
     
 ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.class, baseUrl, basicAuth)
     .logLevel(Logger.Level.HEADERS)
@@ -139,14 +152,12 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 
 ### adapt circuit breaker config
 This library uses [Hystrix](https://github.com/Netflix/Hystrix/) for latency and fault tolerance.
-To adapt the default options you can provide your own `SetterFactory` instance.
+The clients are created with reasonable default values but the options can be adapted to your special 
+requirements by providing your own `SetterFactory` instance.
 For more information see the [Hystrix Configuration Documentation](https://github.com/Netflix/Hystrix/wiki/Configuration).
 ```
-String baseUrl = "http://www.example.com";
-BasicAuth basicAuth = BasicAuthImpl.builder()
-    .username("john_doe")
-    .password("mysupersecretpassword")
-    .build();
+String baseUrl = ...
+BasicAuth basicAuth = ...
     
 ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.class, baseUrl, basicAuth)
     .setterFactory(new SetterFactory() {
@@ -172,6 +183,26 @@ ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.cla
                     .andCommandPropertiesDefaults(commandProperties);
         }
     })
+    .build();
+    
+XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
+// ...
+```
+
+### adapt http client
+This library uses [OkHttpClient](https://github.com/OpenFeign/feign/tree/master/okhttp) 
+as default client to direct http requests to [OkHttp](http://square.github.io/okhttp/), 
+which enables SPDY and better network control. You can easily switch to another client like 
+[ApacheHttpClient](https://github.com/OpenFeign/feign/tree/master/httpclient) in order to use 
+[Apache HttpComponents](https://hc.apache.org/httpcomponents-client-ga/) or provide your very 
+own implementation:
+```
+String baseUrl = ...
+BasicAuth basicAuth = ...
+    
+ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.class, baseUrl, basicAuth)
+    .client(new ApacheHttpClient())
+    // ...
     .build();
     
 XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
