@@ -48,6 +48,43 @@ AsgRegisterClient asgRegisterClient = TrafficsoftClients.asgRegister(baseUrl, ba
 // ...
 ```
 
+## execution
+Every method returns a [HystrixCommand](https://netflix.github.io/Hystrix/javadoc/index.html?com/netflix/hystrix/HystrixCommand.html) 
+which is essentially a blocking command but provides non-blocking execution if used with `toObservable()`. 
+See [Hystrix wiki](https://github.com/Netflix/Hystrix/wiki/How-it-Works#flow2) for more information.
+
+### non-blocking
+Used for asynchronous execution of a request with a callback by subscribing to the Observable.
+```
+long contractId = 42;
+
+Action1<OemsResponseRestDto> onNext = oemsResponseRestDto -> {
+    log.info("Received: {}", oemsResponseRestDto);
+};
+Action1<Throwable> onError = error -> {
+    log.error("{}", error);
+};
+Action0 onComplete = () -> {
+    log.info("Completed.");
+};
+
+myAsgRegisterClient.getOems(contractId)
+    .toObservable()
+    .subscribe(onNext, onError, onCompleted);
+// ...
+```
+
+### blocking
+Used for synchronous execution of requests.
+```
+long contractId = 42;
+
+OemsResponseRestDto oemsResponseDto = myAsgRegisterClient
+    .getOems(contractId)
+    .execute();
+// ...
+```
+
 ## examples
 Take a look at the [test/](amv-trafficsoft-rest-client/src/test/java/org/amv/trafficsoft/rest/client/) directory 
 as a good way of getting started and a quick overview of the key client features and concepts.
