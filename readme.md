@@ -245,3 +245,5 @@ ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.cla
 XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 // ...
 ```
+
+[logo]: amv-trafficsoft-rest-logo-128x128.png "amv-trafficsoft-rest logo"
