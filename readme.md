@@ -20,7 +20,7 @@ amv-trafficsoft-rest
 
 ## xfcd
 ```
-String baseUrl = "http//www.example.com";
+String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
     .password("mysupersecretpassword")
@@ -32,7 +32,7 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(baseUrl, basicAuth);
 
 ## asg-register
 ```
-String baseUrl = "http//www.example.com";
+String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
     .password("mysupersecretpassword")
@@ -107,7 +107,7 @@ It is possible to apply a custom configuration and configure the clients to your
 If you construct your own config you have to provide the `target` property
 or use `TrafficsoftClients.config(clazz, baseUrl, basicAuth)` method. e.g.
 ```
-String baseUrl = "http//www.example.com";
+String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
     .password("mysupersecretpassword")
@@ -142,7 +142,7 @@ This library uses [Hystrix](https://github.com/Netflix/Hystrix/) for latency and
 To adapt the default options you can provide your own `SetterFactory` instance.
 For more information see the [Hystrix Configuration Documentation](https://github.com/Netflix/Hystrix/wiki/Configuration).
 ```
-String baseUrl = "http//www.example.com";
+String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
     .password("mysupersecretpassword")
