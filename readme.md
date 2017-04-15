@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/amvnetworks/amv-trafficsoft-rest.svg?branch=master)](https://travis-ci.org/amvnetworks/amv-trafficsoft-rest)
 [![Download](https://api.bintray.com/packages/amvnetworks/amv-trafficsoft-rest/amv-trafficsoft-rest-client/images/download.svg) ](https://bintray.com/amvnetworks/amv-trafficsoft-rest)
 
+![amv-trafficsoft-rest logo][logo] 
 amv-trafficsoft-rest
 ========
 amv-trafficsoft-rest is a Java client library for accessing the AMV Trafficsoft API.
@@ -246,4 +247,4 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 // ...
 ```
 
-[logo]: amv-trafficsoft-rest-logo-128x128.png "amv-trafficsoft-rest logo"
+[logo]: amv-trafficsoft-rest-logo-64x64.png "amv-trafficsoft-rest logo"
