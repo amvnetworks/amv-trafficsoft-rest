@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import feign.RequestInterceptor;
 import feign.hystrix.HystrixFeign;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -27,13 +28,13 @@ final class Clients {
      * Construct a client instance from a configuration object.
      *
      * @param clientConfig the config class for configuring the client
-     * @param <T> the type of the client
+     * @param <T>          the type of the client
      * @return the client based on the configuration
      */
     static <T> T create(ClientConfig<T> clientConfig) {
         requireNonNull(clientConfig, "`clientConfig` must not be null.");
 
-        final ImmutableList<RequestInterceptor> requestInterceptors =
+        final List<RequestInterceptor> requestInterceptors =
                 ImmutableList.<RequestInterceptor>builder()
                         .addAll(firstNonNull(clientConfig.requestInterceptors(), emptyList()))
                         .addAll(Stream.of(clientConfig.basicAuthRequestInterceptor())

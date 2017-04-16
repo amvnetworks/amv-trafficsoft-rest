@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.netflix.hystrix.*;
 import feign.*;
@@ -114,7 +118,11 @@ public interface ClientConfig<T> {
     @Accessors(fluent = true)
     @EqualsAndHashCode
     class ConfigurableClientConfig<T> implements ClientConfig<T> {
-        private static final ObjectMapper defaultObjectMapper = new ObjectMapper()
+        @VisibleForTesting
+        public static final ObjectMapper defaultObjectMapper = new ObjectMapper()
+                .registerModule(new ParameterNamesModule())
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule())
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .configure(SerializationFeature.INDENT_OUTPUT, true)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -124,6 +132,7 @@ public interface ClientConfig<T> {
         private Decoder decoder;
         private Encoder encoder;
         private BasicAuth basicAuth;
+        private ErrorDecoder errorDecoder;
 
         @Default
         private SetterFactory setterFactory = new DefaultSetterFactory();
@@ -139,9 +148,6 @@ public interface ClientConfig<T> {
 
         @Default
         private Contract contract = new Contract.Default();
-
-        @Default
-        private ErrorDecoder errorDecoder = new ErrorDecoder.Default();
 
         @Default
         private Client client = new OkHttpClient();
@@ -165,6 +171,11 @@ public interface ClientConfig<T> {
         @Override
         public Encoder encoder() {
             return Optional.ofNullable(encoder).orElseGet(() -> new JacksonEncoder(defaultObjectMapper));
+        }
+
+        @Override
+        public ErrorDecoder errorDecoder() {
+            return Optional.ofNullable(errorDecoder).orElseGet(() -> new TrafficsoftErrorDecoder(decoder()));
         }
 
         private static final class DefaultSetterFactory implements SetterFactory {

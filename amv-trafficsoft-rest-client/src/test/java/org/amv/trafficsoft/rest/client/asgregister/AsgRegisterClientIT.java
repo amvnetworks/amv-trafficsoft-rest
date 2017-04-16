@@ -11,9 +11,11 @@ import feign.Target;
 import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
+import org.amv.trafficsoft.rest.ErrorInfo;
 import org.amv.trafficsoft.rest.asgregister.model.*;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
+import org.amv.trafficsoft.rest.client.TrafficsoftException;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
@@ -27,6 +29,7 @@ import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -51,7 +54,7 @@ public class AsgRegisterClientIT {
 
     @Before
     public void setUp() throws JsonProcessingException {
-        ObjectMapper jsonMapper = new ObjectMapper();
+        ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
         String registerAsgResponseDtoAsJson = jsonMapper.writeValueAsString(RegisterAsgResponseRestDto.builder()
                 .vehicle(VehicleRestDto.builder()
@@ -96,12 +99,19 @@ public class AsgRegisterClientIT {
                         .build())
                 .build());
 
+        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
+                .id(RandomStringUtils.randomAlphanumeric(6))
+                .dateTime(LocalDateTime.now())
+                .errorCode(RandomStringUtils.randomNumeric(6))
+                .exception(RandomStringUtils.randomAlphanumeric(10))
+                .url(RandomStringUtils.randomAlphanumeric(10))
+        .build());
         MockClient mockClient = new MockClient()
                 .add(HttpMethod.POST, String.format("/%d/asg-register", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                         .headers(Collections.emptyMap())
-                        .body("{}", Charsets.UTF_8))
+                        .body(exceptionJson, Charsets.UTF_8))
                 .ok(HttpMethod.POST, String.format("/%d/asg-register", ANY_CONTRACT_ID), registerAsgResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/asg-register/oem/%s/series", ANY_CONTRACT_ID, ANY_OEM_CODE), seriesResponseDtoAsJson)
@@ -130,7 +140,8 @@ public class AsgRegisterClientIT {
                     @Override
                     public void onError(Throwable e) {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
-                        assertThat(e.getCause(), instanceOf(FeignException.class));
+                        assertThat(e.getCause(), instanceOf(TrafficsoftException.class));
+                        assertThat(e.getCause().getCause(), instanceOf(FeignException.class));
                         onErrorCalled.set(true);
                         latch.countDown();
                     }

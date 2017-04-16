@@ -10,8 +10,14 @@ dependencies {
     compile 'io.github.openfeign:feign-core:9.4.0'
     compile 'io.github.openfeign:feign-okhttp:9.4.0'
     compile 'io.github.openfeign:feign-hystrix:9.4.0'
-    compile 'io.github.openfeign:feign-jackson:9.4.0'
     compile 'io.github.openfeign:feign-slf4j:9.4.0'
+    compile 'io.github.openfeign:feign-jackson:9.4.0'
+
+    compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.7'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.7'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.7'
+
+    compile 'com.google.guava:guava:21.0'
 
     testCompile 'com.marvinformatics.feign:feign-mock:0.5'
     testCompile 'org.slf4j:slf4j-simple:1.7.25'

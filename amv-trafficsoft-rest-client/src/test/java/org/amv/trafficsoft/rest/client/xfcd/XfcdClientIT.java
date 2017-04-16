@@ -12,12 +12,16 @@ import feign.Target;
 import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
+import org.amv.trafficsoft.rest.ErrorInfo;
 import org.amv.trafficsoft.rest.client.ClientConfig;
+import org.amv.trafficsoft.rest.client.TrafficsoftClient;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
+import org.amv.trafficsoft.rest.client.TrafficsoftException;
 import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
 import org.amv.trafficsoft.rest.xfcd.model.NodeRestDto;
 import org.amv.trafficsoft.rest.xfcd.model.ParameterRestDto;
 import org.amv.trafficsoft.rest.xfcd.model.TrackRestDto;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +37,7 @@ import rx.schedulers.TestScheduler;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -56,7 +61,7 @@ public class XfcdClientIT {
 
     @Before
     public void setUp() throws JsonProcessingException {
-        ObjectMapper jsonMapper = new ObjectMapper();
+        ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
         ParameterRestDto parameterDto = ParameterRestDto.builder()
                 .latitude(BigDecimal.ONE)
@@ -78,12 +83,19 @@ public class XfcdClientIT {
         String deliveryDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
         String nodeDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
 
+        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
+                .id(RandomStringUtils.randomAlphanumeric(6))
+                .dateTime(LocalDateTime.now())
+                .errorCode(RandomStringUtils.randomNumeric(6))
+                .exception(RandomStringUtils.randomAlphanumeric(10))
+                .url(RandomStringUtils.randomAlphanumeric(10))
+                .build());
         MockClient mockClient = new MockClient()
                 .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                         .headers(Collections.emptyMap())
-                        .body("{}", Charsets.UTF_8))
+                        .body(exceptionJson, Charsets.UTF_8))
                 .add(HttpMethod.POST, String.format("/%d/xfcd/confirm", ANY_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.OK.value())
                         .reason(HttpStatus.OK.getReasonPhrase())
@@ -113,7 +125,8 @@ public class XfcdClientIT {
                     @Override
                     public void onError(Throwable e) {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
-                        assertThat(e.getCause(), instanceOf(FeignException.class));
+                        assertThat(e.getCause(), instanceOf(TrafficsoftException.class));
+                        assertThat(e.getCause().getCause(), instanceOf(FeignException.class));
                         onErrorCalled.set(true);
                         latch.countDown();
                     }
