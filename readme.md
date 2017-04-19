@@ -9,12 +9,12 @@ amv-trafficsoft-rest is a Java client library for accessing the AMV Trafficsoft 
 amv-trafficsoft-rest requires Java version 1.8 or greater.
 
 # build
-```
+```bash
 ./gradlew clean build
 ```
 
 ## release to bintray
-```
+```bash
 ./gradlew clean build -Prelease -PbintrayUser=${username} -PbintrayApiKey=${apiKey} bintrayUpload
 ```
 
@@ -26,7 +26,7 @@ amv-trafficsoft-rest requires Java version 1.8 or greater.
 Construct a new client for the various services to access different parts of the AMV Trafficsoft API.
 
 ### xfcd
-```
+```java
 String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
@@ -38,7 +38,7 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(baseUrl, basicAuth);
 ```
 
 ### asg-register
-```
+```java
 String baseUrl = "http://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
@@ -56,7 +56,7 @@ See [Hystrix wiki](https://github.com/Netflix/Hystrix/wiki/How-it-Works#flow2) f
 
 ### non-blocking
 Used for asynchronous execution of a request with a callback by subscribing to the Observable.
-```
+```java
 long contractId = 42;
 
 Action1<OemsResponseRestDto> onNext = oemsResponseRestDto -> {
@@ -77,7 +77,7 @@ myAsgRegisterClient.getOems(contractId)
 
 ### blocking
 Used for synchronous execution of requests.
-```
+```java
 long contractId = 42;
 
 OemsResponseRestDto oemsResponseDto = myAsgRegisterClient
@@ -99,7 +99,7 @@ simple demo application.
 # install
 ## gradle
 ### repo
-```
+```groovy
 repositories {
     jcenter()
     // ... or add bintray repo
@@ -109,7 +109,7 @@ repositories {
 }
 ```
 ### dependency
-```
+```groovy
 dependencies {
     compile 'org.amv.trafficsoft:amv-trafficsoft-rest-client:${version}'
 }
@@ -117,7 +117,7 @@ dependencies {
 
 ## maven 
 ### repo
-```
+```xml
 <profiles>
     <profile>
         <repositories>
@@ -148,7 +148,7 @@ dependencies {
 </activeProfiles>
 ```
 ### dependency
-```
+```xml
 <dependency>
   <groupId>org.amv.trafficsoft</groupId>
   <artifactId>amv-trafficsoft-rest-client</artifactId>
@@ -160,7 +160,7 @@ dependencies {
 It is possible to apply a custom configuration and configure the clients to your needs. 
 If you construct your own config you have to provide the `target` property
 or use `TrafficsoftClients.config(clazz, baseUrl, basicAuth)` method. e.g.
-```
+```java
 String baseUrl = ...
 BasicAuth basicAuth = ...
     
@@ -193,7 +193,7 @@ This library uses [Hystrix](https://github.com/Netflix/Hystrix/) for latency and
 The clients are created with reasonable default values but the options can be adapted to your special 
 requirements by providing your own `SetterFactory` instance.
 For more information see the [Hystrix Configuration Documentation](https://github.com/Netflix/Hystrix/wiki/Configuration).
-```
+```java
 String baseUrl = ...
 BasicAuth basicAuth = ...
     
@@ -234,7 +234,7 @@ which enables SPDY and better network control. You can easily switch to another 
 [ApacheHttpClient](https://github.com/OpenFeign/feign/tree/master/httpclient) in order to use 
 [Apache HttpComponents](https://hc.apache.org/httpcomponents-client-ga/) or provide your very 
 own implementation:
-```
+```java
 String baseUrl = ...
 BasicAuth basicAuth = ...
     
