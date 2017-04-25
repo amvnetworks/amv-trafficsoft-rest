@@ -27,7 +27,7 @@ Construct a new client for the various services to access different parts of the
 
 ### xfcd
 ```java
-String baseUrl = "http://www.example.com";
+String baseUrl = "https://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
     .password("mysupersecretpassword")
@@ -39,7 +39,7 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(baseUrl, basicAuth);
 
 ### asg-register
 ```java
-String baseUrl = "http://www.example.com";
+String baseUrl = "https://www.example.com";
 BasicAuth basicAuth = BasicAuthImpl.builder()
     .username("john_doe")
     .password("mysupersecretpassword")
@@ -229,7 +229,7 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 
 ### adapt http client
 This library uses [OkHttpClient](https://github.com/OpenFeign/feign/tree/master/okhttp) 
-as default client to direct http requests to [OkHttp](http://square.github.io/okhttp/), 
+as default client to direct http requests to [OkHttp](https://square.github.io/okhttp/), 
 which enables SPDY and better network control. You can easily switch to another client like 
 [ApacheHttpClient](https://github.com/OpenFeign/feign/tree/master/httpclient) in order to use 
 [Apache HttpComponents](https://hc.apache.org/httpcomponents-client-ga/) or provide your very 
