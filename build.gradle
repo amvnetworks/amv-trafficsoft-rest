@@ -6,6 +6,8 @@ buildscript {
     }
 }
 plugins {
+    id 'findbugs'
+    id 'checkstyle'
     id 'com.jfrog.bintray' version '1.7.3'
     id 'io.franzbecker.gradle-lombok' version '1.8'
 }
@@ -28,6 +30,9 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: 'findbugs'
+    apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
@@ -87,8 +92,40 @@ subprojects {
         archives javadocJar, sourcesJar
     }
 
+    checkstyle {
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+        toolVersion = '6.7'
+        ignoreFailures = true
+        showViolations = false
+        sourceSets = [sourceSets.main]
+        reportsDir = rootProject.file("$buildDir/reports/checkstyle")
+    }
+
+    findbugs {
+        effort = 'min'
+        ignoreFailures = true
+        sourceSets = [sourceSets.main]
+    }
+
     task allDependencies(type: DependencyReportTask) {
 
+    }
+
+    test {
+        // Generate code coverage reports ... run with jacoco
+        jacocoTestReport {
+            additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+            reports {
+                xml.enabled true
+                csv.enabled false
+                html.destination "${buildDir}/reports/jacoco/html"
+            }
+            executionData = files("${buildDir}/jacoco/test.exec")
+        }
+
+        // * enable on demand
+        // testLogging.showStandardStreams = true
+        finalizedBy jacocoTestReport
     }
 
     if (project.hasProperty('release')) {
