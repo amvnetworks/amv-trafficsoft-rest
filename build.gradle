@@ -10,7 +10,13 @@ plugins {
     id 'checkstyle'
     id 'com.jfrog.bintray' version '1.7.3'
     id 'io.franzbecker.gradle-lombok' version '1.8'
+    id 'nebula.lint' version '6.8.0'
+    id 'nebula.release' version '4.2.0'
+    id 'nebula.dependency-lock' version '4.9.3'
+    id 'nebula.info' version '3.5.2'
+    id 'com.github.ben-manes.versions' version '0.14.0'
 }
+
 
 apply plugin: 'maven'
 
@@ -33,6 +39,10 @@ subprojects {
     apply plugin: 'findbugs'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
+    apply plugin: 'nebula.dependency-lock'
+    apply plugin: 'nebula.lint'
+    apply plugin: 'nebula.nebula-release'
+    apply plugin: 'nebula.info'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
@@ -128,7 +138,7 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    if (project.hasProperty('release')) {
+    if (project.hasProperty('releaseToBintray')) {
         bintray {
             user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
             key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')

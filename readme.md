@@ -15,7 +15,7 @@ amv-trafficsoft-rest requires Java version 1.8 or greater.
 
 ## release to bintray
 ```bash
-./gradlew clean build -Prelease -PbintrayUser=${username} -PbintrayApiKey=${apiKey} bintrayUpload
+./gradlew clean build -PreleaseToBintray -PbintrayUser=${username} -PbintrayApiKey=${apiKey} bintrayUpload
 ```
 
 
