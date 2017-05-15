@@ -117,7 +117,7 @@ subprojects {
         sourceSets = [sourceSets.main]
     }
 
-    task allDependencies(type: DependencyReportTask) {
+    task subprojectsDependencies(type: DependencyReportTask) {
 
     }
 
