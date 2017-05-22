@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/amvnetworks/amv-trafficsoft-rest.svg?branch=master)](https://travis-ci.org/amvnetworks/amv-trafficsoft-rest)
 [![Download](https://api.bintray.com/packages/amvnetworks/amv-trafficsoft-rest/amv-trafficsoft-rest-client/images/download.svg) ](https://bintray.com/amvnetworks/amv-trafficsoft-rest)
+[![License](https://img.shields.io/github/license/amvnetworks/amv-trafficsoft-rest.svg?maxAge=2592000)](https://github.com/amvnetworks/amv-trafficsoft-rest/blob/master/LICENSE)
 
 ![amv-trafficsoft-rest logo][logo] 
 amv-trafficsoft-rest
