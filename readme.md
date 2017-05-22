@@ -247,4 +247,7 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 // ...
 ```
 
+# license
+The project is licensed under the Apache License. See [LICENSE](LICENSE) for details.
+
 [logo]: amv-trafficsoft-rest-logo-64x64.png "amv-trafficsoft-rest logo"
