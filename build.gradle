@@ -55,6 +55,14 @@ subprojects {
         testCompile 'pl.pragmatists:JUnitParams:1.0.6'
     }
 
+    gradle.taskGraph.whenReady { graph ->
+        if (project.hasProperty("dev")) {
+            findbugsMain.enabled = false
+            checkstyleMain.enabled = false
+            javadoc.enabled = false
+        }
+    }
+
     lombok {
         version = '1.16.16'
         sha256 = 'fbf682c7ff113e5187a9c4b4cbd7a8ad782abd8ccff91b9fa7289a4a6aa8c19a'
