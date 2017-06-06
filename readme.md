@@ -14,15 +14,19 @@ amv-trafficsoft-rest requires Java version 1.8 or greater.
 ./gradlew clean build
 ```
 
-When a parameter `dev` is provided, certain tasks will be skipped to make the build faster.
-e.g. findbugs, checkstyle, javadoc - tasks which results are not essential for a working build.
+When a parameter `minimal` is provided, certain tasks will be skipped to make the build faster.
+e.g. `findbugs`, `checkstyle`, `javadoc` - tasks which results are not essential for a working build.
 ```bash
-./gradlew clean build -Pdev
+./gradlew clean build -Pminimal
 ```
 
 ## release to bintray
 ```bash
-./gradlew clean build -PreleaseToBintray -PbintrayUser=${username} -PbintrayApiKey=${apiKey} bintrayUpload
+./gradlew clean build bintrayUpload
+  -Prelease.stage=final
+  -PreleaseToBintray 
+  -PbintrayUser=${username} 
+  -PbintrayApiKey=${apiKey} 
 ```
 
 
