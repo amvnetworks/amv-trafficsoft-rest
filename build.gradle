@@ -160,7 +160,11 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    if (project.hasProperty('releaseToBintray')) {
+    if (project.hasProperty('release')) {
+        if (rootProject.version.toString().contains('SNAPSHOT')) {
+            throw new GradleException('-Prelease param cannot be used with SNAPSHOT versions')
+        }
+
         bintray {
             user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
             key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
