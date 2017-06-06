@@ -56,7 +56,11 @@ subprojects {
     }
 
     gradle.taskGraph.whenReady { graph ->
-        if (project.hasProperty("dev")) {
+        def isMinimalBuild = project.hasProperty("minimal")
+
+        def enableAdditionalLongRunningTasks = !isMinimalBuild
+
+        if (!enableAdditionalLongRunningTasks) {
             findbugsMain.enabled = false
             checkstyleMain.enabled = false
             javadoc.enabled = false
@@ -101,6 +105,7 @@ subprojects {
         classifier = 'javadoc'
         from javadoc
     }
+
     task sourcesJar(type: Jar) {
         from sourceSets.main.allSource
         classifier = 'sources'
