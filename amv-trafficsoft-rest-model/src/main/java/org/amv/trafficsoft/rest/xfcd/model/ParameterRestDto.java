@@ -1,4 +1,3 @@
-
 package org.amv.trafficsoft.rest.xfcd.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Value;
 
-import static java.util.Objects.requireNonNull;
 @Value
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = VehicleKeyResponseRestDto.Builder.class)

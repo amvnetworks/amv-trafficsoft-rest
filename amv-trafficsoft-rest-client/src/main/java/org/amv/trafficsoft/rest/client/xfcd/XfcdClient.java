@@ -5,7 +5,8 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import org.amv.trafficsoft.rest.client.TrafficsoftClient;
-import org.amv.trafficsoft.rest.xfcd.model.*;
+import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
+import org.amv.trafficsoft.rest.xfcd.model.NodeRestDto;
 
 import java.util.List;
 

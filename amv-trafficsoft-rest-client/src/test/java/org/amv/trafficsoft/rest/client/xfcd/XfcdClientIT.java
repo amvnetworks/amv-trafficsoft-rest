@@ -70,7 +70,7 @@ public class XfcdClientIT {
                 .param("anyParam")
                 .value("anyValue")
                 .build();
-        
+
         NodeRestDto nodeDto = NodeRestDto.builder()
                 .addXfcd(parameterDto)
                 .build();

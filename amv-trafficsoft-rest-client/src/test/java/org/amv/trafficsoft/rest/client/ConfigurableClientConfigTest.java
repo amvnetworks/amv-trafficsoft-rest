@@ -67,7 +67,7 @@ public class ConfigurableClientConfigTest {
                     public void apply(RequestTemplate template) {
                         template.replaceQueryValues(ImmutableMap.<String, String>builder()
                                 .put("myQueryParam", "myQueryValue")
-                        .build());
+                                .build());
                     }
                 })
                 .setterFactory(new SetterFactory() {

@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 
 /**
  * {
- *  "dateTime":"2042-01-10T14:15:33",
- *  "exception":"org.amv.trafficsoft.web.TSWebException",
- *  "errorCode":"TSW-00001",
- *  "id":"6POYG",
- *  "message":"[TSW-00001] Some message here!",
- *  "url":"http://www.example.com"
- *  }
+ * "dateTime":"2042-01-10T14:15:33",
+ * "exception":"org.amv.trafficsoft.web.TSWebException",
+ * "errorCode":"TSW-00001",
+ * "id":"6POYG",
+ * "message":"[TSW-00001] Some message here!",
+ * "url":"http://www.example.com"
+ * }
  */
 @Value
 @Builder(builderClassName = "Builder")
