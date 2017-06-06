@@ -32,6 +32,7 @@ import rx.schedulers.TestScheduler;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.hamcrest.Matchers.*;
@@ -64,17 +65,20 @@ public class AsgRegisterClientIT {
                         .modelCode(ANY_MODEL_CODE)
                         .build())
                 .build());
+
         String oemsResponseDtoAsJson = jsonMapper.writeValueAsString(OemsResponseRestDto.builder()
                 .addOem(OemRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
                         .build())
                 .build());
+
         String seriesResponseDtoAsJson = jsonMapper.writeValueAsString(SeriesResponseRestDto.builder()
                 .addSeries(SeriesRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
                         .seriesCode(ANY_SERIES_CODE)
                         .build())
                 .build());
+
         String modelResponseDtoAsJson = jsonMapper.writeValueAsString(ModelsResponseRestDto.builder()
                 .addModel(ModelRestDto.builder()
                         .oemCode(ANY_OEM_CODE)
@@ -105,7 +109,8 @@ public class AsgRegisterClientIT {
                 .errorCode(RandomStringUtils.randomNumeric(6))
                 .exception(RandomStringUtils.randomAlphanumeric(10))
                 .url(RandomStringUtils.randomAlphanumeric(10))
-        .build());
+                .build());
+
         MockClient mockClient = new MockClient()
                 .add(HttpMethod.POST, String.format("/%d/asg-register", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
@@ -148,14 +153,15 @@ public class AsgRegisterClientIT {
 
                     @Override
                     public void onNext(RegisterAsgResponseRestDto registerAsgResponseRestDto) {
-                        Assert.fail("Should have thrown exception and called onError");
                         latch.countDown();
+
+                        Assert.fail("Should have thrown exception and called onError");
                     }
                 });
 
         testScheduler.triggerActions();
 
-        latch.await();
+        latch.await(10, TimeUnit.SECONDS);
 
         assertThat(onErrorCalled.get(), is(true));
     }

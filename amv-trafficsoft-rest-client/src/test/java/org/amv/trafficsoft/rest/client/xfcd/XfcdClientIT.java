@@ -14,7 +14,6 @@ import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.ErrorInfo;
 import org.amv.trafficsoft.rest.client.ClientConfig;
-import org.amv.trafficsoft.rest.client.TrafficsoftClient;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.client.TrafficsoftException;
 import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
@@ -41,6 +40,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.LongStream;
 
@@ -70,12 +70,15 @@ public class XfcdClientIT {
                 .param("anyParam")
                 .value("anyValue")
                 .build();
+        
         NodeRestDto nodeDto = NodeRestDto.builder()
                 .addXfcd(parameterDto)
                 .build();
+
         TrackRestDto trackDto = TrackRestDto.builder()
                 .addNode(nodeDto)
                 .build();
+
         DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
                 .addTrack(trackDto)
                 .build();
@@ -90,6 +93,7 @@ public class XfcdClientIT {
                 .exception(RandomStringUtils.randomAlphanumeric(10))
                 .url(RandomStringUtils.randomAlphanumeric(10))
                 .build());
+
         MockClient mockClient = new MockClient()
                 .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
@@ -128,19 +132,21 @@ public class XfcdClientIT {
                         assertThat(e.getCause(), instanceOf(TrafficsoftException.class));
                         assertThat(e.getCause().getCause(), instanceOf(FeignException.class));
                         onErrorCalled.set(true);
+
                         latch.countDown();
                     }
 
                     @Override
                     public void onNext(List<DeliveryRestDto> deliveryDtos) {
-                        Assert.fail("Should have thrown exception and called onError");
                         latch.countDown();
+
+                        Assert.fail("Should have thrown exception and called onError");
                     }
                 });
 
         testScheduler.triggerActions();
 
-        latch.await();
+        latch.await(10, TimeUnit.SECONDS);
 
         assertThat(onErrorCalled.get(), is(true));
     }
