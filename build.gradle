@@ -11,9 +11,10 @@ plugins {
     id 'com.jfrog.bintray' version '1.7.3'
     id 'io.franzbecker.gradle-lombok' version '1.8'
     id 'nebula.lint' version '6.8.0'
-    id 'nebula.release' version '4.2.0'
+    id 'nebula.project' version '3.4.0'
+    id 'nebula.info' version '3.6.0'
+    id 'nebula.release' version '6.0.0'
     id 'nebula.dependency-lock' version '4.9.3'
-    id 'nebula.info' version '3.5.2'
     id 'com.github.ben-manes.versions' version '0.14.0'
 }
 
@@ -28,7 +29,6 @@ allprojects {
     apply plugin: 'java'
 
     group = 'org.amv.trafficsoft'
-    version = '0.0.5-SNAPSHOT'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -41,7 +41,7 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'nebula.dependency-lock'
     apply plugin: 'nebula.lint'
-    apply plugin: 'nebula.nebula-release'
+    apply plugin: 'nebula.project'
     apply plugin: 'nebula.info'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
@@ -100,10 +100,6 @@ subprojects {
                     'Build-Version': rootProject.version
             )
         }
-    }
-    task javadocJar(type: Jar) {
-        classifier = 'javadoc'
-        from javadoc
     }
 
     task sourcesJar(type: Jar) {
