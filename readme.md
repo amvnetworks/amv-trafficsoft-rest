@@ -24,7 +24,7 @@ e.g. `findbugs`, `checkstyle`, `javadoc` - tasks which results are not essential
 ```bash
 ./gradlew clean build bintrayUpload
   -Prelease.stage=final
-  -Prelease
+  -PreleaseToBintray 
   -PbintrayUser=${username} 
   -PbintrayApiKey=${apiKey} 
 ```
