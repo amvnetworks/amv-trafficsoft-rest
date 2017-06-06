@@ -8,11 +8,11 @@ dependencies {
 
     compile project(':amv-trafficsoft-rest-model')
 
-    compile 'io.github.openfeign:feign-core:9.4.0'
-    compile 'io.github.openfeign:feign-okhttp:9.4.0'
-    compile 'io.github.openfeign:feign-hystrix:9.4.0'
-    compile 'io.github.openfeign:feign-slf4j:9.4.0'
-    compile 'io.github.openfeign:feign-jackson:9.4.0'
+    compile 'io.github.openfeign:feign-core:9.5.0'
+    compile 'io.github.openfeign:feign-okhttp:9.5.0'
+    compile 'io.github.openfeign:feign-hystrix:9.5.0'
+    compile 'io.github.openfeign:feign-slf4j:9.5.0'
+    compile 'io.github.openfeign:feign-jackson:9.5.0'
 
     compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.8'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.8'
