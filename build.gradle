@@ -5,20 +5,18 @@ buildscript {
         jcenter()
     }
 }
+
 plugins {
+    id 'nebula.project' version '3.4.0'
+    id 'nebula.info' version '3.6.0'
+    id 'nebula.release' version '6.0.0'
+    id 'nebula.lint' version '6.8.0'
     id 'findbugs'
     id 'checkstyle'
     id 'com.jfrog.bintray' version '1.7.3'
     id 'io.franzbecker.gradle-lombok' version '1.8'
-    id 'nebula.lint' version '6.8.0'
-    id 'nebula.project' version '3.4.0'
-    id 'nebula.info' version '3.6.0'
-    id 'nebula.release' version '6.0.0'
-    id 'nebula.dependency-lock' version '4.9.3'
     id 'com.github.ben-manes.versions' version '0.14.0'
 }
-
-apply plugin: 'maven'
 
 contacts {
     'devlopment@amv-networks.com' {
@@ -29,11 +27,12 @@ contacts {
 }
 
 allprojects {
+    apply plugin: 'maven'
+    apply plugin: 'java'
+
     repositories {
         jcenter()
     }
-    apply plugin: 'maven'
-    apply plugin: 'java'
 
     group = 'org.amv.trafficsoft'
 
@@ -46,13 +45,16 @@ subprojects {
     apply plugin: 'findbugs'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
-    apply plugin: 'nebula.dependency-lock'
     apply plugin: 'nebula.lint'
     apply plugin: 'nebula.project'
     apply plugin: 'nebula.info'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
+    repositories {
+        mavenLocal()
+    }
+    
     dependencies {
         compile 'com.google.guava:guava:21.0'
         compileOnly 'org.projectlombok:lombok:1.16.16'
