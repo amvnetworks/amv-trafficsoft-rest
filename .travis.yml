@@ -20,3 +20,7 @@ before_install:
 
 before_script:
   - echo $HOME
+
+script:
+  - ./gradlew releaseCheck -Prelease.stage=SNAPSHOT
+  - ./gradlew releaseCheck clean build -Prelease.stage=SNAPSHOT --refresh-dependencies --stacktrace
