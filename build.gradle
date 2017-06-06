@@ -18,8 +18,15 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.14.0'
 }
 
-
 apply plugin: 'maven'
+
+contacts {
+    'devlopment@amv-networks.com' {
+        moniker 'AMV Networks GmbH'
+        role 'owner'
+        github 'amvnetworks'
+    }
+}
 
 allprojects {
     repositories {
@@ -92,12 +99,16 @@ subprojects {
         failOnError = false
     }
 
-    tasks.withType(Jar).all { jarTask ->
+    jar.doFirst {
+        // other manifest attributes will be populated by nebula.info plugin
+        // see https://github.com/nebula-plugins/gradle-info-plugin
+        def vendor = 'AMV Networks GmbH'
         manifest {
             attributes(
-                    'Artifact': project.name,
-                    'Group': rootProject.group,
-                    'Build-Version': rootProject.version
+                    'Specification-Title': project.description,
+                    'Specification-Version': project.version,
+                    'Specification-Vendor': vendor,
+                    'Implementation-Vendor': vendor
             )
         }
     }

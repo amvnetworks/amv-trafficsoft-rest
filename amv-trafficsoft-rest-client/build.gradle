@@ -1,4 +1,6 @@
 
+description = 'A Java client library for accessing the AMV Trafficsoft API'
+
 repositories {
     jcenter()
 }

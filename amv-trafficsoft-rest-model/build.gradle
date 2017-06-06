@@ -1,4 +1,6 @@
 
+description = 'Transfer objects of the AMV Trafficsoft API'
+
 repositories {
     jcenter()
 }
