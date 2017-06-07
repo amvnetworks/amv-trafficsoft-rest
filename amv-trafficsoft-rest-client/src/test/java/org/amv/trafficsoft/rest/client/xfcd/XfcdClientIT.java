@@ -35,10 +35,12 @@ import rx.schedulers.TestScheduler;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -63,28 +65,52 @@ public class XfcdClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
-        ParameterRestDto parameterDto = ParameterRestDto.builder()
-                .latitude(BigDecimal.ONE)
-                .longitude(BigDecimal.ONE)
+        ParameterRestDto xfcdParameterDto = ParameterRestDto.builder()
+                .timestamp(Date.from(Instant.now()))
+                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
                 .timestamp(Date.valueOf(LocalDate.now()))
-                .param("anyParam")
-                .value("anyValue")
+                .param(RandomStringUtils.randomAlphanumeric(10))
+                .value(RandomStringUtils.randomAlphanumeric(10))
+                .build();
+
+        ParameterRestDto stateParameterDto = ParameterRestDto.builder()
+                .timestamp(Date.from(Instant.now()))
+                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .timestamp(Date.valueOf(LocalDate.now()))
+                .param(RandomStringUtils.randomAlphanumeric(10))
+                .value(RandomStringUtils.randomAlphanumeric(10))
                 .build();
 
         NodeRestDto nodeDto = NodeRestDto.builder()
-                .addXfcd(parameterDto)
+                .id(RandomUtils.nextLong())
+                .timestamp(Date.from(Instant.now()))
+                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .vdop(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .hdop(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .altitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .heading(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .speed(BigDecimal.valueOf(RandomUtils.nextDouble()))
+                .satellites(RandomUtils.nextInt())
+                .addXfcd(xfcdParameterDto)
+                .addState(stateParameterDto)
                 .build();
 
         TrackRestDto trackDto = TrackRestDto.builder()
+                .id(RandomUtils.nextLong())
                 .addNode(nodeDto)
                 .build();
 
         DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
+                .deliveryId(RandomUtils.nextLong())
+                .timestamp(Date.from(Instant.now()))
                 .addTrack(trackDto)
                 .build();
 
         String deliveryDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
-        String nodeDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
+        String nodeDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(nodeDto));
 
         String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
                 .id(RandomStringUtils.randomAlphanumeric(6))
@@ -161,24 +187,39 @@ public class XfcdClientIT {
         assertThat(deliveries, is(notNullValue()));
         assertThat(deliveries, hasSize(greaterThan(0)));
 
-        DeliveryRestDto anyDelivery = deliveries.stream().findAny()
+        DeliveryRestDto firstDelivery = deliveries.stream().findFirst()
                 .orElseThrow(IllegalStateException::new);
 
-        assertThat(anyDelivery, is(notNullValue()));
-        assertThat(anyDelivery.getTrack(), is(notNullValue()));
-        assertThat(anyDelivery.getTrack(), hasSize(greaterThan(0)));
+        assertThat(firstDelivery, is(notNullValue()));
+        assertThat(firstDelivery.getDeliveryId(), is(greaterThanOrEqualTo(0L)));
+        assertThat(firstDelivery.getTimestamp(), is(notNullValue()));
+        assertThat(firstDelivery.getTrack(), is(notNullValue()));
+        assertThat(firstDelivery.getTrack(), hasSize(greaterThan(0)));
 
-        TrackRestDto anyTrack = anyDelivery.getTrack().stream().findAny()
+        TrackRestDto anyTrack = firstDelivery.getTrack().stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyTrack, is(notNullValue()));
         assertThat(anyTrack.getNodes(), is(notNullValue()));
         assertThat(anyTrack.getNodes(), hasSize(greaterThan(0)));
 
-        NodeRestDto anyNode = anyTrack.getNodes().stream().findAny()
+        NodeRestDto firstNode = anyTrack.getNodes().stream().findFirst()
                 .orElseThrow(IllegalStateException::new);
 
-        assertThat(anyNode, is(notNullValue()));
+        assertThat(firstNode, is(notNullValue()));
+        assertThat(firstNode.getId(), is(greaterThanOrEqualTo(0L)));
+        assertThat(firstNode.getLatitude(), is(notNullValue()));
+        assertThat(firstNode.getLongitude(), is(notNullValue()));
+        assertThat(firstNode.getSpeed(), is(notNullValue()));
+        assertThat(firstNode.getHdop(), is(notNullValue()));
+        assertThat(firstNode.getVdop(), is(notNullValue()));
+        assertThat(firstNode.getAltitude(), is(notNullValue()));
+        assertThat(firstNode.getHeading(), is(notNullValue()));
+        assertThat(firstNode.getSatellites(), is(greaterThanOrEqualTo(0)));
+        assertThat(firstNode.getStates(), is(notNullValue()));
+        assertThat(firstNode.getStates(), hasSize(greaterThan(0)));
+        assertThat(firstNode.getXfcds(), is(notNullValue()));
+        assertThat(firstNode.getXfcds(), hasSize(greaterThan(0)));
     }
 
     @Test
@@ -198,24 +239,39 @@ public class XfcdClientIT {
         assertThat(deliveries, is(notNullValue()));
         assertThat(deliveries, hasSize(greaterThan(0)));
 
-        DeliveryRestDto anyDelivery = deliveries.stream().findAny()
+        DeliveryRestDto firstDelivery = deliveries.stream().findFirst()
                 .orElseThrow(IllegalStateException::new);
 
-        assertThat(anyDelivery, is(notNullValue()));
-        assertThat(anyDelivery.getTrack(), is(notNullValue()));
-        assertThat(anyDelivery.getTrack(), hasSize(greaterThan(0)));
+        assertThat(firstDelivery, is(notNullValue()));
+        assertThat(firstDelivery.getDeliveryId(), is(greaterThanOrEqualTo(0L)));
+        assertThat(firstDelivery.getTimestamp(), is(notNullValue()));
+        assertThat(firstDelivery.getTrack(), is(notNullValue()));
+        assertThat(firstDelivery.getTrack(), hasSize(greaterThan(0)));
 
-        TrackRestDto anyTrack = anyDelivery.getTrack().stream().findAny()
+        TrackRestDto anyTrack = firstDelivery.getTrack().stream().findAny()
                 .orElseThrow(IllegalStateException::new);
 
         assertThat(anyTrack, is(notNullValue()));
         assertThat(anyTrack.getNodes(), is(notNullValue()));
         assertThat(anyTrack.getNodes(), hasSize(greaterThan(0)));
 
-        NodeRestDto anyNode = anyTrack.getNodes().stream().findAny()
+        NodeRestDto firstNode = anyTrack.getNodes().stream().findFirst()
                 .orElseThrow(IllegalStateException::new);
 
-        assertThat(anyNode, is(notNullValue()));
+        assertThat(firstNode, is(notNullValue()));
+        assertThat(firstNode.getId(), is(greaterThanOrEqualTo(0L)));
+        assertThat(firstNode.getLatitude(), is(notNullValue()));
+        assertThat(firstNode.getLongitude(), is(notNullValue()));
+        assertThat(firstNode.getSpeed(), is(notNullValue()));
+        assertThat(firstNode.getHdop(), is(notNullValue()));
+        assertThat(firstNode.getVdop(), is(notNullValue()));
+        assertThat(firstNode.getAltitude(), is(notNullValue()));
+        assertThat(firstNode.getHeading(), is(notNullValue()));
+        assertThat(firstNode.getSatellites(), is(greaterThanOrEqualTo(0)));
+        assertThat(firstNode.getStates(), is(notNullValue()));
+        assertThat(firstNode.getStates(), hasSize(greaterThan(0)));
+        assertThat(firstNode.getXfcds(), is(notNullValue()));
+        assertThat(firstNode.getXfcds(), hasSize(greaterThan(0)));
     }
 
     @Test
@@ -223,5 +279,42 @@ public class XfcdClientIT {
         List<NodeRestDto> nodes = sut.getLastData(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(nodes, is(notNullValue()));
+        assertThat(nodes, hasSize(1));
+
+        NodeRestDto firstNode = nodes.stream().findFirst()
+                .orElseThrow(IllegalStateException::new);
+
+        assertThat(firstNode, is(notNullValue()));
+        assertThat(firstNode.getId(), is(greaterThanOrEqualTo(0L)));
+        assertThat(firstNode.getLatitude(), is(notNullValue()));
+        assertThat(firstNode.getLongitude(), is(notNullValue()));
+        assertThat(firstNode.getSpeed(), is(notNullValue()));
+        assertThat(firstNode.getHdop(), is(notNullValue()));
+        assertThat(firstNode.getVdop(), is(notNullValue()));
+        assertThat(firstNode.getAltitude(), is(notNullValue()));
+        assertThat(firstNode.getHeading(), is(notNullValue()));
+        assertThat(firstNode.getSatellites(), is(greaterThanOrEqualTo(0)));
+        assertThat(firstNode.getStates(), is(notNullValue()));
+        assertThat(firstNode.getStates(), hasSize(greaterThan(0)));
+        assertThat(firstNode.getXfcds(), is(notNullValue()));
+        assertThat(firstNode.getXfcds(), hasSize(greaterThan(0)));
+
+        ParameterRestDto firstXfcdParam = firstNode.getXfcds().stream().findFirst()
+                .orElseThrow(IllegalStateException::new);
+        assertThat(firstXfcdParam, is(notNullValue()));
+        assertThat(firstXfcdParam.getTimestamp(), is(notNullValue()));
+        assertThat(firstXfcdParam.getParam(), is(notNullValue()));
+        assertThat(firstXfcdParam.getValue(), is(notNullValue()));
+        assertThat(firstXfcdParam.getLatitude(), is(notNullValue()));
+        assertThat(firstXfcdParam.getLongitude(), is(notNullValue()));
+
+        ParameterRestDto firstStateParam = firstNode.getStates().stream().findFirst()
+                .orElseThrow(IllegalStateException::new);
+        assertThat(firstStateParam, is(notNullValue()));
+        assertThat(firstStateParam.getTimestamp(), is(notNullValue()));
+        assertThat(firstStateParam.getParam(), is(notNullValue()));
+        assertThat(firstStateParam.getValue(), is(notNullValue()));
+        assertThat(firstStateParam.getLatitude(), is(notNullValue()));
+        assertThat(firstStateParam.getLongitude(), is(notNullValue()));
     }
 }
