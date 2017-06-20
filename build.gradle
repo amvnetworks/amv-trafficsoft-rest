@@ -5,7 +5,6 @@ buildscript {
         jcenter()
     }
 }
-
 plugins {
     id 'nebula.project' version '3.4.0'
     id 'nebula.info' version '3.6.0'
@@ -38,7 +37,6 @@ allprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
 }
 
 subprojects {
@@ -52,6 +50,7 @@ subprojects {
     apply plugin: 'io.franzbecker.gradle-lombok'
 
     repositories {
+        jcenter()
         mavenLocal()
     }
 

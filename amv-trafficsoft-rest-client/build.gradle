@@ -1,9 +1,5 @@
 description = 'A Java client library for accessing the AMV Trafficsoft API'
 
-repositories {
-    jcenter()
-}
-
 dependencies {
 
     compile project(':amv-trafficsoft-rest-model')
@@ -14,17 +10,15 @@ dependencies {
     compile 'io.github.openfeign:feign-slf4j:9.5.0'
     compile 'io.github.openfeign:feign-jackson:9.5.0'
 
-    compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.8'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.8'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8'
-
-    compile 'com.google.guava:guava:21.0'
+    compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.9'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.9'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
 
     testCompile 'com.marvinformatics.feign:feign-mock:0.5'
     testCompile 'org.slf4j:slf4j-simple:1.7.25'
 
-    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.2.RELEASE'
-    testCompile('org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE') {
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.4.RELEASE'
+    testCompile('org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE') {
         exclude module: 'spring-boot-starter-logging'
     }
 
