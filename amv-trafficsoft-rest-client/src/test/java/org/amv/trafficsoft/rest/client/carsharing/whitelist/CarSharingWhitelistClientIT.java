@@ -174,7 +174,7 @@ public class CarSharingWhitelistClientIT {
 
         testScheduler.triggerActions();
 
-        latch.await(10, TimeUnit.SECONDS);
+        latch.await(1, TimeUnit.SECONDS);
 
         TrafficsoftException trafficsoftException = trafficsoftExceptionRef.get();
         assertThat(trafficsoftException, is(notNullValue()));

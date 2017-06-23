@@ -44,6 +44,7 @@ import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.LongStream;
 
 import static java.util.stream.Collectors.toList;
@@ -117,6 +118,7 @@ public class XfcdClientIT {
                 .dateTime(LocalDateTime.now())
                 .errorCode(RandomStringUtils.randomNumeric(6))
                 .exception(RandomStringUtils.randomAlphanumeric(10))
+                .message(RandomStringUtils.randomAlphanumeric(10))
                 .url(RandomStringUtils.randomAlphanumeric(10))
                 .build());
 
@@ -147,7 +149,8 @@ public class XfcdClientIT {
     @Test
     public void itShouldThrowExceptionOnMismatchingContractId() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        AtomicBoolean onErrorCalled = new AtomicBoolean(false);
+        AtomicReference<TrafficsoftException> trafficsoftExceptionRef = new AtomicReference<>();
+
         sut.getData(NON_EXISTING_CONTRACT_ID)
                 .toObservable()
                 .subscribeOn(testScheduler)
@@ -157,7 +160,8 @@ public class XfcdClientIT {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
                         assertThat(e.getCause(), instanceOf(TrafficsoftException.class));
                         assertThat(e.getCause().getCause(), instanceOf(FeignException.class));
-                        onErrorCalled.set(true);
+
+                        trafficsoftExceptionRef.set((TrafficsoftException) e.getCause());
 
                         latch.countDown();
                     }
@@ -172,9 +176,19 @@ public class XfcdClientIT {
 
         testScheduler.triggerActions();
 
-        latch.await(10, TimeUnit.SECONDS);
+        latch.await(1, TimeUnit.SECONDS);
 
-        assertThat(onErrorCalled.get(), is(true));
+        TrafficsoftException trafficsoftException = trafficsoftExceptionRef.get();
+        assertThat(trafficsoftException, is(notNullValue()));
+
+        ErrorInfo errorInfo = trafficsoftException.getErrorInfo();
+        assertThat(errorInfo, is(notNullValue()));
+        assertThat(errorInfo.getId(), is(notNullValue()));
+        assertThat(errorInfo.getDateTime(), is(notNullValue()));
+        assertThat(errorInfo.getErrorCode(), is(notNullValue()));
+        assertThat(errorInfo.getException(), is(notNullValue()));
+        assertThat(errorInfo.getMessage(), is(notNullValue()));
+        assertThat(errorInfo.getUrl(), is(notNullValue()));
     }
 
     @Test
