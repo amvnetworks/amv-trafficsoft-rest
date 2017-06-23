@@ -4,8 +4,8 @@ import com.netflix.hystrix.HystrixCommand;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.RetrieveWhitelistResponseRestDto;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.UpdateWhitelistRequestRestDto;
+import org.amv.trafficsoft.rest.carsharing.whitelist.model.FetchWhitelistsResponseRestDto;
+import org.amv.trafficsoft.rest.carsharing.whitelist.model.UpdateWhitelistsRequestRestDto;
 import org.amv.trafficsoft.rest.client.TrafficsoftClient;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public interface CarSharingWhitelistClient extends TrafficsoftClient {
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
     @RequestLine("POST /{contractId}/car-sharing/whitelist")
-    HystrixCommand<Void> updateWhitelist(
+    HystrixCommand<Void> updateWhitelists(
             @Param("contractId") long contractId,
-            UpdateWhitelistRequestRestDto request);
+            UpdateWhitelistsRequestRestDto request);
 
     @RequestLine("GET /{contractId}/car-sharing/whitelist?vehicleId={vehicleId}")
-    HystrixCommand<RetrieveWhitelistResponseRestDto> retrieveWhitelist(
+    HystrixCommand<FetchWhitelistsResponseRestDto> fetchWhitelists(
             @Param("contractId") long contractId,
             @Param("vehicleId") List<Long> vehicleIds);
 }

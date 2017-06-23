@@ -10,18 +10,20 @@ import lombok.Value;
 
 import java.util.List;
 
+/**
+ *
+ */
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = UpdateWhitelistRequestRestDto.Builder.class)
-@ApiModel(description = "A resource representing the request for updating vehicleWhitelists")
-public class UpdateWhitelistRequestRestDto {
+@JsonDeserialize(builder = FetchWhitelistsResponseRestDto.Builder.class)
+@ApiModel(description = "A resource representing the response for fetching whitelists")
+public class FetchWhitelistsResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
     }
 
-    @ApiModelProperty(value = "A list of whitelists associated to vehicles", required = true)
+    @ApiModelProperty(value = "A list of whitelists associated to vehicles", required = true, allowEmptyValue = true)
     @Singular(value = "addVehicleWhitelist")
     private List<VehicleWhitelistRestDto> vehicleWhitelists;
-
 }

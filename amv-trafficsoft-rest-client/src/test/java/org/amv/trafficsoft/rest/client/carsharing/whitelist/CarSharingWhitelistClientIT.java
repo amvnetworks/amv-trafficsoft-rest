@@ -12,13 +12,12 @@ import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.ErrorInfo;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.RetrieveWhitelistResponseRestDto;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.UpdateWhitelistRequestRestDto;
+import org.amv.trafficsoft.rest.carsharing.whitelist.model.FetchWhitelistsResponseRestDto;
+import org.amv.trafficsoft.rest.carsharing.whitelist.model.UpdateWhitelistsRequestRestDto;
 import org.amv.trafficsoft.rest.carsharing.whitelist.model.VehicleWhitelistRestDto;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.client.TrafficsoftException;
-import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
@@ -37,11 +36,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -63,7 +62,7 @@ public class CarSharingWhitelistClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
-        RetrieveWhitelistResponseRestDto retrieveWhitelistResponseRestDto = RetrieveWhitelistResponseRestDto.builder()
+        FetchWhitelistsResponseRestDto fetchWhitelistsResponseRestDto = FetchWhitelistsResponseRestDto.builder()
                 .vehicleWhitelists(VALID_VEHICLE_IDS.stream()
                         .map(vehicleId -> VehicleWhitelistRestDto.builder()
                                 .vehicleId(vehicleId)
@@ -73,7 +72,7 @@ public class CarSharingWhitelistClientIT {
                                 .build()).collect(toList()))
                 .build();
 
-        String retrieveWhitelistResponseRestDtoAsJson = jsonMapper.writeValueAsString(retrieveWhitelistResponseRestDto);
+        String retrieveWhitelistResponseRestDtoAsJson = jsonMapper.writeValueAsString(fetchWhitelistsResponseRestDto);
 
         String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
                 .id(RandomStringUtils.randomAlphanumeric(6))
@@ -86,7 +85,7 @@ public class CarSharingWhitelistClientIT {
 
         String queryString = VALID_VEHICLE_IDS.stream()
                 .map(vehicleId -> String.format("vehicleId=%s", vehicleId))
-                .collect(Collectors.joining("&"));
+                .collect(joining("&"));
 
         this.mockClient = new MockClient()
                 .add(HttpMethod.POST, String.format("/%d/car-sharing/whitelist", ANY_CONTRACT_ID), Response.builder()
@@ -111,8 +110,8 @@ public class CarSharingWhitelistClientIT {
     }
 
     @Test
-    public void itShouldUpdateWhitelist() throws Exception {
-        UpdateWhitelistRequestRestDto updateWhitelistRequest = UpdateWhitelistRequestRestDto.builder()
+    public void itShouldUpdateWhitelists() throws Exception {
+        UpdateWhitelistsRequestRestDto updateWhitelistRequest = UpdateWhitelistsRequestRestDto.builder()
                 .vehicleWhitelists(VALID_VEHICLE_IDS.stream()
                         .map(vehicleId -> VehicleWhitelistRestDto.builder()
                                 .vehicleId(vehicleId)
@@ -122,7 +121,7 @@ public class CarSharingWhitelistClientIT {
                                 .build()).collect(toList()))
                 .build();
 
-        Void returnValue = this.sut.updateWhitelist(ANY_CONTRACT_ID, updateWhitelistRequest).execute();
+        Void returnValue = this.sut.updateWhitelists(ANY_CONTRACT_ID, updateWhitelistRequest).execute();
 
         assertThat(returnValue, is(nullValue()));
 
@@ -131,14 +130,14 @@ public class CarSharingWhitelistClientIT {
     }
 
     @Test
-    public void itShouldRetrieveWhitelist() throws Exception {
-        RetrieveWhitelistResponseRestDto returnValue = this.sut.retrieveWhitelist(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
+    public void itShouldFetchWhitelists() throws Exception {
+        FetchWhitelistsResponseRestDto returnValue = this.sut.fetchWhitelists(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(returnValue, is(notNullValue()));
 
         String queryString = VALID_VEHICLE_IDS.stream()
                 .map(vehicleId -> String.format("vehicleId=%s", vehicleId))
-                .collect(Collectors.joining("&"));
+                .collect(joining("&"));
         String url = String.format("/%s/car-sharing/whitelist?%s", ANY_CONTRACT_ID, queryString);
         this.mockClient.verifyOne(HttpMethod.GET, url);
     }
@@ -149,10 +148,10 @@ public class CarSharingWhitelistClientIT {
         CountDownLatch latch = new CountDownLatch(1);
         AtomicReference<TrafficsoftException> trafficsoftExceptionRef = new AtomicReference<>();
 
-        sut.retrieveWhitelist(NON_EXISTING_CONTRACT_ID, Collections.emptyList())
+        sut.fetchWhitelists(NON_EXISTING_CONTRACT_ID, Collections.emptyList())
                 .toObservable()
                 .subscribeOn(testScheduler)
-                .subscribe(new TestSubscriber<RetrieveWhitelistResponseRestDto>() {
+                .subscribe(new TestSubscriber<FetchWhitelistsResponseRestDto>() {
                     @Override
                     public void onError(Throwable e) {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
@@ -165,7 +164,7 @@ public class CarSharingWhitelistClientIT {
                     }
 
                     @Override
-                    public void onNext(RetrieveWhitelistResponseRestDto response) {
+                    public void onNext(FetchWhitelistsResponseRestDto response) {
                         latch.countDown();
 
                         Assert.fail("Should have thrown exception and called onError");
