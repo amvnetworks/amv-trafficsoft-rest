@@ -14,7 +14,7 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.9'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
 
-    testCompile 'com.marvinformatics.feign:feign-mock:0.5'
+    testCompile 'com.marvinformatics.feign:feign-mock:0.6'
     testCompile 'org.slf4j:slf4j-simple:1.7.25'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.4.RELEASE'
