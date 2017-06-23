@@ -146,7 +146,7 @@ public class CarSharingWhitelistClientIT {
         assertThat(vehicleWhitelists.get(0).getWhitelist(), hasSize(greaterThanOrEqualTo(1)));
 
         assertThat(vehicleWhitelists.get(1), is(notNullValue()));
-        assertThat(vehicleWhitelists.get(1).getVehicleId(), is(VALID_VEHICLE_IDS.get(0)));
+        assertThat(vehicleWhitelists.get(1).getVehicleId(), is(VALID_VEHICLE_IDS.get(1)));
         assertThat(vehicleWhitelists.get(1).getWhitelist(), is(notNullValue()));
         assertThat(vehicleWhitelists.get(1).getWhitelist(), hasSize(greaterThanOrEqualTo(1)));
 
