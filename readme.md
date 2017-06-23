@@ -20,6 +20,12 @@ e.g. `findbugs`, `checkstyle`, `javadoc` - tasks which results are not essential
 ./gradlew clean build -Pminimal
 ```
 
+## create a release
+```bash
+./gradlew final -Prelease.scope=patch
+```
+
+
 ## release to bintray
 ```bash
 ./gradlew clean build bintrayUpload
