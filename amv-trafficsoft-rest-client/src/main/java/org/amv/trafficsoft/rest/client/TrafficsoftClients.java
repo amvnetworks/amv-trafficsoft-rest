@@ -3,6 +3,7 @@ package org.amv.trafficsoft.rest.client;
 import feign.Target;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
+import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 
 import static java.util.Objects.requireNonNull;
@@ -94,6 +95,27 @@ public final class TrafficsoftClients {
      * @return a XfcdClient configured with the given configuration
      */
     public static XfcdClient xfcd(ClientConfig<XfcdClient> clientConfig) {
+        return client(clientConfig);
+    }
+
+    /**
+     * Constructs a new CarSharingWhitelistClient with default configuration.
+     *
+     * @param baseUrl   the base url of the api
+     * @param basicAuth the authorisation object for accessing the api
+     * @return a CarSharingWhitelistClient with default configuration
+     */
+    public static CarSharingWhitelistClient carSharingWhitelist(String baseUrl, ClientConfig.BasicAuth basicAuth) {
+        return carSharingWhitelist(config(CarSharingWhitelistClient.class, baseUrl, basicAuth).build());
+    }
+
+    /**
+     * Constructs a new CarSharingWhitelistClient with custom configuration.
+     *
+     * @param clientConfig the configuration to use
+     * @return a CarSharingWhitelistClient configured with the given configuration
+     */
+    public static CarSharingWhitelistClient carSharingWhitelist(ClientConfig<CarSharingWhitelistClient> clientConfig) {
         return client(clientConfig);
     }
 }
