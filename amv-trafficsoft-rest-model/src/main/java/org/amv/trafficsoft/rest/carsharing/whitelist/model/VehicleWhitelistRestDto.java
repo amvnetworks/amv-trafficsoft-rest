@@ -1,6 +1,7 @@
 package org.amv.trafficsoft.rest.carsharing.whitelist.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Singular;
@@ -12,6 +13,11 @@ import java.util.List;
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = VehicleWhitelistRestDto.Builder.class)
 public class VehicleWhitelistRestDto {
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class Builder {
+
+    }
+
     @ApiModelProperty(value = "Id of a vehicle", required = true)
     private long vehicleId;
 

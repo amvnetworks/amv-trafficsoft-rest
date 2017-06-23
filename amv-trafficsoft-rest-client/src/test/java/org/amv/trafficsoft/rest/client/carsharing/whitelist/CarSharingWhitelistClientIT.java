@@ -40,6 +40,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.*;
@@ -66,7 +67,7 @@ public class CarSharingWhitelistClientIT {
                 .vehicleWhitelists(VALID_VEHICLE_IDS.stream()
                         .map(vehicleId -> VehicleWhitelistRestDto.builder()
                                 .vehicleId(vehicleId)
-                                .whitelist(IntStream.range(0, RandomUtils.nextInt(9) + 1).boxed()
+                                .whitelist(IntStream.range(1, RandomUtils.nextInt(9) + 1).boxed()
                                         .map(i -> RandomStringUtils.randomAlphanumeric(8))
                                         .collect(Collectors.toList()))
                                 .build()).collect(toList()))
@@ -134,6 +135,21 @@ public class CarSharingWhitelistClientIT {
         FetchWhitelistsResponseRestDto returnValue = this.sut.fetchWhitelists(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(returnValue, is(notNullValue()));
+
+        checkArgument(VALID_VEHICLE_IDS.size() >= 2, "Sanity check");
+
+        List<VehicleWhitelistRestDto> vehicleWhitelists = returnValue.getVehicleWhitelists();
+        assertThat(vehicleWhitelists, hasSize(VALID_VEHICLE_IDS.size()));
+        assertThat(vehicleWhitelists.get(0), is(notNullValue()));
+        assertThat(vehicleWhitelists.get(0).getVehicleId(), is(VALID_VEHICLE_IDS.get(0)));
+        assertThat(vehicleWhitelists.get(0).getWhitelist(), is(notNullValue()));
+        assertThat(vehicleWhitelists.get(0).getWhitelist(), hasSize(greaterThanOrEqualTo(1)));
+
+        assertThat(vehicleWhitelists.get(1), is(notNullValue()));
+        assertThat(vehicleWhitelists.get(1).getVehicleId(), is(VALID_VEHICLE_IDS.get(0)));
+        assertThat(vehicleWhitelists.get(1).getWhitelist(), is(notNullValue()));
+        assertThat(vehicleWhitelists.get(1).getWhitelist(), hasSize(greaterThanOrEqualTo(1)));
+
 
         String queryString = VALID_VEHICLE_IDS.stream()
                 .map(vehicleId -> String.format("vehicleId=%s", vehicleId))

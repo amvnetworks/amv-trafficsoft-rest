@@ -10,9 +10,6 @@ import lombok.Value;
 
 import java.util.List;
 
-/**
- *
- */
 @Value
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = FetchWhitelistsResponseRestDto.Builder.class)
@@ -23,7 +20,7 @@ public class FetchWhitelistsResponseRestDto {
 
     }
 
-    @ApiModelProperty(value = "A list of whitelists associated to vehicles", required = true, allowEmptyValue = true)
+    @ApiModelProperty(value = "A list of whitelists associated to vehicles", required = true)
     @Singular(value = "addVehicleWhitelist")
     private List<VehicleWhitelistRestDto> vehicleWhitelists;
 }
