@@ -1,0 +1,9 @@
+spring.application.name: 'amv-trafficsoft-rest-spring-boot-autoconfigure-test'
+spring.profiles.active: test
+
+amv.trafficsoft.api:
+  rest:
+    baseUrl: 'https://www.example.com'
+    username: 'john_doe'
+    password: 'mysupersecretpassword'
+    contractId: 0

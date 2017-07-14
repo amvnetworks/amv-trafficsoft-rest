@@ -1,5 +1,11 @@
 description = 'A Java client library for accessing the AMV Trafficsoft API'
 
+repositories {
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/libs-milestone' }
+    jcenter()
+}
+
 dependencies {
 
     compile project(':amv-trafficsoft-rest-model')
@@ -15,11 +21,10 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
 
     testCompile 'com.marvinformatics.feign:feign-mock:0.6'
-    testCompile 'org.slf4j:slf4j-simple:1.7.25'
 
-    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.4.RELEASE'
-    testCompile('org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE') {
-        exclude module: 'spring-boot-starter-logging'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'
+    testCompile('org.springframework.boot:spring-boot-starter-webflux:2.0.0.M2') {
+        //exclude module: 'spring-boot-starter-logging'
     }
 
 }

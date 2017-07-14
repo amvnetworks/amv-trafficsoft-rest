@@ -1,0 +1,15 @@
+description = 'Autoconfigure for spring based applications accessing the AMV Trafficsoft API'
+
+repositories {
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/libs-milestone' }
+    jcenter()
+}
+
+dependencies {
+    compile project(':amv-trafficsoft-rest-client')
+
+    compile 'org.springframework.boot:spring-boot-autoconfigure:2.0.0.M2'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'
+}
