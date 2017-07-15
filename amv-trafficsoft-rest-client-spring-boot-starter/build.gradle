@@ -1,0 +1,9 @@
+description = 'Starter for spring based applications accessing the AMV Trafficsoft API'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile project(':amv-trafficsoft-rest-client-spring-boot-autoconfigure')
+}
