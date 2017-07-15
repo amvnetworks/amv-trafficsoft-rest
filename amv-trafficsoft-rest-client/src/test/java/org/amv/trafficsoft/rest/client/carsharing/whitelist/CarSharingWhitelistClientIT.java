@@ -67,7 +67,7 @@ public class CarSharingWhitelistClientIT {
                 .vehicleWhitelists(VALID_VEHICLE_IDS.stream()
                         .map(vehicleId -> VehicleWhitelistRestDto.builder()
                                 .vehicleId(vehicleId)
-                                .whitelist(IntStream.range(1, RandomUtils.nextInt(9) + 1).boxed()
+                                .whitelist(IntStream.range(1, RandomUtils.nextInt(9) + 2).boxed()
                                         .map(i -> RandomStringUtils.randomAlphanumeric(8))
                                         .collect(Collectors.toList()))
                                 .build()).collect(toList()))

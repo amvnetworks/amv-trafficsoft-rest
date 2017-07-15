@@ -30,7 +30,10 @@ allprojects {
     apply plugin: 'java'
 
     repositories {
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/libs-milestone' }
         jcenter()
+        mavenLocal()
     }
 
     group = 'org.amv.trafficsoft'
@@ -48,11 +51,6 @@ subprojects {
     apply plugin: 'nebula.info'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
-
-    repositories {
-        jcenter()
-        mavenLocal()
-    }
 
     dependencies {
         compile 'com.google.guava:guava:21.0'
@@ -149,7 +147,7 @@ subprojects {
             reports {
                 xml.enabled true
                 csv.enabled false
-                html.destination "${buildDir}/reports/jacoco/html"
+                html.destination file("${buildDir}/reports/jacoco/html")
             }
             executionData = files("${buildDir}/jacoco/test.exec")
         }
