@@ -12,6 +12,7 @@ public class BasicAuthImplTest {
     public void itShouldBePossibleToConstructABasicAuthObjectEasily() throws Exception {
         String username = RandomStringUtils.random(10);
         String password = RandomStringUtils.random(10);
+        
         ClientConfig.BasicAuth basicAuth = ClientConfig.BasicAuthImpl.builder()
                 .username(username)
                 .password(password)

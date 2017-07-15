@@ -25,6 +25,7 @@ public class DeliveryRestDtoTest {
         DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
                 .build();
 
+        assertThat(deliveryDto, is(notNullValue()));
         assertThat(deliveryDto.getTrack(), is(notNullValue()));
         assertThat(deliveryDto.getTrack(), is(instanceOf(ImmutableCollection.class)));
     }

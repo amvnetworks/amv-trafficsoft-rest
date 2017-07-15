@@ -52,6 +52,10 @@ subprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
+    configurations {
+        testArtifacts
+    }
+
     dependencies {
         compile 'com.google.guava:guava:21.0'
         compileOnly 'org.projectlombok:lombok:1.16.16'
@@ -59,6 +63,7 @@ subprojects {
         testCompile 'junit:junit:4.12'
         testCompile 'org.hamcrest:hamcrest-all:1.3'
         testCompile 'pl.pragmatists:JUnitParams:1.0.6'
+        testCompile 'org.apache.commons:commons-lang3:3.5'
     }
 
     gradle.taskGraph.whenReady { graph ->
@@ -113,12 +118,18 @@ subprojects {
     }
 
     task sourcesJar(type: Jar) {
-        from sourceSets.main.allSource
         classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task testJar(type: Jar) {
+        classifier = 'test'
+        from sourceSets.test.output
     }
 
     artifacts {
-        archives javadocJar, sourcesJar
+        archives javadocJar, sourcesJar, testJar
+        testArtifacts testJar
     }
 
     checkstyle {

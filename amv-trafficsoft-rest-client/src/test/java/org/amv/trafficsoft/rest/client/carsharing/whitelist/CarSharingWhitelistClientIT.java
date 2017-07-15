@@ -12,6 +12,7 @@ import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.ErrorInfo;
+import org.amv.trafficsoft.rest.ErrorInfoRestDtoMother;
 import org.amv.trafficsoft.rest.carsharing.whitelist.model.FetchWhitelistsResponseRestDto;
 import org.amv.trafficsoft.rest.carsharing.whitelist.model.UpdateWhitelistsRequestRestDto;
 import org.amv.trafficsoft.rest.carsharing.whitelist.model.VehicleWhitelistRestDto;
@@ -31,7 +32,6 @@ import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -75,14 +75,7 @@ public class CarSharingWhitelistClientIT {
 
         String retrieveWhitelistResponseRestDtoAsJson = jsonMapper.writeValueAsString(fetchWhitelistsResponseRestDto);
 
-        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
-                .id(RandomStringUtils.randomAlphanumeric(6))
-                .dateTime(LocalDateTime.now())
-                .errorCode(RandomStringUtils.randomNumeric(6))
-                .exception(RandomStringUtils.randomAlphanumeric(10))
-                .message(RandomStringUtils.randomAlphanumeric(10))
-                .url(RandomStringUtils.randomAlphanumeric(10))
-                .build());
+        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random());
 
         String queryString = VALID_VEHICLE_IDS.stream()
                 .map(vehicleId -> String.format("vehicleId=%s", vehicleId))

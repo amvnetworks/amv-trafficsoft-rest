@@ -13,14 +13,11 @@ import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.ErrorInfo;
+import org.amv.trafficsoft.rest.ErrorInfoRestDtoMother;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.client.TrafficsoftException;
-import org.amv.trafficsoft.rest.xfcd.model.DeliveryRestDto;
-import org.amv.trafficsoft.rest.xfcd.model.NodeRestDto;
-import org.amv.trafficsoft.rest.xfcd.model.ParameterRestDto;
-import org.amv.trafficsoft.rest.xfcd.model.TrackRestDto;
-import org.apache.commons.lang.RandomStringUtils;
+import org.amv.trafficsoft.rest.xfcd.model.*;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,11 +30,6 @@ import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -64,61 +56,13 @@ public class XfcdClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
-        ParameterRestDto xfcdParameterDto = ParameterRestDto.builder()
-                .timestamp(Date.from(Instant.now()))
-                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .timestamp(Date.valueOf(LocalDate.now()))
-                .param(RandomStringUtils.randomAlphanumeric(10))
-                .value(RandomStringUtils.randomAlphanumeric(10))
-                .build();
-
-        ParameterRestDto stateParameterDto = ParameterRestDto.builder()
-                .timestamp(Date.from(Instant.now()))
-                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .timestamp(Date.valueOf(LocalDate.now()))
-                .param(RandomStringUtils.randomAlphanumeric(10))
-                .value(RandomStringUtils.randomAlphanumeric(10))
-                .build();
-
-        NodeRestDto nodeDto = NodeRestDto.builder()
-                .id(RandomUtils.nextLong())
-                .timestamp(Date.from(Instant.now()))
-                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .vdop(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .hdop(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .altitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .heading(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .speed(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .satellites(RandomUtils.nextInt())
-                .addXfcd(xfcdParameterDto)
-                .addState(stateParameterDto)
-                .build();
-
-        TrackRestDto trackDto = TrackRestDto.builder()
-                .id(RandomUtils.nextLong())
-                .addNode(nodeDto)
-                .build();
-
-        DeliveryRestDto deliveryDto = DeliveryRestDto.builder()
-                .deliveryId(RandomUtils.nextLong())
-                .timestamp(Date.from(Instant.now()))
-                .addTrack(trackDto)
-                .build();
+        NodeRestDto nodeDto = NodeRestDtoMother.random();
+        DeliveryRestDto deliveryDto = DeliveryRestDtoMother.random();
 
         String deliveryDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(deliveryDto));
         String nodeDtoListAsJson = jsonMapper.writeValueAsString(Lists.newArrayList(nodeDto));
 
-        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
-                .id(RandomStringUtils.randomAlphanumeric(6))
-                .dateTime(LocalDateTime.now())
-                .errorCode(RandomStringUtils.randomNumeric(6))
-                .exception(RandomStringUtils.randomAlphanumeric(10))
-                .message(RandomStringUtils.randomAlphanumeric(10))
-                .url(RandomStringUtils.randomAlphanumeric(10))
-                .build());
+        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random());
 
         MockClient mockClient = new MockClient()
                 .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.builder()
@@ -313,6 +257,7 @@ public class XfcdClientIT {
 
         ParameterRestDto firstXfcdParam = firstNode.getXfcds().stream().findFirst()
                 .orElseThrow(IllegalStateException::new);
+
         assertThat(firstXfcdParam, is(notNullValue()));
         assertThat(firstXfcdParam.getTimestamp(), is(notNullValue()));
         assertThat(firstXfcdParam.getParam(), is(notNullValue()));
@@ -322,6 +267,7 @@ public class XfcdClientIT {
 
         ParameterRestDto firstStateParam = firstNode.getStates().stream().findFirst()
                 .orElseThrow(IllegalStateException::new);
+
         assertThat(firstStateParam, is(notNullValue()));
         assertThat(firstStateParam.getTimestamp(), is(notNullValue()));
         assertThat(firstStateParam.getParam(), is(notNullValue()));

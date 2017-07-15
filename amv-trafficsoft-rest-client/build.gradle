@@ -7,7 +7,6 @@ repositories {
 }
 
 dependencies {
-
     compile project(':amv-trafficsoft-rest-model')
 
     compile 'io.github.openfeign:feign-core:9.5.0'
@@ -20,6 +19,8 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.9'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
 
+
+    testCompile project(path: ':amv-trafficsoft-rest-model', configuration: 'testArtifacts')
     testCompile 'com.marvinformatics.feign:feign-mock:0.6'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'
