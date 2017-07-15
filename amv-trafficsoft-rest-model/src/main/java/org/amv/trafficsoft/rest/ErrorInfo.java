@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 
 /**
  * A resource representing information about a Trafficsoft error.
- *
- * <p> For example:
+ * <p>
+ * For example:
  * <pre>{@code
  * {
  *   "dateTime":"2042-01-10T14:15:33",

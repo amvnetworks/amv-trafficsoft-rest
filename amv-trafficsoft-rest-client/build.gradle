@@ -23,8 +23,6 @@ dependencies {
     testCompile 'com.marvinformatics.feign:feign-mock:0.6'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'
-    testCompile('org.springframework.boot:spring-boot-starter-webflux:2.0.0.M2') {
-        //exclude module: 'spring-boot-starter-logging'
-    }
+    testCompile 'org.springframework.boot:spring-boot-starter-webflux:2.0.0.M2'
 
 }
