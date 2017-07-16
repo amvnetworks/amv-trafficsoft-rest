@@ -10,6 +10,7 @@ import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,7 @@ public class TrafficsoftApiRestClientAutoConfig {
         this.trafficsoftApiRestProperties = requireNonNull(trafficsoftApiRestProperties);
     }
 
+    @ConditionalOnMissingBean
     @Bean("trafficsoftApiRestClientBasicAuth")
     public ClientConfig.BasicAuth basicAuth() {
         return ClientConfig.BasicAuthImpl.builder()
@@ -39,42 +41,50 @@ public class TrafficsoftApiRestClientAutoConfig {
                 .build();
     }
 
+    @ConditionalOnMissingBean(name = "trafficsoftApiRestXfcdClientConfig")
     @Bean("trafficsoftApiRestXfcdClientConfig")
-    public ConfigurableClientConfig<XfcdClient> xfcdClientConfig() {
-        return TrafficsoftClients.config(XfcdClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth())
+    public ConfigurableClientConfig<XfcdClient> xfcdClientConfig(ClientConfig.BasicAuth basicAuth) {
+        return TrafficsoftClients.config(XfcdClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth)
                 .setterFactory(setterFactory())
                 .build();
     }
 
+    @ConditionalOnMissingBean
     @Bean("trafficsoftApiRestXfcdClient")
-    public XfcdClient xfcdClient() {
-        return TrafficsoftClients.xfcd(xfcdClientConfig());
+    public XfcdClient xfcdClient(ConfigurableClientConfig<XfcdClient> xfcdClientConfig) {
+        return TrafficsoftClients.xfcd(xfcdClientConfig);
     }
 
+    @ConditionalOnMissingBean(name = "trafficsoftApiRestCarSharingWhitelistClientConfig")
     @Bean("trafficsoftApiRestCarSharingWhitelistClientConfig")
-    public ConfigurableClientConfig<CarSharingWhitelistClient> carSharingWhitelistConfig() {
-        return TrafficsoftClients.config(CarSharingWhitelistClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth())
+    public ConfigurableClientConfig<CarSharingWhitelistClient> carSharingWhitelistConfig(ClientConfig.BasicAuth basicAuth) {
+        return TrafficsoftClients.config(CarSharingWhitelistClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth)
                 .setterFactory(setterFactory())
                 .build();
     }
 
+    @ConditionalOnMissingBean
     @Bean("trafficsoftApiRestCarSharingWhitelistClient")
-    public CarSharingWhitelistClient carSharingWhitelistClient() {
-        return TrafficsoftClients.carSharingWhitelist(carSharingWhitelistConfig());
+    public CarSharingWhitelistClient carSharingWhitelistClient(ConfigurableClientConfig<CarSharingWhitelistClient> carSharingWhitelistConfig) {
+        return TrafficsoftClients.carSharingWhitelist(carSharingWhitelistConfig);
     }
 
+    @ConditionalOnMissingBean(name = "trafficsoftApiRestAsgRegisterClientConfig")
     @Bean("trafficsoftApiRestAsgRegisterClientConfig")
-    public ConfigurableClientConfig<AsgRegisterClient> asgRegisterClientConfig() {
-        return TrafficsoftClients.config(AsgRegisterClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth())
+    public ConfigurableClientConfig<AsgRegisterClient> asgRegisterClientConfig(ClientConfig.BasicAuth basicAuth) {
+        return TrafficsoftClients.config(AsgRegisterClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth)
                 .setterFactory(setterFactory())
                 .build();
     }
 
+    @ConditionalOnMissingBean
     @Bean("trafficsoftApiRestAsgRegisterClient")
-    public AsgRegisterClient asgRegisterClient() {
-        return TrafficsoftClients.asgRegister(asgRegisterClientConfig());
+    public AsgRegisterClient asgRegisterClient(ConfigurableClientConfig<AsgRegisterClient> asgRegisterClientConfig) {
+        return TrafficsoftClients.asgRegister(asgRegisterClientConfig);
     }
 
+
+    @ConditionalOnMissingBean(name = "trafficsoftApiRestClientSetterFactory")
     @Bean("trafficsoftApiRestClientSetterFactory")
     public SetterFactory setterFactory() {
         return (target, method) -> {
