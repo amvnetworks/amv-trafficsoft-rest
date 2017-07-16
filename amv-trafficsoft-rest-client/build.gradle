@@ -20,7 +20,7 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
 
 
-    testCompile project(path: ':amv-trafficsoft-rest-model', configuration: 'testArtifacts')
+    testCompile project(':amv-trafficsoft-rest-model-test')
     testCompile 'com.marvinformatics.feign:feign-mock:0.6'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'

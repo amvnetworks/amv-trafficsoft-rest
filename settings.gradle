@@ -4,4 +4,5 @@ include 'amv-trafficsoft-rest-client'
 include 'amv-trafficsoft-rest-model'
 include 'amv-trafficsoft-rest-client-spring-boot-autoconfigure'
 include 'amv-trafficsoft-rest-client-spring-boot-starter'
+include 'amv-trafficsoft-rest-model-test'
 

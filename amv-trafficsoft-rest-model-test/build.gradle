@@ -1,0 +1,7 @@
+description = 'Utility classes for testing with transfer objects of the AMV Trafficsoft API'
+
+dependencies {
+    compile project(':amv-trafficsoft-rest-model')
+
+    compile 'org.apache.commons:commons-lang3:3.5'
+}

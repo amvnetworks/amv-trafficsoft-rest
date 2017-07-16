@@ -15,6 +15,7 @@ public final class TrackRestDtoMother {
     public static TrackRestDto random() {
         return TrackRestDto.builder()
                 .id(RandomUtils.nextLong())
+                .vehicleId(RandomUtils.nextLong())
                 .nodes(NodeRestDtoMother.randomList())
                 .build();
     }

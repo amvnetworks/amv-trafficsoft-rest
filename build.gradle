@@ -52,10 +52,6 @@ subprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
-    configurations {
-        testArtifacts
-    }
-
     dependencies {
         compile 'com.google.guava:guava:21.0'
         compileOnly 'org.projectlombok:lombok:1.16.16'
@@ -128,8 +124,7 @@ subprojects {
     }
 
     artifacts {
-        archives javadocJar, sourcesJar, testJar
-        testArtifacts testJar
+        archives javadocJar, sourcesJar
     }
 
     checkstyle {
