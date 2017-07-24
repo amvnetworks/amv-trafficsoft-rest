@@ -2,7 +2,6 @@
 [![Download](https://api.bintray.com/packages/amvnetworks/amv-trafficsoft-rest/amv-trafficsoft-rest-client/images/download.svg) ](https://bintray.com/amvnetworks/amv-trafficsoft-rest)
 [![License](https://img.shields.io/github/license/amvnetworks/amv-trafficsoft-rest.svg?maxAge=2592000)](https://github.com/amvnetworks/amv-trafficsoft-rest/blob/master/LICENSE)
 
-![amv-trafficsoft-rest logo][logo] 
 amv-trafficsoft-rest
 ========
 amv-trafficsoft-rest is a Java client library for accessing the AMV Trafficsoft API.
@@ -267,5 +266,3 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 
 # license
 The project is licensed under the Apache License. See [LICENSE](LICENSE) for details.
-
-[logo]: amv-trafficsoft-rest-logo-64x64.png "amv-trafficsoft-rest logo"
