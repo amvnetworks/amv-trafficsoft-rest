@@ -107,11 +107,48 @@ OemsResponseRestDto oemsResponseDto = myAsgRegisterClient
 Take a look at the [test/](amv-trafficsoft-rest-client/src/test/java/org/amv/trafficsoft/rest/client/) directory 
 as a good way of getting started and a quick overview of the key client features and concepts.
 
+### spring boot integration
+If you are using [Spring Boot](https://projects.spring.io/spring-boot/) you can make use of its auto-configuration feature by including
+`amv-trafficsoft-rest-client-spring-boot-starter` module in your application.
+
+Add dependency:
+```groovy
+dependencies {
+    compile 'org.amv.trafficsoft:amv-trafficsoft-rest-client-spring-boot-starter:${version}'
+}
+```
+
+If the auto-configuration class detects certain properties it will automatically setup and configure
+all beans. Adapt all properties to your needs in your `application.yml`:
+```yaml
+amv.trafficsoft.api:
+  rest:
+    baseUrl: 'https://www.example.com'
+    username: 'john_doe'
+    password: 'mysupersecretpassword'
+    contractId: 0
+```
+
+This will make all client beans available for your services:
+```java
+@Component
+public class MyService {
+    private final XfcdClient xfcdClient;
+  
+    @Autowired
+    public MyService(XfcdClient xfcdClient) {
+      this.xfcdClient = Objects.requireNonNull(xfcdClient);
+    }
+
+    public void doIt() {
+        // ...
+    }
+}
+```
+
 ### demo application
 See [amv-trafficsoft-restclient-demo](https://github.com/amvnetworks/amv-trafficsoft-restclient-demo) repository for a
-simple demo application.
-
-###
+simple demo application with [Spring Boot](https://projects.spring.io/spring-boot/).
 
 # install
 ## gradle
@@ -121,51 +158,35 @@ repositories {
     jcenter()
     // ... or add bintray repo
     maven {
-        url  "http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest" 
+        url 'https://dl.bintray.com/amvnetworks/amv-trafficsoft-rest' 
     }
 }
-```
-### dependency
-```groovy
+
+// ...
+
 dependencies {
-    compile 'org.amv.trafficsoft:amv-trafficsoft-rest-client:${version}'
+    compile "org.amv.trafficsoft:amv-trafficsoft-rest-client:${version}"
 }
 ```
 
 ## maven 
 ### repo
 ```xml
-<profiles>
-    <profile>
-        <repositories>
-            <repository>
-                <snapshots>
-                    <enabled>false</enabled>
-                </snapshots>
-                <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
-                <name>bintray</name>
-                <url>http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
-            </repository>
-        </repositories>
-        <pluginRepositories>
-            <pluginRepository>
-                <snapshots>
-                    <enabled>false</enabled>
-                </snapshots>
-                <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
-                <name>bintray-plugins</name>
-                <url>http://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
-            </pluginRepository>
-        </pluginRepositories>
-        <id>bintray</id>
-    </profile>
-</profiles>
-<activeProfiles>
-    <activeProfile>bintray</activeProfile>
-</activeProfiles>
-```
-### dependency
-```xml
+<repositories>
+    <repository>
+        <id>jcenter</id>
+        <url>https://jcenter.bintray.com/</url>
+    </repository>
+    <!-- ... or add bintray repo -->
+    <repository>
+        <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
+        <name>bintray</name>
+        <url>https://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
+    </repository>
+</repositories>
+
+<!-- ... -->
+
 <dependency>
   <groupId>org.amv.trafficsoft</groupId>
   <artifactId>amv-trafficsoft-rest-client</artifactId>
