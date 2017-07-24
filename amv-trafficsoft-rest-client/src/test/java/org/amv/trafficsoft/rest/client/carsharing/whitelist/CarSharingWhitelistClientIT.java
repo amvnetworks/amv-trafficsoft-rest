@@ -13,13 +13,10 @@ import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.ErrorInfo;
 import org.amv.trafficsoft.rest.ErrorInfoRestDtoMother;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.FetchWhitelistsResponseRestDto;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.UpdateWhitelistsRequestRestDto;
-import org.amv.trafficsoft.rest.carsharing.whitelist.model.VehicleWhitelistRestDto;
+import org.amv.trafficsoft.rest.carsharing.whitelist.model.*;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.client.TrafficsoftException;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,12 +34,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -63,15 +57,7 @@ public class CarSharingWhitelistClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
-        FetchWhitelistsResponseRestDto fetchWhitelistsResponseRestDto = FetchWhitelistsResponseRestDto.builder()
-                .vehicleWhitelists(VALID_VEHICLE_IDS.stream()
-                        .map(vehicleId -> VehicleWhitelistRestDto.builder()
-                                .vehicleId(vehicleId)
-                                .whitelist(IntStream.range(1, RandomUtils.nextInt(9) + 2).boxed()
-                                        .map(i -> RandomStringUtils.randomAlphanumeric(8))
-                                        .collect(Collectors.toList()))
-                                .build()).collect(toList()))
-                .build();
+        FetchWhitelistsResponseRestDto fetchWhitelistsResponseRestDto = FetchWhitelistsResponseRestDtoMother.randomForVehicleIds(VALID_VEHICLE_IDS);
 
         String retrieveWhitelistResponseRestDtoAsJson = jsonMapper.writeValueAsString(fetchWhitelistsResponseRestDto);
 
@@ -105,15 +91,7 @@ public class CarSharingWhitelistClientIT {
 
     @Test
     public void itShouldUpdateWhitelists() throws Exception {
-        UpdateWhitelistsRequestRestDto updateWhitelistRequest = UpdateWhitelistsRequestRestDto.builder()
-                .vehicleWhitelists(VALID_VEHICLE_IDS.stream()
-                        .map(vehicleId -> VehicleWhitelistRestDto.builder()
-                                .vehicleId(vehicleId)
-                                .whitelist(IntStream.range(0, RandomUtils.nextInt(9) + 1).boxed()
-                                        .map(i -> RandomStringUtils.randomAlphanumeric(8))
-                                        .collect(Collectors.toList()))
-                                .build()).collect(toList()))
-                .build();
+        UpdateWhitelistsRequestRestDto updateWhitelistRequest = UpdateWhitelistsRequestRestDtoMother.randomForVehicleIds(VALID_VEHICLE_IDS);
 
         Void returnValue = this.sut.updateWhitelists(ANY_CONTRACT_ID, updateWhitelistRequest).execute();
 

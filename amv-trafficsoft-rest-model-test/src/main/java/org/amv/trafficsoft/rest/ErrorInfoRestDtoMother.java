@@ -1,6 +1,5 @@
 package org.amv.trafficsoft.rest;
 
-import org.amv.trafficsoft.rest.ErrorInfo;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
