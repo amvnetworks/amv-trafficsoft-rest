@@ -7,7 +7,6 @@ import org.apache.commons.lang3.RandomUtils;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -20,9 +19,8 @@ public final class ParameterRestDtoMother {
     public static ParameterRestDto random() {
         return ParameterRestDto.builder()
                 .timestamp(Date.from(Instant.now()))
-                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble()))
-                .timestamp(Date.valueOf(LocalDate.now()))
+                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble(0d, 100_000d)))
+                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble(0d, 100_000d)))
                 .param(RandomStringUtils.randomAlphanumeric(10))
                 .value(RandomStringUtils.randomAlphanumeric(10))
                 .build();
