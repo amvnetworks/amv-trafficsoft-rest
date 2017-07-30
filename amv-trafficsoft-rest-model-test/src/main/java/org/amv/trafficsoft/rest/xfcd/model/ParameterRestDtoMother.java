@@ -19,8 +19,8 @@ public final class ParameterRestDtoMother {
     public static ParameterRestDto random() {
         return ParameterRestDto.builder()
                 .timestamp(Date.from(Instant.now()))
-                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble(0d, 100_000d)))
-                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble(0d, 100_000d)))
+                .latitude(BigDecimal.valueOf(RandomUtils.nextDouble(0d, Math.pow(10, 4) - 1)))
+                .longitude(BigDecimal.valueOf(RandomUtils.nextDouble(0d, Math.pow(10, 4) - 1)))
                 .param(RandomStringUtils.randomAlphanumeric(10))
                 .value(RandomStringUtils.randomAlphanumeric(10))
                 .build();
