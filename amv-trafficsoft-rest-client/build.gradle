@@ -2,7 +2,6 @@ description = 'A Java client library for accessing the AMV Trafficsoft API'
 buildscript {
     ext {
         feignVersion = '9.5.1'
-        jacksonVersion = '2.8.9'
     }
 }
 
@@ -29,7 +28,7 @@ dependencies {
     testCompile project(':amv-trafficsoft-rest-model-test')
     testCompile 'com.marvinformatics.feign:feign-mock:0.6'
 
-    testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'
-    testCompile 'org.springframework.boot:spring-boot-starter-webflux:2.0.0.M2'
+    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testCompile "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
 
 }

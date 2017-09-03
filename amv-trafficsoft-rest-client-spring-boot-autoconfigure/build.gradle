@@ -9,8 +9,8 @@ repositories {
 dependencies {
     compile project(':amv-trafficsoft-rest-client')
 
-    compileOnly 'org.springframework.boot:spring-boot-configuration-processor:2.0.0.M2'
-    compile 'org.springframework.boot:spring-boot-autoconfigure:2.0.0.M2'
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
 
-    testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.M2'
+    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }

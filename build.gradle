@@ -1,6 +1,10 @@
 import io.franzbecker.gradle.lombok.task.DelombokTask
 
 buildscript {
+    ext {
+        springBootVersion = '2.0.0.M3'
+        jacksonVersion = '2.8.9'
+    }
     repositories {
         jcenter()
     }
