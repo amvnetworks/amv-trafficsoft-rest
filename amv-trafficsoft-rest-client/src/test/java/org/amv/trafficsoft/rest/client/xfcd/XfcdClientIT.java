@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 import static java.util.stream.Collectors.toList;
@@ -76,7 +77,9 @@ public class XfcdClientIT {
                         .headers(Collections.emptyMap()))
                 .ok(HttpMethod.POST, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
                 .ok(HttpMethod.GET, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
-                .ok(HttpMethod.POST, String.format("/%d/xfcd/last", ANY_CONTRACT_ID), nodeDtoListAsJson);
+                .ok(HttpMethod.GET, String.format("/%d/xfcd/last?%s", ANY_CONTRACT_ID, VALID_VEHICLE_IDS.stream()
+                        .map(val -> "vehicleId=" + val)
+                        .collect(Collectors.joining("&"))), nodeDtoListAsJson);
 
         Target<XfcdClient> mockTarget = new MockTarget<>(XfcdClient.class);
 
@@ -231,8 +234,8 @@ public class XfcdClientIT {
     }
 
     @Test
-    public void itShouldGetLastData() {
-        List<NodeRestDto> nodes = sut.getLastData(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
+    public void itShouldGetLatestData() {
+        List<NodeRestDto> nodes = sut.getLatestData(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(nodes, is(notNullValue()));
         assertThat(nodes, hasSize(1));

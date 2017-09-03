@@ -39,11 +39,18 @@ public interface XfcdClient extends TrafficsoftClient {
             @Param("contractId") long contractId,
             List<Long> deliveryIds);
 
-    @Headers({
-            CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
-    })
-    @RequestLine("POST /{contractId}/xfcd/last")
-    HystrixCommand<List<NodeRestDto>> getLastData(
+    /**
+     * @deprecated Please use {{@link #getLatestData(long, List)}} instead.
+     */
+    @Deprecated
+    default HystrixCommand<List<NodeRestDto>> getLastData(
             @Param("contractId") long contractId,
-            List<Long> vehicleIds);
+            List<Long> vehicleIds) {
+        return getLatestData(contractId, vehicleIds);
+    }
+
+    @RequestLine("GET /{contractId}/xfcd/last?vehicleId={vehicleId}")
+    HystrixCommand<List<NodeRestDto>> getLatestData(
+            @Param("contractId") long contractId,
+            @Param(value = "vehicleId") List<Long> vehicleIds);
 }
