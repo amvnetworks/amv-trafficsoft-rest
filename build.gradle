@@ -101,6 +101,19 @@ subprojects {
         source = delombok.outputDir
         exclude 'lombok.config'
         failOnError = false
+        options.noTimestamp = true
+        title = "${project.name}"
+    }
+
+    task copyJavadoc(type: Copy) {
+        from javadoc
+        into rootProject.file("docs/${project.name}/javadoc/")
+    }
+
+    build.dependsOn copyJavadoc
+
+    clean.doLast {
+        rootProject.file("docs/${project.name}/javadoc/").deleteDir()
     }
 
     jar.doFirst {
