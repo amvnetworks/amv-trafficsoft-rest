@@ -1,4 +1,10 @@
 description = 'A Java client library for accessing the AMV Trafficsoft API'
+buildscript {
+    ext {
+        feignVersion = '9.5.1'
+        jacksonVersion = '2.8.9'
+    }
+}
 
 repositories {
     maven { url 'https://repo.spring.io/milestone' }
@@ -9,15 +15,15 @@ repositories {
 dependencies {
     compile project(':amv-trafficsoft-rest-model')
 
-    compile 'io.github.openfeign:feign-core:9.5.0'
-    compile 'io.github.openfeign:feign-okhttp:9.5.0'
-    compile 'io.github.openfeign:feign-hystrix:9.5.0'
-    compile 'io.github.openfeign:feign-slf4j:9.5.0'
-    compile 'io.github.openfeign:feign-jackson:9.5.0'
+    compile "io.github.openfeign:feign-core:${feignVersion}"
+    compile "io.github.openfeign:feign-okhttp:${feignVersion}"
+    compile "io.github.openfeign:feign-hystrix:${feignVersion}"
+    compile "io.github.openfeign:feign-slf4j:${feignVersion}"
+    compile "io.github.openfeign:feign-jackson:${feignVersion}"
 
-    compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.8.9'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.9'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9'
+    compile "com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
 
     testCompile project(':amv-trafficsoft-rest-model-test')
