@@ -8,38 +8,53 @@ amv-trafficsoft-rest is a Java client library for accessing the AMV Trafficsoft 
 
 amv-trafficsoft-rest requires Java version 1.8 or greater.
 
-# build
-```bash
-./gradlew clean build
+# install
+## gradle
+### repo
+```groovy
+repositories {
+    jcenter()
+    // ... or add bintray repo
+    maven {
+        url 'https://dl.bintray.com/amvnetworks/amv-trafficsoft-rest' 
+    }
+}
+
+// ...
+
+dependencies {
+    compile "org.amv.trafficsoft:amv-trafficsoft-rest-client:${version}"
+}
 ```
 
-When a parameter `minimal` is provided, certain tasks will be skipped to make the build faster.
-e.g. `findbugs`, `checkstyle`, `javadoc` - tasks which results are not essential for a working build.
-```bash
-./gradlew clean build -Pminimal
+## maven 
+### repo
+```xml
+<repositories>
+    <repository>
+        <id>jcenter</id>
+        <url>https://jcenter.bintray.com/</url>
+    </repository>
+    <!-- ... or add bintray repo -->
+    <repository>
+        <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
+        <name>bintray</name>
+        <url>https://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
+    </repository>
+</repositories>
+
+<!-- ... -->
+
+<dependency>
+  <groupId>org.amv.trafficsoft</groupId>
+  <artifactId>amv-trafficsoft-rest-client</artifactId>
+  <version>${version}</version>
+</dependency>
 ```
-
-## create a release
-```bash
-./gradlew final -Prelease.scope=patch
-```
-
-
-## release to bintray
-```bash
-./gradlew clean build bintrayUpload
-  -Prelease.stage=final
-  -Prelease.scope=patch
-  -PreleaseToBintray 
-  -PbintrayUser=${username} 
-  -PbintrayApiKey=${apiKey} 
-```
-
 
 # usage
 
 ## constructing clients
-
 Construct a new client for the various services to access different parts of the AMV Trafficsoft API.
 
 ### xfcd
@@ -150,50 +165,6 @@ public class MyService {
 See [amv-trafficsoft-restclient-demo](https://github.com/amvnetworks/amv-trafficsoft-restclient-demo) repository for a
 simple demo application with [Spring Boot](https://projects.spring.io/spring-boot/).
 
-# install
-## gradle
-### repo
-```groovy
-repositories {
-    jcenter()
-    // ... or add bintray repo
-    maven {
-        url 'https://dl.bintray.com/amvnetworks/amv-trafficsoft-rest' 
-    }
-}
-
-// ...
-
-dependencies {
-    compile "org.amv.trafficsoft:amv-trafficsoft-rest-client:${version}"
-}
-```
-
-## maven 
-### repo
-```xml
-<repositories>
-    <repository>
-        <id>jcenter</id>
-        <url>https://jcenter.bintray.com/</url>
-    </repository>
-    <!-- ... or add bintray repo -->
-    <repository>
-        <id>bintray-amvnetworks-amv-trafficsoft-rest</id>
-        <name>bintray</name>
-        <url>https://dl.bintray.com/amvnetworks/amv-trafficsoft-rest</url>
-    </repository>
-</repositories>
-
-<!-- ... -->
-
-<dependency>
-  <groupId>org.amv.trafficsoft</groupId>
-  <artifactId>amv-trafficsoft-rest-client</artifactId>
-  <version>${version}</version>
-</dependency>
-```
-
 # custom configuration
 It is possible to apply a custom configuration and configure the clients to your needs. 
 If you construct your own config you have to provide the `target` property
@@ -283,6 +254,33 @@ ClientConfig<XfcdClient> customConfig = TrafficsoftClients.config(XfcdClient.cla
     
 XfcdClient xfcdClient = TrafficsoftClients.xfcd(customConfig);
 // ...
+```
+
+# build
+```bash
+./gradlew clean build
+```
+
+When a parameter `minimal` is provided, certain tasks will be skipped to make the build faster.
+e.g. `findbugs`, `checkstyle`, `javadoc` - tasks which results are not essential for a working build.
+```bash
+./gradlew clean build -Pminimal
+```
+
+## create a release
+```bash
+./gradlew final -Prelease.scope=patch
+```
+
+
+## release to bintray
+```bash
+./gradlew clean build bintrayUpload
+  -Prelease.stage=final
+  -Prelease.scope=patch
+  -PreleaseToBintray 
+  -PbintrayUser=${username} 
+  -PbintrayApiKey=${apiKey} 
 ```
 
 # license
