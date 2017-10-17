@@ -214,7 +214,7 @@ subprojects {
                 repo = 'amv-trafficsoft-rest'
                 name = project.name
                 userOrg = user
-                licenses = ['MIT']
+                licenses = ['Apache-2.0']
                 vcsUrl = 'https://github.com/amvnetworks/amv-trafficsoft-rest.git'
                 labels = ['amv', 'trafficsoft']
                 publicDownloadNumbers = false
