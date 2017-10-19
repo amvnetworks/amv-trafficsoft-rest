@@ -30,7 +30,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
     public static class TestApplicationWithManualBeans {
 
         @Bean
-        public ClientConfig.BasicAuth manualBasicAuth() {
+        public BasicAuth manualBasicAuth() {
             return ClientConfig.BasicAuthImpl.builder()
                     .username(RandomStringUtils.randomAlphanumeric(5))
                     .password(RandomStringUtils.randomAlphanumeric(16))

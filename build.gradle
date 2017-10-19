@@ -2,8 +2,8 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M4'
-        jacksonVersion = '2.9.1'
+        springBootVersion = '1.5.8.RELEASE'
+        jacksonVersion = '2.8.10'
     }
     repositories {
         jcenter()
@@ -57,12 +57,14 @@ allprojects {
                     'com.google.guava:guava:22.0',
                     'io.github.openfeign:feign-core:9.5.1',
                     'org.reactivestreams:reactive-streams:1.0.1',
-                    'com.fasterxml.jackson.core:jackson-core:2.9.1',
-                    'com.fasterxml.jackson.core:jackson-databind:2.9.1',
-                    'com.fasterxml.jackson.core:jackson-annotations:2.9.1',
-                    'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.1',
-                    'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.1',
-                    'com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.1'
+                    "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
+                    "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+                    "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
+                    "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}",
+                    "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}",
+                    "com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}",
+                    'commons-logging:commons-logging:1.2',
+                    'org.hamcrest:hamcrest-core:1.3'
         }
     }
 }

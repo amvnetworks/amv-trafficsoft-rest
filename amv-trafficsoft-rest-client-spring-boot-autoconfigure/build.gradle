@@ -1,11 +1,5 @@
 description = 'Autoconfigure for spring based applications accessing the AMV Trafficsoft API'
 
-repositories {
-    maven { url 'https://repo.spring.io/milestone' }
-    maven { url 'https://repo.spring.io/libs-milestone' }
-    jcenter()
-}
-
 dependencies {
     compile project(':amv-trafficsoft-rest-client')
 
