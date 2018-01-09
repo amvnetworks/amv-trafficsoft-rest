@@ -5,6 +5,7 @@ import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
 import org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient;
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
+import org.amv.trafficsoft.rest.client.contract.ContractClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 
 import static java.util.Objects.requireNonNull;
@@ -73,6 +74,27 @@ public final class TrafficsoftClients {
      * @return a AsgRegisterClient configured with the given configuration
      */
     public static AsgRegisterClient asgRegister(ClientConfig<AsgRegisterClient> clientConfig) {
+        return client(clientConfig);
+    }
+
+    /**
+     * Constructs a new ContractClient with default configuration.
+     *
+     * @param baseUrl   the base url of the api
+     * @param basicAuth the authorisation object for accessing the api
+     * @return a ContractClient with default configuration
+     */
+    public static ContractClient contract(String baseUrl, ClientConfig.BasicAuth basicAuth) {
+        return contract(config(ContractClient.class, baseUrl, basicAuth).build());
+    }
+
+    /**
+     * Constructs a new ContractClient with custom configuration.
+     *
+     * @param clientConfig the configuration to use
+     * @return a ContractClient configured with the given configuration
+     */
+    public static ContractClient contract(ClientConfig<ContractClient> clientConfig) {
         return client(clientConfig);
     }
 

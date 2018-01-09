@@ -26,7 +26,7 @@ public interface CarSharingWhitelistClient extends TrafficsoftClient {
             @Param("contractId") long contractId,
             UpdateWhitelistsRequestRestDto request);
 
-    //@RequestLine("GET /api/rest/v1/car-sharing/whitelist?vehicleId={vehicleId}?contractId={contractId}")
+    //@RequestLine("GET /api/rest/v1/car-sharing/whitelist?vehicleId={vehicleId}&contractId={contractId}")
     @RequestLine("GET /{contractId}/car-sharing/whitelist?vehicleId={vehicleId}")
     HystrixCommand<FetchWhitelistsResponseRestDto> fetchWhitelists(
             @Param("contractId") long contractId,

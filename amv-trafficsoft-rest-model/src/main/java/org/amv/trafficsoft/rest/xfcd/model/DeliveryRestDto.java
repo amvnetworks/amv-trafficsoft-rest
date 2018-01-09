@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A delivery contains multiple vehicles which can contain one or more data
- * points for the given vehicle.
+ * A delivery contains multiple tracks which can contain one or more data
+ * points from multiple vehicles.
  */
 @Value
 @Builder(builderClassName = "Builder")
@@ -33,7 +33,8 @@ public class DeliveryRestDto {
     private Date timestamp;
 
     @Singular("addTrack")
-    @ApiModelProperty(notes = "The list of currently active vehicles with a subscription to the given contract. Empty list if there are no active vehicles.")
+    @ApiModelProperty(notes = "The list of data sent by currently active vehicles with a subscription to the given contract. " +
+            "Empty list if there is no data from active vehicles at the moment.")
     private List<TrackRestDto> track;
 
     public Date getTimestamp() {

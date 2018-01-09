@@ -112,6 +112,11 @@ public class CarSharingReservationClientIT {
         assertThat(returnValue.getReservationId(), is(notNullValue()));
         assertThat(returnValue.getFrom(), is(notNullValue()));
         assertThat(returnValue.getUntil(), is(notNullValue()));
+        assertThat(returnValue.getBtle(), is(notNullValue()));
+        assertThat(returnValue.getBtle().getAppId(), is(notNullValue()));
+        assertThat(returnValue.getBtle().getMobileSerialNumber(), is(notNullValue()));
+        assertThat(returnValue.getRfid(), is(notNullValue()));
+        assertThat(returnValue.getRfid().getDriverTagId(), is(notNullValue()));
 
         String url = String.format("/api/rest/v1/car-sharing/vehicle/%d/reservation?contractId=%d", ANY_VEHICLE_ID, ANY_CONTRACT_ID);
         this.mockClient.verifyOne(HttpMethod.POST, url);

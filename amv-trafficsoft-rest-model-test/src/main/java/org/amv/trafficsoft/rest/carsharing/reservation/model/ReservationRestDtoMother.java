@@ -23,6 +23,10 @@ public class ReservationRestDtoMother {
                 .rfid(ReservationRestDto.Rfid.builder()
                         .driverTagId(RandomStringUtils.randomNumeric(8))
                         .build())
+                .btle(ReservationRestDto.Btle.builder()
+                        .mobileSerialNumber(RandomStringUtils.randomNumeric(8))
+                        .appId(RandomStringUtils.randomAlphanumeric(12))
+                        .build())
                 .from(Date.from(Instant.now()))
                 .until(Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(7))))
                 .build();

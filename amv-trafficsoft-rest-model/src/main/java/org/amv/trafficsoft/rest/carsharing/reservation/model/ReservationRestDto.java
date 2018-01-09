@@ -1,6 +1,5 @@
 package org.amv.trafficsoft.rest.carsharing.reservation.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -61,7 +60,6 @@ public class ReservationRestDto {
 
         }
 
-        @JsonProperty("driver_tag_id")
         @ApiModelProperty(notes = "Required. The driver tag id (RFID).", required = true)
         private String driverTagId;
     }
@@ -75,11 +73,9 @@ public class ReservationRestDto {
 
         }
 
-        @JsonProperty("app_id")
         @ApiModelProperty(notes = "Required. The application id.", required = true)
         private String appId;
 
-        @JsonProperty("mobile_serial_number")
         @ApiModelProperty(notes = "Required. The mobile serial number (mosn).", required = true)
         private String mobileSerialNumber;
     }
