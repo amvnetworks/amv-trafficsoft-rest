@@ -7,6 +7,7 @@ import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
+import org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient;
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,20 @@ public class TrafficsoftApiRestClientAutoConfig {
     @Bean("trafficsoftApiRestCarSharingWhitelistClient")
     public CarSharingWhitelistClient carSharingWhitelistClient(ConfigurableClientConfig<CarSharingWhitelistClient> carSharingWhitelistConfig) {
         return TrafficsoftClients.carSharingWhitelist(carSharingWhitelistConfig);
+    }
+
+    @ConditionalOnMissingBean(name = "trafficsoftApiRestCarSharingReservationClientConfig")
+    @Bean("trafficsoftApiRestCarSharingReservationClientConfig")
+    public ConfigurableClientConfig<CarSharingReservationClient> carSharingReservationConfig(ClientConfig.BasicAuth basicAuth) {
+        return TrafficsoftClients.config(CarSharingReservationClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth)
+                .setterFactory(setterFactory())
+                .build();
+    }
+
+    @ConditionalOnMissingBean
+    @Bean("trafficsoftApiRestCarSharingReservationClient")
+    public CarSharingReservationClient carSharingReservationClient(ConfigurableClientConfig<CarSharingReservationClient> carSharingReservationConfig) {
+        return TrafficsoftClients.carSharingReservation(carSharingReservationConfig);
     }
 
     @ConditionalOnMissingBean(name = "trafficsoftApiRestAsgRegisterClientConfig")

@@ -76,7 +76,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
 
     @Test
     public void createsBeansOfTypeClientConfig() {
-        int numberOfBeansInAutoConfig = 3;
+        int numberOfBeansInAutoConfig = 4;
         int numberOfBeansInManualConfig = 2;
 
         int numberOfClientConfigBeansCreated = numberOfBeansInAutoConfig + numberOfBeansInManualConfig;

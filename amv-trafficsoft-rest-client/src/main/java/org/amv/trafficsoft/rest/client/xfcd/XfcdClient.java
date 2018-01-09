@@ -44,7 +44,7 @@ public interface XfcdClient extends TrafficsoftClient {
      */
     @Deprecated
     default HystrixCommand<List<NodeRestDto>> getLastData(
-            @Param("contractId") long contractId,
+            long contractId,
             List<Long> vehicleIds) {
         return getLatestData(contractId, vehicleIds);
     }

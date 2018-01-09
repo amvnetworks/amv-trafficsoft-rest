@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -159,22 +159,30 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#basicAuth--">basicAuth</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#carSharingReservationClient-org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig-">carSharingReservationClient</a></span>(org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient&gt;&nbsp;carSharingReservationConfig)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#carSharingReservationConfig-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-">carSharingReservationConfig</a></span>(org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth&nbsp;basicAuth)</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#carSharingWhitelistClient-org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig-">carSharingWhitelistClient</a></span>(org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient&gt;&nbsp;carSharingWhitelistConfig)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#carSharingWhitelistConfig-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-">carSharingWhitelistConfig</a></span>(org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth&nbsp;basicAuth)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>feign.hystrix.SetterFactory</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#setterFactory--">setterFactory</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>org.amv.trafficsoft.rest.client.xfcd.XfcdClient</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#xfcdClient-org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig-">xfcdClient</a></span>(org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.xfcd.XfcdClient&gt;&nbsp;xfcdClientConfig)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.xfcd.XfcdClient&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/autoconfigure/TrafficsoftApiRestClientAutoConfig.html#xfcdClientConfig-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-">xfcdClientConfig</a></span>(org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth&nbsp;basicAuth)</code>&nbsp;</td>
 </tr>
@@ -271,6 +279,28 @@ public&nbsp;org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfi
 <pre>@ConditionalOnMissingBean
  @Bean(value="trafficsoftApiRestCarSharingWhitelistClient")
 public&nbsp;org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient&nbsp;carSharingWhitelistClient(org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient&gt;&nbsp;carSharingWhitelistConfig)</pre>
+</li>
+</ul>
+<a name="carSharingReservationConfig-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>carSharingReservationConfig</h4>
+<pre>@ConditionalOnMissingBean(name="trafficsoftApiRestCarSharingReservationClientConfig")
+ @Bean(value="trafficsoftApiRestCarSharingReservationClientConfig")
+public&nbsp;org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient&gt;&nbsp;carSharingReservationConfig(org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth&nbsp;basicAuth)</pre>
+</li>
+</ul>
+<a name="carSharingReservationClient-org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>carSharingReservationClient</h4>
+<pre>@ConditionalOnMissingBean
+ @Bean(value="trafficsoftApiRestCarSharingReservationClient")
+public&nbsp;org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient&nbsp;carSharingReservationClient(org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig&lt;org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient&gt;&nbsp;carSharingReservationConfig)</pre>
 </li>
 </ul>
 <a name="asgRegisterClientConfig-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-">

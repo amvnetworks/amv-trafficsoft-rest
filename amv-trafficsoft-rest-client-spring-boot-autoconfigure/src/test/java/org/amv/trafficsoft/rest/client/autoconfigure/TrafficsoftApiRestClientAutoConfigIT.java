@@ -3,6 +3,7 @@ package org.amv.trafficsoft.rest.client.autoconfigure;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
+import org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient;
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class TrafficsoftApiRestClientAutoConfigIT {
                 .getBeansOfType(ClientConfig.class);
 
         assertThat(beansOfTypeClientConfig, is(notNullValue()));
-        assertThat(beansOfTypeClientConfig.keySet(), hasSize(3));
+        assertThat(beansOfTypeClientConfig.keySet(), hasSize(4));
     }
 
     @Test
@@ -67,6 +68,14 @@ public class TrafficsoftApiRestClientAutoConfigIT {
                 .getBean(CarSharingWhitelistClient.class);
 
         assertThat(carSharingWhitelistClient, is(notNullValue()));
+    }
+
+    @Test
+    public void createsBeanOfTypeCarSharingRegistrationClient() {
+        final CarSharingReservationClient carSharingReservationClient = applicationContext
+                .getBean(CarSharingReservationClient.class);
+
+        assertThat(carSharingReservationClient, is(notNullValue()));
     }
 
     @Test

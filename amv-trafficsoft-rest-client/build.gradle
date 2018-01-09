@@ -20,7 +20,7 @@ dependencies {
 
 
     testCompile project(':amv-trafficsoft-rest-model-test')
-    testCompile 'com.marvinformatics.feign:feign-mock:0.6'
+    testCompile 'com.marvinformatics.feign:feign-mock:0.7'
 
     testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
     testCompile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"

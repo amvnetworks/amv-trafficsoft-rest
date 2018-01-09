@@ -3,6 +3,7 @@ package org.amv.trafficsoft.rest.client;
 import feign.Target;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
+import org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient;
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 
@@ -116,6 +117,27 @@ public final class TrafficsoftClients {
      * @return a CarSharingWhitelistClient configured with the given configuration
      */
     public static CarSharingWhitelistClient carSharingWhitelist(ClientConfig<CarSharingWhitelistClient> clientConfig) {
+        return client(clientConfig);
+    }
+
+    /**
+     * Constructs a new CarSharingReservationClient with default configuration.
+     *
+     * @param baseUrl   the base url of the api
+     * @param basicAuth the authorisation object for accessing the api
+     * @return a CarSharingReservationClient with default configuration
+     */
+    public static CarSharingReservationClient carSharingReservation(String baseUrl, ClientConfig.BasicAuth basicAuth) {
+        return carSharingReservation(config(CarSharingReservationClient.class, baseUrl, basicAuth).build());
+    }
+
+    /**
+     * Constructs a new CarSharingReservationClient with custom configuration.
+     *
+     * @param clientConfig the configuration to use
+     * @return a CarSharingReservationClient configured with the given configuration
+     */
+    public static CarSharingReservationClient carSharingReservation(ClientConfig<CarSharingReservationClient> clientConfig) {
         return client(clientConfig);
     }
 }
