@@ -14,8 +14,6 @@ import static java.util.Objects.requireNonNull;
  * <p>
  * This class exists for simpler construction of new clients
  * for the various services to access different parts of the API.
- *
- * @author Alois Leitner
  */
 public final class TrafficsoftClients {
 

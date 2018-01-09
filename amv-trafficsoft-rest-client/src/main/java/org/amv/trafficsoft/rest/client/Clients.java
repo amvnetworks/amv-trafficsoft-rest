@@ -15,8 +15,6 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * An internal factory class for creating generic client instances.
- *
- * @author Alois Leitner
  */
 final class Clients {
 

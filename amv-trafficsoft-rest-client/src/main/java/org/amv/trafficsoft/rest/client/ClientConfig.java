@@ -40,13 +40,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * it to his needs.
  *
  * @param <T> the type of the client this class is configuring
- * @author Alois Leitner
  */
 public interface ClientConfig<T> {
     /**
      * An interface for configuring basic authentication.
-     *
-     * @author Alois Leitner
      */
     interface BasicAuth {
         String username();
@@ -57,8 +54,6 @@ public interface ClientConfig<T> {
 
     /**
      * A simple implementation of {@link BasicAuth}.
-     *
-     * @author Alois Leitner
      */
     @Value
     @Builder(builderClassName = "Builder")
@@ -111,7 +106,6 @@ public interface ClientConfig<T> {
      * with reasonable default values.
      *
      * @param <T> the type of the client
-     * @author Alois Leitner
      */
     @Getter
     @Builder(builderClassName = "Builder")

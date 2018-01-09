@@ -7,8 +7,6 @@ import static com.google.common.net.HttpHeaders.USER_AGENT;
 
 /**
  * Base class for all Trafficsoft clients.
- *
- * @author Alois Leitner
  */
 @Headers({
         ACCEPT + ": " + "application/json;charset=UTF-8",
