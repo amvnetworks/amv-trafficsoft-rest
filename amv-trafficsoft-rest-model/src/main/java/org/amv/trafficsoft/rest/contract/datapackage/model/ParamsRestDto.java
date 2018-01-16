@@ -17,8 +17,8 @@ public class ParamsRestDto {
 
     }
 
-    @Singular("addDopuxParam")
-    private List<DopuxParamRestDto> dopux;
+    @Singular("addFcdParam")
+    private List<FcdParamRestDto> fcds;
 
     @Singular("addXfcdParam")
     private List<XfcdParamRestDto> xfcds;

@@ -45,10 +45,10 @@ public class ContractClientIT {
         String datapackageResponseJson = jsonMapper.writeValueAsString(DataPackageResponseRestDto.builder()
                 .gpsClean(true)
                 .params(ParamsRestDto.builder()
-                        .addDopuxParam(DopuxParamRestDto.builder()
-                                .code("DOPUX_CODE")
-                                .description("DOPUX_DESC")
-                                .name("DOPUX_NAME")
+                        .addFcdParam(FcdParamRestDto.builder()
+                                .code("FCD_CODE")
+                                .description("FCD_DESC")
+                                .name("FCD_NAME")
                                 .build())
                         .addStateParam(StateParamRestDto.builder()
                                 .code("STATE_CODE")
@@ -101,7 +101,7 @@ public class ContractClientIT {
         assertThat(returnValue, is(notNullValue()));
         assertThat(returnValue.isGpsClean(), is(true));
         assertThat(returnValue.getParams(), is(notNullValue()));
-        assertThat(returnValue.getParams().getDopux(), hasSize(1));
+        assertThat(returnValue.getParams().getFcds(), hasSize(1));
         assertThat(returnValue.getParams().getStates(), hasSize(1));
         assertThat(returnValue.getParams().getXfcds(), hasSize(1));
 

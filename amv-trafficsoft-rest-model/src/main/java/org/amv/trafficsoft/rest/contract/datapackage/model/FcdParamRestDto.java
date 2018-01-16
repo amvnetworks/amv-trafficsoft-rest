@@ -7,8 +7,8 @@ import lombok.Value;
 
 @Value
 @Builder(builderClassName = "Builder")
-@JsonDeserialize(builder = DopuxParamRestDto.Builder.class)
-public class DopuxParamRestDto {
+@JsonDeserialize(builder = FcdParamRestDto.Builder.class)
+public class FcdParamRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
