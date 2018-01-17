@@ -4,7 +4,7 @@
 
 amv-trafficsoft-rest
 ========
-amv-trafficsoft-rest is a Java client library for accessing the AMV Trafficsoft API.
+amv-trafficsoft-rest is a Java client library for accessing the AMV TrafficSoft® API.
 
 amv-trafficsoft-rest requires Java version 1.8 or greater.
 
