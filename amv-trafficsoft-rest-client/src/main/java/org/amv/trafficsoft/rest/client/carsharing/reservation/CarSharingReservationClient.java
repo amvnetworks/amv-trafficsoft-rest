@@ -28,6 +28,12 @@ public interface CarSharingReservationClient extends TrafficsoftClient {
             @Param("contractId") long contractId,
             @Param("vehicleId") long vehicleId);
 
+    @RequestLine("GET /api/rest/v1/car-sharing/vehicle/{vehicleId}/reservation?contractId={contractId}&reservationId={reservationId}")
+    HystrixCommand<List<ReservationRestDto>> fetchReservations(
+            @Param("contractId") long contractId,
+            @Param("vehicleId") long vehicleId,
+            @Param("reservationId") List<Long> reservationIds);
+
     @Headers({
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
