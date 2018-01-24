@@ -20,28 +20,24 @@ public interface XfcdClient extends TrafficsoftClient {
     @Headers({
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
-    //@RequestLine("POST /api/rest/v1/xfcd?contractId={contractId}")
-    @RequestLine("POST /{contractId}/xfcd")
+    @RequestLine("POST /api/rest/v1/xfcd?contractId={contractId}")
     HystrixCommand<List<DeliveryRestDto>> getDataAndConfirmDeliveries(
             @Param("contractId") long contractId,
             List<Long> deliveryIds);
 
-    //@RequestLine("GET /api/rest/v1/xfcd?contractId={contractId}")
-    @RequestLine("GET /{contractId}/xfcd")
+    @RequestLine("GET /api/rest/v1/xfcd?contractId={contractId}")
     HystrixCommand<List<DeliveryRestDto>> getData(
             @Param("contractId") long contractId);
 
     @Headers({
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
-    //@RequestLine("POST /api/rest/v1/xfcd/confirm?contractId={contractId}")
-    @RequestLine("POST /{contractId}/xfcd/confirm")
+    @RequestLine("POST /api/rest/v1/xfcd/confirm?contractId={contractId}")
     HystrixCommand<Void> confirmDeliveries(
             @Param("contractId") long contractId,
             List<Long> deliveryIds);
 
-    //@RequestLine("GET /api/rest/v1/xfcd/last?contractId={contractId}&vehicleId={vehicleId}")
-    @RequestLine("GET /{contractId}/xfcd/last?vehicleId={vehicleId}")
+    @RequestLine("GET /api/rest/v1/xfcd/last?contractId={contractId}&vehicleId={vehicleId}")
     HystrixCommand<List<NodeRestDto>> getLatestData(
             @Param("contractId") long contractId,
             @Param(value = "vehicleId") List<Long> vehicleIds);

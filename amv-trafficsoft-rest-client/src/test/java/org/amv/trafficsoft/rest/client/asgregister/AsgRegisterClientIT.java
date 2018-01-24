@@ -112,17 +112,17 @@ public class AsgRegisterClientIT {
                 .build());
 
         MockClient mockClient = new MockClient()
-                .add(HttpMethod.POST, String.format("/%d/asg-register", NON_EXISTING_CONTRACT_ID), Response.builder()
+                .add(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                         .headers(Collections.emptyMap())
                         .body(exceptionJson, Charsets.UTF_8))
-                .ok(HttpMethod.POST, String.format("/%d/asg-register", ANY_CONTRACT_ID), registerAsgResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/asg-register/oem", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/asg-register/oem/%s/series", ANY_CONTRACT_ID, ANY_OEM_CODE), seriesResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/asg-register/oem/%s/series/%s/model", ANY_CONTRACT_ID, ANY_OEM_CODE, ANY_SERIES_CODE), modelResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/asg-register/vehicle/%d", ANY_CONTRACT_ID, ANY_VEHICLE_ID), vehicleResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/asg-register/vehiclekey/%s", ANY_CONTRACT_ID, ANY_VEHICLE_KEY), vehicleKeyResponseDtoAsJson);
+                .ok(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", ANY_CONTRACT_ID), registerAsgResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem?contractId=%d", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series?contractId=%d", ANY_OEM_CODE, ANY_CONTRACT_ID), seriesResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehicle/%d?contractId=%d", ANY_VEHICLE_ID, ANY_CONTRACT_ID), vehicleResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehiclekey/%s?contractId=%d", ANY_VEHICLE_KEY, ANY_CONTRACT_ID), vehicleKeyResponseDtoAsJson);
 
         Target<AsgRegisterClient> mockTarget = new MockTarget<>(AsgRegisterClient.class);
 

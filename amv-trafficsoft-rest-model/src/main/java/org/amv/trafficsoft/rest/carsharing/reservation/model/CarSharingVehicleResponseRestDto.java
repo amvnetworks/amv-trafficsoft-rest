@@ -9,7 +9,7 @@ import java.util.List;
 
 @Value
 @Builder(builderClassName = "Builder")
-public class CarSharingVehicleRestDto {
+public class CarSharingVehicleResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 

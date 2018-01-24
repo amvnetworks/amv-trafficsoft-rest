@@ -10,14 +10,14 @@ import java.util.Date;
 
 @Value
 @Builder(builderClassName = "Builder")
-@ApiModel(description = "Data structure of a reservation. A ReservationRestDto can be of type 'RFID' or 'BTLE' (Bluetooth) " +
-        "depending which detail meta data object is present: 'rfid' or 'btle'. One of both is mandatory so if both " +
-        "objects are missing or both are present will result in an AMV TrafficSoft Error when trying to create or " +
+@ApiModel(description = "Data structure of a reservation. A reservation can be of type 'RFID' or 'BTLE' (Bluetooth) " +
+        "depending which detail meta data object is present: 'rfid' or 'btle'. One of both is mandatory so both " +
+        "objects missing or both present will result in an AMV TrafficSoft Error when trying to create or " +
         "modify a reservation. \nWhen using 'RFID' the properties valid from date/time and valid until date/time " +
         "are generally optional. So it's possible to create an infinite master reservation. For 'BTLE' or " +
         "limited reservations always both properties are mandatory."
 )
-public class ReservationRestDto {
+public class ReservationRequestRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 

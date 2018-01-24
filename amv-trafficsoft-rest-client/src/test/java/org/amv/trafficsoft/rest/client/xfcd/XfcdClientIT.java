@@ -66,18 +66,18 @@ public class XfcdClientIT {
         String exceptionJson = jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random());
 
         MockClient mockClient = new MockClient()
-                .add(HttpMethod.GET, String.format("/%d/xfcd", NON_EXISTING_CONTRACT_ID), Response.builder()
+                .add(HttpMethod.GET, String.format("/api/rest/v1/xfcd?contractId=%d", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                         .headers(Collections.emptyMap())
                         .body(exceptionJson, Charsets.UTF_8))
-                .add(HttpMethod.POST, String.format("/%d/xfcd/confirm", ANY_CONTRACT_ID), Response.builder()
+                .add(HttpMethod.POST, String.format("/api/rest/v1/xfcd/confirm?contractId=%d", ANY_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.OK.value())
                         .reason(HttpStatus.OK.getReasonPhrase())
                         .headers(Collections.emptyMap()))
-                .ok(HttpMethod.POST, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/xfcd", ANY_CONTRACT_ID), deliveryDtoListAsJson)
-                .ok(HttpMethod.GET, String.format("/%d/xfcd/last?%s", ANY_CONTRACT_ID, VALID_VEHICLE_IDS.stream()
+                .ok(HttpMethod.POST, String.format("/api/rest/v1/xfcd?contractId=%d", ANY_CONTRACT_ID), deliveryDtoListAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/xfcd?contractId=%d", ANY_CONTRACT_ID), deliveryDtoListAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/xfcd/last?contractId=%d&%s", ANY_CONTRACT_ID, VALID_VEHICLE_IDS.stream()
                         .map(val -> "vehicleId=" + val)
                         .collect(Collectors.joining("&"))), nodeDtoListAsJson);
 

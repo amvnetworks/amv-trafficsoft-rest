@@ -1,11 +1,7 @@
 package org.amv.trafficsoft.rest.carsharing.reservation.model;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
-import java.sql.Date;
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -15,12 +11,12 @@ public class CarSharingVehicleRestDtoMother {
         throw new UnsupportedOperationException();
     }
 
-    public static CarSharingVehicleRestDto random() {
+    public static CarSharingVehicleResponseRestDto random() {
         return randomWithVehicleId(RandomUtils.nextLong());
     }
 
-    public static CarSharingVehicleRestDto randomWithVehicleId(long vehicleId) {
-        return CarSharingVehicleRestDto.builder()
+    public static CarSharingVehicleResponseRestDto randomWithVehicleId(long vehicleId) {
+        return CarSharingVehicleResponseRestDto.builder()
                 .vehicleId(vehicleId)
                 .free(RandomUtils.nextBoolean())
                 .alwaysPowerOn(RandomUtils.nextBoolean())

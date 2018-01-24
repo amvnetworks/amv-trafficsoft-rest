@@ -68,16 +68,16 @@ public class CarSharingWhitelistClientIT {
                 .collect(joining("&"));
 
         this.mockClient = new MockClient()
-                .add(HttpMethod.POST, String.format("/%d/car-sharing/whitelist", ANY_CONTRACT_ID), Response.builder()
+                .add(HttpMethod.POST, String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d", ANY_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.OK.value())
                         .reason(HttpStatus.OK.getReasonPhrase())
                         .headers(Collections.emptyMap()))
-                .add(HttpMethod.GET, String.format("/%d/car-sharing/whitelist", NON_EXISTING_CONTRACT_ID), Response.builder()
+                .add(HttpMethod.GET, String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d", NON_EXISTING_CONTRACT_ID), Response.builder()
                         .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                         .headers(Collections.emptyMap())
                         .body(exceptionJson, Charsets.UTF_8))
-                .ok(HttpMethod.GET, String.format("/%d/car-sharing/whitelist?%s", ANY_CONTRACT_ID, queryString), retrieveWhitelistResponseRestDtoAsJson);
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d&%s", ANY_CONTRACT_ID, queryString), retrieveWhitelistResponseRestDtoAsJson);
 
         Target<CarSharingWhitelistClient> mockTarget = new MockTarget<>(CarSharingWhitelistClient.class);
 
@@ -97,7 +97,7 @@ public class CarSharingWhitelistClientIT {
 
         assertThat(returnValue, is(nullValue()));
 
-        String url = String.format("/%s/car-sharing/whitelist", ANY_CONTRACT_ID);
+        String url = String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d", ANY_CONTRACT_ID);
         this.mockClient.verifyOne(HttpMethod.POST, url);
     }
 
@@ -125,7 +125,7 @@ public class CarSharingWhitelistClientIT {
         String queryString = VALID_VEHICLE_IDS.stream()
                 .map(vehicleId -> String.format("vehicleId=%s", vehicleId))
                 .collect(joining("&"));
-        String url = String.format("/%s/car-sharing/whitelist?%s", ANY_CONTRACT_ID, queryString);
+        String url = String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d&%s", ANY_CONTRACT_ID, queryString);
         this.mockClient.verifyOne(HttpMethod.GET, url);
     }
 

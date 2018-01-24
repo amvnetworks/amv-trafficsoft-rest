@@ -9,7 +9,6 @@ import feign.Target;
 import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
-import org.amv.trafficsoft.rest.ErrorInfoRestDtoMother;
 import org.amv.trafficsoft.rest.carsharing.reservation.model.*;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
@@ -20,8 +19,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
-import rx.schedulers.Schedulers;
-import rx.schedulers.TestScheduler;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,11 +45,11 @@ public class CarSharingReservationClientIT {
     public void setUp() throws JsonProcessingException {
         ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
 
-        String createReservationResponseJson = jsonMapper.writeValueAsString(ReservationRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID));
+        String createReservationResponseJson = jsonMapper.writeValueAsString(ReservationResponseRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID));
         String fetchReservationResponseJson = jsonMapper.writeValueAsString(ImmutableList.builder()
-                .add(ReservationRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID))
-                .add(ReservationRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID))
-                .add(ReservationRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID))
+                .add(ReservationResponseRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID))
+                .add(ReservationResponseRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID))
+                .add(ReservationResponseRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID))
                 .build());
         String fetchVehiclesResponseJson = jsonMapper.writeValueAsString(VALID_VEHICLE_IDS.stream()
                 .map(CarSharingVehicleRestDtoMother::randomWithVehicleId)
@@ -103,9 +100,9 @@ public class CarSharingReservationClientIT {
 
     @Test
     public void itShouldCreateReservation() throws Exception {
-        ReservationRestDto request = ReservationRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID);
+        ReservationRequestRestDto request = ReservationRequestRestDtoMother.randomWithVehicleId(ANY_VEHICLE_ID);
 
-        ReservationRestDto returnValue = this.sut.createReservation(ANY_CONTRACT_ID, ANY_VEHICLE_ID, request).execute();
+        ReservationResponseRestDto returnValue = this.sut.createReservation(ANY_CONTRACT_ID, ANY_VEHICLE_ID, request).execute();
 
         assertThat(returnValue, is(notNullValue()));
         assertThat(returnValue.getVehicleId(), is(ANY_VEHICLE_ID));
@@ -115,6 +112,7 @@ public class CarSharingReservationClientIT {
         assertThat(returnValue.getBtle(), is(notNullValue()));
         assertThat(returnValue.getBtle().getAppId(), is(notNullValue()));
         assertThat(returnValue.getBtle().getMobileSerialNumber(), is(notNullValue()));
+        assertThat(returnValue.getBtle().getAccessCertificateId(), is(notNullValue()));
         assertThat(returnValue.getRfid(), is(notNullValue()));
         assertThat(returnValue.getRfid().getDriverTagId(), is(notNullValue()));
 
@@ -134,7 +132,7 @@ public class CarSharingReservationClientIT {
 
     @Test
     public void itShouldFetchReservation() throws Exception {
-        List<ReservationRestDto> returnValue = this.sut.fetchReservations(ANY_CONTRACT_ID, ANY_VEHICLE_ID).execute();
+        List<ReservationResponseRestDto> returnValue = this.sut.fetchReservations(ANY_CONTRACT_ID, ANY_VEHICLE_ID).execute();
 
         assertThat(returnValue, is(notNullValue()));
 
@@ -157,7 +155,7 @@ public class CarSharingReservationClientIT {
 
     @Test
     public void itShouldFetchVehicles() throws Exception {
-        List<CarSharingVehicleRestDto> returnValue = this.sut.fetchVehicles(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
+        List<CarSharingVehicleResponseRestDto> returnValue = this.sut.fetchVehicles(ANY_CONTRACT_ID, VALID_VEHICLE_IDS).execute();
 
         assertThat(returnValue, is(notNullValue()));
 
@@ -181,7 +179,7 @@ public class CarSharingReservationClientIT {
 
     @Test
     public void itShouldUpdateVehicleAlwaysPowerOn() throws Exception {
-        CarSharingVehicleRestDto returnValue = this.sut.updateVehicleAlwaysPowerOn(ANY_CONTRACT_ID, ANY_VEHICLE_ID, new VehiclePowerOnRequestRestDto(true)).execute();
+        CarSharingVehicleResponseRestDto returnValue = this.sut.updateVehicleAlwaysPowerOn(ANY_CONTRACT_ID, ANY_VEHICLE_ID, new VehiclePowerOnRequestRestDto(true)).execute();
 
         assertThat(returnValue, is(notNullValue()));
 

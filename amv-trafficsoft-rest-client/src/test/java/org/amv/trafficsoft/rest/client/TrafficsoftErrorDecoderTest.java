@@ -33,7 +33,7 @@ public class TrafficsoftErrorDecoderTest {
                 "\"errorCode\":\"TSW-00001\"," +
                 "\"id\":\"6POYG\"," +
                 "\"message\":\"[TSW-00001] Some message here!\"," +
-                "\"url\":\"http://www.example.com\"" +
+                "\"url\":\"https://www.example.com\"" +
                 "}";
         Response response = Response.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())

@@ -20,14 +20,12 @@ public interface CarSharingWhitelistClient extends TrafficsoftClient {
     @Headers({
             CONTENT_TYPE + ": " + "application/json;charset=UTF-8"
     })
-    //@RequestLine("POST /api/rest/v1/car-sharing/whitelist?contractId={contractId}")
-    @RequestLine("POST /{contractId}/car-sharing/whitelist")
+    @RequestLine("POST /api/rest/v1/car-sharing/whitelist?contractId={contractId}")
     HystrixCommand<Void> updateWhitelists(
             @Param("contractId") long contractId,
             UpdateWhitelistsRequestRestDto request);
 
-    //@RequestLine("GET /api/rest/v1/car-sharing/whitelist?vehicleId={vehicleId}&contractId={contractId}")
-    @RequestLine("GET /{contractId}/car-sharing/whitelist?vehicleId={vehicleId}")
+    @RequestLine("GET /api/rest/v1/car-sharing/whitelist?contractId={contractId}&vehicleId={vehicleId}")
     HystrixCommand<FetchWhitelistsResponseRestDto> fetchWhitelists(
             @Param("contractId") long contractId,
             @Param("vehicleId") List<Long> vehicleIds);
