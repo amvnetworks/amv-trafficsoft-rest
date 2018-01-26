@@ -41,7 +41,7 @@ final class Clients {
                                 .collect(toList()))
                         .build();
 
-        return HystrixFeign.builder()
+        HystrixFeign.Builder builder = HystrixFeign.builder()
                 .client(clientConfig.client())
                 .contract(clientConfig.contract())
                 .decoder(clientConfig.decoder())
@@ -52,7 +52,12 @@ final class Clients {
                 .options(clientConfig.options())
                 .requestInterceptors(requestInterceptors)
                 .retryer(clientConfig.retryer())
-                .setterFactory(clientConfig.setterFactory())
-                .target(clientConfig.target());
+                .setterFactory(clientConfig.setterFactory());
+
+        boolean hasFallbackFactory = clientConfig.fallbackFactory() != null;
+
+        return hasFallbackFactory ?
+                builder.target(clientConfig.target(), clientConfig.fallbackFactory()) :
+                builder.target(clientConfig.target());
     }
 }

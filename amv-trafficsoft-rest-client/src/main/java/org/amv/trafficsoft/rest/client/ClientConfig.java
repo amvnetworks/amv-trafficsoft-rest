@@ -15,6 +15,7 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import feign.codec.ErrorDecoder;
+import feign.hystrix.FallbackFactory;
 import feign.hystrix.SetterFactory;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -79,6 +80,8 @@ public interface ClientConfig<T> {
 
     SetterFactory setterFactory();
 
+    FallbackFactory<T> fallbackFactory();
+
     Logger logger();
 
     Retryer retryer();
@@ -127,6 +130,7 @@ public interface ClientConfig<T> {
         private Encoder encoder;
         private BasicAuth basicAuth;
         private ErrorDecoder errorDecoder;
+        private FallbackFactory<T> fallbackFactory;
 
         @Default
         private SetterFactory setterFactory = new DefaultSetterFactory();
@@ -185,7 +189,7 @@ public interface ClientConfig<T> {
                         .withCoreSize(DEFAULT_THREAD_POOL_SIZE);
 
                 HystrixCommandProperties.Setter commandProperties = HystrixCommandProperties.Setter()
-                        .withFallbackEnabled(false)
+                        .withFallbackEnabled(true)
                         .withExecutionTimeoutEnabled(true)
                         .withExecutionTimeoutInMilliseconds(DEFAULT_TIMEOUT_IN_MS)
                         .withExecutionIsolationStrategy(THREAD)
