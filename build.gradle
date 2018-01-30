@@ -4,6 +4,7 @@ buildscript {
     ext {
         springBootVersion = '1.5.8.RELEASE'
         jacksonVersion = '2.8.10'
+        swaggerVersion = '1.5.16'
     }
     repositories {
         jcenter()
