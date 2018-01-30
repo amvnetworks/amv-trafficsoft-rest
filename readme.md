@@ -70,6 +70,19 @@ XfcdClient xfcdClient = TrafficsoftClients.xfcd(baseUrl, basicAuth);
 // ...
 ```
 
+### car-sharing
+```java
+String baseUrl = "https://www.example.com";
+BasicAuth basicAuth = BasicAuthImpl.builder()
+    .username("john_doe")
+    .password("mysupersecretpassword")
+    .build();
+
+CarSharingReservationClient reservationClient = TrafficsoftClients.carSharingReservation(baseUrl, basicAuth);
+CarSharingWhitelistClient whitelistClient = TrafficsoftClients.carSharingWhitelist(baseUrl, basicAuth);
+// ...
+```
+
 ### asg-register
 ```java
 String baseUrl = "https://www.example.com";
