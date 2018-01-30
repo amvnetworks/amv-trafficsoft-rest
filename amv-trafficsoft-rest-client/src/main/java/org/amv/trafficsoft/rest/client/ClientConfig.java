@@ -36,9 +36,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 /**
  * A configuration interface for clients.
  * <p>
- * The user of this interface has precise control over
- * how a client class behaves internally and is able to configure
- * it to his needs.
+ * Users of this interface have precise control over
+ * how a client class behaves internally and are able to configure
+ * it to their needs.
  *
  * @param <T> the type of the client this class is configuring
  */
