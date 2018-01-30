@@ -18,5 +18,5 @@ public class VehicleKeyResponseRestDto {
     }
 
     @ApiModelProperty(notes = "A resource representing a vehicle key.")
-    private final VehicleKeyRestDto vehicleKey;
+    private VehicleKeyRestDto vehicleKey;
 }
