@@ -87,7 +87,6 @@ public class CarSharingReservationClientIT {
                         .body(fetchVehiclesResponseJson, Charsets.UTF_8)
                         .headers(Collections.emptyMap()));
 
-
         Target<CarSharingReservationClient> mockTarget = new MockTarget<>(CarSharingReservationClient.class);
 
         ClientConfig<CarSharingReservationClient> config = ClientConfig.ConfigurableClientConfig.<CarSharingReservationClient>builder()

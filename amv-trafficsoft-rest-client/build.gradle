@@ -18,7 +18,6 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
-
     testCompile project(':amv-trafficsoft-rest-model-test')
     testCompile 'com.marvinformatics.feign:feign-mock:0.7'
 

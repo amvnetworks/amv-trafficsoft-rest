@@ -18,6 +18,14 @@ public class ReservationResponseRestDtoMother {
     }
 
     public static ReservationResponseRestDto randomWithVehicleId(long vehicleId) {
+        return randomBuilderWithVehicleId(vehicleId).build();
+    }
+
+    public static ReservationResponseRestDto.Builder randomBuilder() {
+        return randomBuilderWithVehicleId(RandomUtils.nextLong());
+    }
+
+    public static ReservationResponseRestDto.Builder randomBuilderWithVehicleId(long vehicleId) {
         return ReservationResponseRestDto.builder()
                 .reservationId(RandomUtils.nextLong())
                 .vehicleId(vehicleId)
@@ -30,7 +38,6 @@ public class ReservationResponseRestDtoMother {
                         .accessCertificateId(UUID.randomUUID().toString())
                         .build())
                 .from(Date.from(Instant.now()))
-                .until(Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(7))))
-                .build();
+                .until(Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(7))));
     }
 }
