@@ -4,6 +4,5 @@ dependencies {
     compile "io.swagger:swagger-annotations:${swaggerVersion}"
 
     compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-    compile "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 }
