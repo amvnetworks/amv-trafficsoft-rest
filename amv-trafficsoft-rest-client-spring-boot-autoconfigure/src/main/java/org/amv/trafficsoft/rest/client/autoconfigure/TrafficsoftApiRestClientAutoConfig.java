@@ -98,7 +98,6 @@ public class TrafficsoftApiRestClientAutoConfig {
         return TrafficsoftClients.asgRegister(asgRegisterClientConfig);
     }
 
-
     @ConditionalOnMissingBean(name = "trafficsoftApiRestClientSetterFactory")
     @Bean("trafficsoftApiRestClientSetterFactory")
     public SetterFactory setterFactory() {
@@ -111,7 +110,7 @@ public class TrafficsoftApiRestClientAutoConfig {
 
             HystrixCommandProperties.Setter commandProperties = HystrixCommandProperties.Setter()
                     .withRequestLogEnabled(true)
-                    .withFallbackEnabled(false)
+                    .withFallbackEnabled(true)
                     .withExecutionTimeoutEnabled(true)
                     .withExecutionTimeoutInMilliseconds((int) SECONDS.toMillis(45))
                     .withExecutionIsolationStrategy(SEMAPHORE)
