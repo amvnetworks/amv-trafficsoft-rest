@@ -1,9 +1,4 @@
 description = 'A Java client library for accessing the AMV Trafficsoft API'
-buildscript {
-    ext {
-        feignVersion = '9.5.1'
-    }
-}
 
 dependencies {
     compile project(':amv-trafficsoft-rest-model')

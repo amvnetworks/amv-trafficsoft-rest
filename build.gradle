@@ -4,7 +4,8 @@ buildscript {
     ext {
         springBootVersion = '1.5.8.RELEASE'
         jacksonVersion = '2.8.10'
-        swaggerVersion = '1.5.16'
+        feignVersion = '9.5.1'
+        swaggerVersion = '1.5.18'
         apacheCommonsVersion = '3.5'
     }
     repositories {
@@ -57,8 +58,8 @@ allprojects {
             force 'com.netflix.archaius:archaius-core:0.6.6',
                     'org.slf4j:slf4j-api:1.7.25',
                     'com.google.guava:guava:22.0',
-                    'io.github.openfeign:feign-core:9.5.1',
                     'org.reactivestreams:reactive-streams:1.0.1',
+                    "io.github.openfeign:feign-core:${feignVersion}",
                     "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
                     "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
                     "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
