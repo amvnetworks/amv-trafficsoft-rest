@@ -23,31 +23,31 @@ public class ReservationRequestRestDto {
 
     }
 
-    @ApiModelProperty(notes = "The vehicle ID.", required = true)
+    @ApiModelProperty(name = "vehicleId", notes = "The vehicle ID.", required = true)
     private long vehicleId;
 
-    @ApiModelProperty(notes = "The reservation ID. Leave empty for new reservations. " +
+    @ApiModelProperty(name = "reservationId", notes = "The reservation ID. Leave empty for new reservations. " +
             "Required for reservation changes only.")
     private Long reservationId;
 
     @Deprecated
-    @ApiModelProperty(notes = "DEPRECATED: The driver tag id (RFID). This is for backward compatibility only. For "
-            + "new implementations use object 'rfid' instead!")
+    @ApiModelProperty(name = "driverTagId", notes = "DEPRECATED: The driver tag id (RFID). " +
+            "This is for backward compatibility only. For new implementations use object 'rfid' instead!")
     private String driverTagId;
 
-    @ApiModelProperty(notes = "The additional metadata for a RFID reservation. Required for reservations of type 'RFID'"
+    @ApiModelProperty(name = "rfid", notes = "The additional metadata for a RFID reservation. Required for reservations of type 'RFID'"
             + ". Leave empty for reservations of type 'BTLE' (Bluetooth).")
     private Rfid rfid;
 
-    @ApiModelProperty(notes = "The additional metadata for a Bluetooth reservation. Required for reservations of type "
+    @ApiModelProperty(name = "btle", notes = "The additional metadata for a Bluetooth reservation. Required for reservations of type "
             + "'BTLE' (Bluetooth). Leave empty for reservations of type 'RFID'.")
     private Btle btle;
 
-    @ApiModelProperty(notes = "The date and time the reservation is valid from. This property is generally optional but"
+    @ApiModelProperty(name = "from", notes = "The date and time the reservation is valid from. This property is generally optional but"
             + " required, when a valid until date/time is given.")
     private Date from;
 
-    @ApiModelProperty(notes = "The date and time the reservation is valid until. This property is generally optional "
+    @ApiModelProperty(name = "until", notes = "The date and time the reservation is valid until. This property is generally optional "
             + "but required, when a valid from date/time is given.")
     private Date until;
 
@@ -60,7 +60,7 @@ public class ReservationRequestRestDto {
 
         }
 
-        @ApiModelProperty(notes = "Required. The driver tag id (RFID).", required = true)
+        @ApiModelProperty(name = "driverTagId", notes = "Required. The driver tag id (RFID).", required = true)
         private String driverTagId;
     }
 
@@ -73,10 +73,10 @@ public class ReservationRequestRestDto {
 
         }
 
-        @ApiModelProperty(notes = "Required. The application id.", required = true)
+        @ApiModelProperty(name = "appId", notes = "Required. The application id.", required = true)
         private String appId;
 
-        @ApiModelProperty(notes = "Required. The mobile serial number (mosn).", required = true)
+        @ApiModelProperty(name = "mobileSerialNumber", notes = "Required. The mobile serial number (mosn).", required = true)
         private String mobileSerialNumber;
     }
 }

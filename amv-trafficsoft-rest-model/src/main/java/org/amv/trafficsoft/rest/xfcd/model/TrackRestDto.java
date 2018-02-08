@@ -26,13 +26,13 @@ public class TrackRestDto {
 
     }
 
-    @ApiModelProperty(notes = "Required. The ID of the track.", required = true)
+    @ApiModelProperty(name = "id", notes = "Required. The ID of the track.", required = true)
     private long id;
 
-    @ApiModelProperty(notes = "Optional. The ID of the vehicle.")
+    @ApiModelProperty(name = "vehicleId", notes = "Optional. The ID of the vehicle.")
     private Long vehicleId;
 
     @Singular("addNode")
-    @ApiModelProperty(notes = "Required. The actual data nodes of the vehicle.", required = true)
+    @ApiModelProperty(name = "nodes", notes = "Required. The actual data nodes of the vehicle.", required = true)
     private List<NodeRestDto> nodes;
 }

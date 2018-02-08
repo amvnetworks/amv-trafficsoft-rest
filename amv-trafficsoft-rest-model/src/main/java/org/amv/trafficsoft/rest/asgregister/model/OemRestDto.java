@@ -17,9 +17,9 @@ public class OemRestDto {
 
     }
 
-    @ApiModelProperty(notes = "The oem CODE.")
+    @ApiModelProperty(name = "oemCode", notes = "The oem CODE.")
     private String oemCode;
 
-    @ApiModelProperty(notes = "A human readable representation of the oem identifier.")
+    @ApiModelProperty(name = "name", notes = "A human readable representation of the oem identifier.")
     private String name;
 }

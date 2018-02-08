@@ -20,7 +20,7 @@ public class UpdateWhitelistsRequestRestDto {
 
     }
 
-    @ApiModelProperty(value = "A list of whitelists associated to vehicles", required = true)
+    @ApiModelProperty(name = "vehicleWhitelists", value = "A list of whitelists associated to vehicles", required = true)
     @Singular(value = "addVehicleWhitelist")
     private List<VehicleWhitelistRestDto> vehicleWhitelists;
 

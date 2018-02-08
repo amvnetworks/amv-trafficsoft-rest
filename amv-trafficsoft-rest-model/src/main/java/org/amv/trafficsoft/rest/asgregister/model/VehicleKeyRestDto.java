@@ -17,12 +17,12 @@ public class VehicleKeyRestDto {
 
     }
 
-    @ApiModelProperty(notes = "The KEY of the vehicle.")
+    @ApiModelProperty(name = "key", notes = "The KEY of the vehicle.")
     private String key;
 
-    @ApiModelProperty(notes = "The ID of the vehicle.")
+    @ApiModelProperty(name = "vehicleId", notes = "The ID of the vehicle.")
     private Long vehicleId;
 
-    @ApiModelProperty(notes = "Flag indicating whether the KEY is valid.")
+    @ApiModelProperty(name = "valid", notes = "Flag indicating whether the KEY is valid.")
     private boolean valid;
 }

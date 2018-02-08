@@ -37,36 +37,36 @@ public class ErrorInfo {
     /**
      * @return An id uniquely identifying the error
      */
-    @ApiModelProperty(notes = "An id uniquely identifying the error")
+    @ApiModelProperty(name = "id", notes = "An id uniquely identifying the error")
     private String id;
 
     /**
      * @return The time the error occurred
      */
-    @ApiModelProperty(notes = "The time the error occurred")
+    @ApiModelProperty(name = "dateTime", notes = "The time the error occurred")
     private LocalDateTime dateTime;
 
     /**
      * @return An error code
      */
-    @ApiModelProperty(notes = "An error code")
+    @ApiModelProperty(name = "errorCode", notes = "An error code")
     private String errorCode;
 
     /**
      * @return Name of the exception that caused the error
      */
-    @ApiModelProperty(notes = "Name of the exception that caused the error")
+    @ApiModelProperty(name = "exception", notes = "Name of the exception that caused the error")
     private String exception;
 
     /**
      * @return An additional message explaining the error
      */
-    @ApiModelProperty(notes = "An additional message explaining the error")
+    @ApiModelProperty(name = "message", notes = "An additional message explaining the error")
     private String message;
 
     /**
      * @return The source the error originally occurred
      */
-    @ApiModelProperty(notes = "The source the error originally occurred")
+    @ApiModelProperty(name = "url", notes = "The source the error originally occurred")
     private String url;
 }

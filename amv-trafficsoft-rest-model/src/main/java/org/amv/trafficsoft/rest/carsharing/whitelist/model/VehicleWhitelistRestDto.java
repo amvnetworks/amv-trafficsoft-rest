@@ -18,10 +18,10 @@ public class VehicleWhitelistRestDto {
 
     }
 
-    @ApiModelProperty(value = "Id of a vehicle", required = true)
+    @ApiModelProperty(name = "vehicleId", value = "Id of a vehicle", required = true)
     private long vehicleId;
 
-    @ApiModelProperty(value = "A list of driver tag ids", allowEmptyValue = true)
+    @ApiModelProperty(name = "whitelist", value = "A list of driver tag ids", allowEmptyValue = true)
     @Singular(value = "addWhitelist")
     private List<String> whitelist;
 }

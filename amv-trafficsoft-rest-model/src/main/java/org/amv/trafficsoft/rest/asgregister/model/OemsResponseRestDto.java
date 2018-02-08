@@ -20,7 +20,7 @@ public class OemsResponseRestDto {
     }
 
     @Singular("addOem")
-    @ApiModelProperty(notes = "A list of vehicle oems.")
+    @ApiModelProperty(name = "oems", notes = "A list of vehicle oems.")
     private List<OemRestDto> oems;
 
     public List<OemRestDto> getOems() {

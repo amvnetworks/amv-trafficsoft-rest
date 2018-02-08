@@ -17,6 +17,6 @@ public class VehicleResponseRestDto {
 
     }
 
-    @ApiModelProperty(notes = "A resource representing a vehicle.")
+    @ApiModelProperty(name = "vehicle", notes = "A resource representing a vehicle.")
     private VehicleRestDto vehicle;
 }

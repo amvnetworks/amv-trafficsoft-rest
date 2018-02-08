@@ -20,7 +20,7 @@ public class ModelsResponseRestDto {
     }
 
     @Singular("addModel")
-    @ApiModelProperty(notes = "A list of vehicle models.")
+    @ApiModelProperty(name = "models", notes = "A list of vehicle models.")
     private List<ModelRestDto> models;
 
     public List<ModelRestDto> getModels() {

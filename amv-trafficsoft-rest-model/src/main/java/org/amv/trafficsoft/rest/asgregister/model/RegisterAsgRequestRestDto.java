@@ -17,15 +17,15 @@ public class RegisterAsgRequestRestDto {
 
     }
 
-    @ApiModelProperty(notes = "Required. The vehicle KEY.", required = true)
+    @ApiModelProperty(name = "vehicleKey", notes = "Required. The vehicle KEY.", required = true)
     private String vehicleKey;
 
-    @ApiModelProperty(notes = "Required. The oem CODE.", required = true)
+    @ApiModelProperty(name = "oemCode", notes = "Required. The oem CODE.", required = true)
     private String oemCode;
 
-    @ApiModelProperty(notes = "Required. The series CODE.", required = true)
+    @ApiModelProperty(name = "seriesCode", notes = "Required. The series CODE.", required = true)
     private String seriesCode;
 
-    @ApiModelProperty(notes = "Required. The model CODE.", required = true)
+    @ApiModelProperty(name = "modelCode", notes = "Required. The model CODE.", required = true)
     private String modelCode;
 }

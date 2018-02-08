@@ -17,15 +17,15 @@ public class ModelRestDto {
 
     }
 
-    @ApiModelProperty(notes = "The oem CODE.")
+    @ApiModelProperty(name = "oemCode", notes = "The oem CODE.")
     private String oemCode;
 
-    @ApiModelProperty(notes = "The series CODE.")
+    @ApiModelProperty(name = "seriesCode", notes = "The series CODE.")
     private String seriesCode;
 
-    @ApiModelProperty(notes = "The model CODE.")
+    @ApiModelProperty(name = "modelCode", notes = "The model CODE.")
     private String modelCode;
 
-    @ApiModelProperty(notes = "A human readable representation of the model identifier.")
+    @ApiModelProperty(name = "name", notes = "A human readable representation of the model identifier.")
     private String name;
 }

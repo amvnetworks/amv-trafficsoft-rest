@@ -27,19 +27,20 @@ public class ParameterRestDto {
 
     }
 
-    @ApiModelProperty(notes = "Required. The name of the parameter, e.g. \"kmrd\", \"speed\", etc", required = true)
+    @ApiModelProperty(name = "param", notes = "Required. The name of the parameter, e.g. \"kmrd\", \"speed\", etc", required = true)
     private String param;
 
-    @ApiModelProperty(notes = "Optional. The value of the parameter. Only in string format, but can be String, Number, boolean, etc. Empty if no value available for that parameter.")
+    @ApiModelProperty(name = "value", notes = "Optional. The value of the parameter. Only in string format, " +
+            "but can be String, Number, boolean, etc. Empty if no value available for that parameter.")
     private String value;
 
-    @ApiModelProperty(notes = "Optional. The time the parameter was generated.")
+    @ApiModelProperty(name = "timestamp", notes = "Optional. The time the parameter was generated.")
     private Date timestamp;
 
-    @ApiModelProperty(notes = "Optional. The longitude at which the parameter was generated.")
+    @ApiModelProperty(name = "longitude", notes = "Optional. The longitude at which the parameter was generated.")
     private BigDecimal longitude;
 
-    @ApiModelProperty(notes = "Optional. The latitude at which the parameter was generated.")
+    @ApiModelProperty(name = "latitude", notes = "Optional. The latitude at which the parameter was generated.")
     private BigDecimal latitude;
 
     public Date getTimestamp() {

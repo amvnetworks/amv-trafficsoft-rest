@@ -17,12 +17,12 @@ public class SeriesRestDto {
 
     }
 
-    @ApiModelProperty(notes = "The oem CODE.")
+    @ApiModelProperty(name = "oemCode", notes = "The oem CODE.")
     private String oemCode;
 
-    @ApiModelProperty(notes = "The series CODE.")
+    @ApiModelProperty(name = "seriesCode", notes = "The series CODE.")
     private String seriesCode;
 
-    @ApiModelProperty(notes = "A human readable representation of the series identifier.")
+    @ApiModelProperty(name = "name", notes = "A human readable representation of the series identifier.")
     private String name;
 }

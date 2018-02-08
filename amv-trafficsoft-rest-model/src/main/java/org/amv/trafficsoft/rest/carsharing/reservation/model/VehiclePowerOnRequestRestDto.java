@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class VehiclePowerOnRequestRestDto {
 
-    @ApiModelProperty(notes = "Required. The 'alwaysPowerOn' configuration for the on-board unit. " +
+    @ApiModelProperty(name = "alwaysPowerOn", notes = "Required. The 'alwaysPowerOn' configuration for the on-board unit. " +
             "This can be necessary for car sharing vehicles to avoid dialing-in delays.", required = true)
     private boolean alwaysPowerOn;
 
