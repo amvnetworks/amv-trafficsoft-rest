@@ -12,7 +12,7 @@ amv-trafficsoft-rest requires Java version 1.8 or greater.
 ## Installation
 
 Download the latest jars from [Bintray](https://bintray.com/amvnetworks/amv-trafficsoft-rest)
-or take a look at the [install wiki page](https://github.com/amvnetworks/amv-trafficsoft-rest/wiki/isntall) on how
+or take a look at the [install wiki page](https://github.com/amvnetworks/amv-trafficsoft-rest/wiki/install) on how
 to include it in your project.
 
 ## Basic Usage
