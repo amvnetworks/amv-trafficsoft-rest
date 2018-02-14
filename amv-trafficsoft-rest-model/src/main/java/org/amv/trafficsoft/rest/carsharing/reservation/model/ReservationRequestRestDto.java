@@ -15,8 +15,7 @@ import java.util.Date;
         "objects missing or both present will result in an AMV TrafficSoft Error when trying to create or " +
         "modify a reservation. \nWhen using 'RFID' the properties valid from date/time and valid until date/time " +
         "are generally optional. So it's possible to create an infinite master reservation. For 'BTLE' or " +
-        "limited reservations always both properties are mandatory."
-)
+        "limited reservations always both properties are mandatory.")
 public class ReservationRequestRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
@@ -35,20 +34,24 @@ public class ReservationRequestRestDto {
             "This is for backward compatibility only. For new implementations use object 'rfid' instead!")
     private String driverTagId;
 
-    @ApiModelProperty(name = "rfid", notes = "The additional metadata for a RFID reservation. Required for reservations of type 'RFID'"
+    @ApiModelProperty(name = "rfid",
+            notes = "The additional metadata for a RFID reservation. Required for reservations of type 'RFID'"
             + ". Leave empty for reservations of type 'BTLE' (Bluetooth).")
     private Rfid rfid;
 
-    @ApiModelProperty(name = "btle", notes = "The additional metadata for a Bluetooth reservation. Required for reservations of type "
-            + "'BTLE' (Bluetooth). Leave empty for reservations of type 'RFID'.")
+    @ApiModelProperty(name = "btle",
+            notes = "The additional metadata for a Bluetooth reservation. Required for reservations of type " +
+                    "'BTLE' (Bluetooth). Leave empty for reservations of type 'RFID'.")
     private Btle btle;
 
-    @ApiModelProperty(name = "from", notes = "The date and time the reservation is valid from. This property is generally optional but"
-            + " required, when a valid until date/time is given.")
+    @ApiModelProperty(name = "from",
+            notes = "The date and time the reservation is valid from. This property is generally optional but" +
+                    " required, when a valid until date/time is given.")
     private Date from;
 
-    @ApiModelProperty(name = "until", notes = "The date and time the reservation is valid until. This property is generally optional "
-            + "but required, when a valid from date/time is given.")
+    @ApiModelProperty(name = "until",
+            notes = "The date and time the reservation is valid until. This property is generally optional " +
+                    "but required, when a valid from date/time is given.")
     private Date until;
 
     @Value
@@ -76,7 +79,9 @@ public class ReservationRequestRestDto {
         @ApiModelProperty(name = "appId", notes = "Required. The application id.", required = true)
         private String appId;
 
-        @ApiModelProperty(name = "mobileSerialNumber", notes = "Required. The mobile serial number (mosn).", required = true)
+        @ApiModelProperty(name = "mobileSerialNumber",
+                notes = "Required. The mobile serial number (mosn).",
+                required = true)
         private String mobileSerialNumber;
     }
 }

@@ -61,11 +61,15 @@ public class NodeRestDto {
     private BigDecimal vdop;
 
     @Singular("addXfcd")
-    @ApiModelProperty(name = "xfcds", notes = "Optional. A list of XFCD data (e.g. kmrd, speed, or any other Trafficsoft CAN parameter) received from the car.")
+    @ApiModelProperty(name = "xfcds",
+            notes = "Optional. A list of XFCD data (e.g. kmrd, speed, or any other Trafficsoft CAN parameter) " +
+                    "received from the car.")
     private List<ParameterRestDto> xfcds;
 
     @Singular("addState")
-    @ApiModelProperty(name = "states", notes = "Optional. A list of state parameters (e.g. vbat, move, or any other Trafficsoft State parameter) received from the car.")
+    @ApiModelProperty(name = "states",
+            notes = "Optional. A list of state parameters (e.g. vbat, move, or any other Trafficsoft State parameter) " +
+                    "received from the car.")
     private List<ParameterRestDto> states;
 
     public Date getTimestamp() {
