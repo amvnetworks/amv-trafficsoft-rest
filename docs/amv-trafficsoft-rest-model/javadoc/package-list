@@ -1,0 +1,7 @@
+org.amv.trafficsoft.rest
+org.amv.trafficsoft.rest.asgregister.model
+org.amv.trafficsoft.rest.carsharing.reservation.model
+org.amv.trafficsoft.rest.carsharing.whitelist.model
+org.amv.trafficsoft.rest.contract.datapackage.model
+org.amv.trafficsoft.rest.contract.subscription.model
+org.amv.trafficsoft.rest.xfcd.model

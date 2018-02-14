@@ -37,8 +37,6 @@ allprojects {
     apply plugin: 'java'
 
     repositories {
-        maven { url 'https://repo.spring.io/milestone' }
-        maven { url 'https://repo.spring.io/libs-milestone' }
         jcenter()
         mavenLocal()
     }
@@ -128,6 +126,7 @@ subprojects {
         exclude 'lombok.config'
         failOnError = false
         options.noTimestamp = true
+        options.locale 'en_US'
         title = "${project.name}"
     }
 
