@@ -21,5 +21,8 @@ For some examples on how to use this library, take a look at the [examples wiki 
 ## Contributing
 For information on how to contribute, please refer to our [contribution guide](CONTRIBUTING.md).
 
+## Documentation
+Javadoc is available at [amvnetworks.github.io](https://amvnetworks.github.io/amv-trafficsoft-rest/amv-trafficsoft-rest-client/javadoc/index.html).
+
 ## License
 The project is licensed under the Apache License. See [LICENSE](LICENSE) for details.
