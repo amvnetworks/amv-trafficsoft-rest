@@ -40,7 +40,7 @@ public class ReservationResponseRestDto {
 
     @Value
     @lombok.Builder(builderClassName = "Builder")
-    @ApiModel(description = "The additional metadata for a reservation of type 'RFID'.")
+    @ApiModel(value = "ResponseRfid", description = "The additional metadata for a reservation of type 'RFID'.")
     public static class Rfid {
         @JsonPOJOBuilder(withPrefix = "")
         public static class Builder {
@@ -53,7 +53,7 @@ public class ReservationResponseRestDto {
 
     @Value
     @lombok.Builder(builderClassName = "Builder")
-    @ApiModel(description = "The additional metadata for a reservation of type 'BTLE' (Bluetooth).")
+    @ApiModel(value = "ResponseBtle", description = "The additional metadata for a reservation of type 'BTLE' (Bluetooth).")
     public static class Btle {
         @JsonPOJOBuilder(withPrefix = "")
         public static class Builder {
