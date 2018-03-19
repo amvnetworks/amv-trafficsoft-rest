@@ -17,7 +17,7 @@ plugins {
     id 'nebula.info' version '3.6.0'
     id 'nebula.release' version '6.0.0'
     id 'nebula.lint' version '6.8.0'
-    id 'findbugs'
+    id 'com.github.spotbugs' version '1.6.1'
     id 'checkstyle'
     id 'com.jfrog.bintray' version '1.7.3'
     id 'io.franzbecker.gradle-lombok' version '1.8'
@@ -71,7 +71,7 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'findbugs'
+    apply plugin: 'com.github.spotbugs'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'nebula.lint'
@@ -81,6 +81,8 @@ subprojects {
     apply plugin: 'io.franzbecker.gradle-lombok'
 
     dependencies {
+        spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
+
         compile 'com.google.guava:guava:22.0'
         compileOnly 'org.projectlombok:lombok:1.16.16'
 
@@ -96,7 +98,7 @@ subprojects {
         def enableAdditionalLongRunningTasks = !isMinimalBuild
 
         if (!enableAdditionalLongRunningTasks) {
-            findbugsMain.enabled = false
+            spotbugsMain.enabled = false
             checkstyleMain.enabled = false
             javadoc.enabled = false
         }
@@ -178,10 +180,18 @@ subprojects {
         reportsDir = rootProject.file("$buildDir/reports/checkstyle")
     }
 
-    findbugs {
+    spotbugs {
+        toolVersion = '3.1.2'
         effort = 'min'
         ignoreFailures = true
         sourceSets = [sourceSets.main]
+    }
+
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
     }
 
     task subprojectsDependencies(type: DependencyReportTask) {
