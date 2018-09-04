@@ -4,15 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
+import com.netflix.hystrix.HystrixCommand;
+import feign.FeignException;
 import feign.Response;
 import feign.Target;
 import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
+import org.amv.trafficsoft.rest.ErrorInfo;
+import org.amv.trafficsoft.rest.ErrorInfoRestDtoMother;
 import org.amv.trafficsoft.rest.carsharing.reservation.model.*;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
+import org.amv.trafficsoft.rest.client.TrafficsoftException;
 import org.apache.commons.lang.math.RandomUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,6 +42,8 @@ public class CarSharingReservationClientIT {
     private static final long ANY_RESERVATION_ID = RandomUtils.nextLong();
     private static final long ANY_CONTRACT_ID = RandomUtils.nextLong();
     private static final long ANY_VEHICLE_ID = RandomUtils.nextLong();
+    private static final long ERROR_CONTRACT_ID = ANY_CONTRACT_ID + 1L;
+    private static final long ERROR_VEHICLE_ID = ANY_VEHICLE_ID + 1L;
     private static final List<Long> VALID_VEHICLE_IDS = ImmutableList.of(RandomUtils.nextLong(), RandomUtils.nextLong());
 
     private MockClient mockClient;
@@ -85,7 +94,12 @@ public class CarSharingReservationClientIT {
                         .status(HttpStatus.OK.value())
                         .reason(HttpStatus.OK.getReasonPhrase())
                         .body(fetchVehiclesResponseJson, Charsets.UTF_8)
-                        .headers(Collections.emptyMap()));
+                        .headers(Collections.emptyMap()))
+                .add(HttpMethod.POST, String.format("/api/rest/v1/car-sharing/vehicle/%d/reservation?contractId=%d", ERROR_VEHICLE_ID, ERROR_CONTRACT_ID), Response.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                        .headers(Collections.emptyMap())
+                        .body(jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random()), Charsets.UTF_8));
 
         Target<CarSharingReservationClient> mockTarget = new MockTarget<>(CarSharingReservationClient.class);
 
@@ -184,6 +198,34 @@ public class CarSharingReservationClientIT {
 
         String url = String.format("/api/rest/v1/car-sharing/vehicle/%d/always-power-on?contractId=%d", ANY_VEHICLE_ID, ANY_CONTRACT_ID);
         this.mockClient.verifyOne(HttpMethod.POST, url);
+    }
+
+    @Test
+    public void itShouldReturnDeserializedErrorTransferObjectOnFailure()  {
+        ReservationRequestRestDto request = ReservationRequestRestDtoMother.randomWithVehicleId(ERROR_VEHICLE_ID);
+
+        HystrixCommand<ReservationResponseRestDto> reservationCommand = this.sut.createReservation(ERROR_CONTRACT_ID, ERROR_VEHICLE_ID, request);
+
+        try {
+            ReservationResponseRestDto returnValue = reservationCommand.execute();
+            Assert.fail("Should have thrown exception");
+        } catch (Exception e) {
+            assertThat(e, is(notNullValue()));
+            assertThat(e.getCause(), is(notNullValue()));
+
+            Throwable cause = e.getCause();
+            assertThat(cause, is(instanceOf(FeignException.class)));
+            FeignException feignException = (FeignException) cause;
+
+            assertThat(feignException.getCause(), is(instanceOf(TrafficsoftException.class)));
+            TrafficsoftException trafficsoftException = (TrafficsoftException) feignException.getCause();
+
+            ErrorInfo error = trafficsoftException.getErrorInfo();
+            assertThat(error, is(notNullValue()));
+            assertThat(error.getDateTime(), is(notNullValue()));
+            assertThat(error.getMessage(), is(notNullValue()));
+            assertThat(error.getException(), is(notNullValue()));
+        }
     }
 
 }

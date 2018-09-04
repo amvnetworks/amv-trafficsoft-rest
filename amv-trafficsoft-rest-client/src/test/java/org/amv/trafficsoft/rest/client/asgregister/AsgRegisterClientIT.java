@@ -12,6 +12,7 @@ import feign.mock.HttpMethod;
 import feign.mock.MockClient;
 import feign.mock.MockTarget;
 import org.amv.trafficsoft.rest.ErrorInfo;
+import org.amv.trafficsoft.rest.ErrorInfoRestDtoMother;
 import org.amv.trafficsoft.rest.asgregister.model.*;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
@@ -34,6 +35,7 @@ import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -103,13 +105,7 @@ public class AsgRegisterClientIT {
                         .build())
                 .build());
 
-        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfo.builder()
-                .id(RandomStringUtils.randomAlphanumeric(6))
-                .dateTime(LocalDateTime.now())
-                .errorCode(RandomStringUtils.randomNumeric(6))
-                .exception(RandomStringUtils.randomAlphanumeric(10))
-                .url(RandomStringUtils.randomAlphanumeric(10))
-                .build());
+        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random());
 
         MockClient mockClient = new MockClient()
                 .add(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", NON_EXISTING_CONTRACT_ID), Response.builder()
@@ -137,7 +133,7 @@ public class AsgRegisterClientIT {
     @Test
     public void itShouldThrowExceptionOnMismatchingContractId() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        AtomicBoolean onErrorCalled = new AtomicBoolean(false);
+        AtomicReference<TrafficsoftException> trafficsoftExceptionRef = new AtomicReference<>();
         sut.registerAsg(NON_EXISTING_CONTRACT_ID, RegisterAsgRequestRestDto.builder().build())
                 .toObservable()
                 .subscribeOn(testScheduler)
@@ -145,9 +141,9 @@ public class AsgRegisterClientIT {
                     @Override
                     public void onError(Throwable e) {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
-                        assertThat(e.getCause(), instanceOf(TrafficsoftException.class));
-                        assertThat(e.getCause().getCause(), instanceOf(FeignException.class));
-                        onErrorCalled.set(true);
+                        assertThat(e.getCause(), instanceOf(FeignException.class));
+                        assertThat(e.getCause().getCause(), instanceOf(TrafficsoftException.class));
+                        trafficsoftExceptionRef.set((TrafficsoftException) e.getCause().getCause());
                         latch.countDown();
                     }
 
@@ -161,9 +157,19 @@ public class AsgRegisterClientIT {
 
         testScheduler.triggerActions();
 
-        latch.await(10, TimeUnit.SECONDS);
+        latch.await(1, TimeUnit.SECONDS);
 
-        assertThat(onErrorCalled.get(), is(true));
+        TrafficsoftException trafficsoftException = trafficsoftExceptionRef.get();
+        assertThat(trafficsoftException, is(notNullValue()));
+
+        ErrorInfo errorInfo = trafficsoftException.getErrorInfo();
+        assertThat(errorInfo, is(notNullValue()));
+        assertThat(errorInfo.getId(), is(notNullValue()));
+        assertThat(errorInfo.getDateTime(), is(notNullValue()));
+        assertThat(errorInfo.getErrorCode(), is(notNullValue()));
+        assertThat(errorInfo.getException(), is(notNullValue()));
+        assertThat(errorInfo.getMessage(), is(notNullValue()));
+        assertThat(errorInfo.getUrl(), is(notNullValue()));
     }
 
     @Test

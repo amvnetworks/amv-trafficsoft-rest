@@ -46,9 +46,10 @@ public class TrafficsoftErrorDecoderTest {
         final Exception exception = sut.decode(anyMethodKey, response);
 
         assertThat(exception, is(notNullValue()));
-        assertThat(exception, instanceOf(TrafficsoftException.class));
+        assertThat(exception, instanceOf(FeignException.class));
+        assertThat(exception.getCause(), instanceOf(TrafficsoftException.class));
 
-        TrafficsoftException tsException = (TrafficsoftException) exception;
+        TrafficsoftException tsException = (TrafficsoftException) exception.getCause();
         final ErrorInfo errorInfo = tsException.getErrorInfo();
 
         assertThat(errorInfo, is(notNullValue()));

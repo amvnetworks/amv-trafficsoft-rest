@@ -21,11 +21,13 @@ class TrafficsoftErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
-        FeignException feignException = errorStatus(methodKey, response);
+        Optional<Exception> exception = parseErrorInfo(response)
+                .map(errorInfo -> new TrafficsoftException(errorInfo, null));
 
-        return parseErrorInfo(response)
-                .map(errorInfo -> (Exception) new TrafficsoftException(errorInfo, feignException))
-                .orElse(feignException);
+        FeignException feignException = errorStatus(methodKey, response);
+        exception.ifPresent(feignException::initCause);
+
+        return feignException;
     }
 
     private Optional<ErrorInfo> parseErrorInfo(Response response) {

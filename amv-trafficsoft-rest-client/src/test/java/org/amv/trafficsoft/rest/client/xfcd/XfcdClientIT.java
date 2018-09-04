@@ -103,10 +103,10 @@ public class XfcdClientIT {
                     @Override
                     public void onError(Throwable e) {
                         assertThat(e, instanceOf(HystrixRuntimeException.class));
-                        assertThat(e.getCause(), instanceOf(TrafficsoftException.class));
-                        assertThat(e.getCause().getCause(), instanceOf(FeignException.class));
+                        assertThat(e.getCause(), instanceOf(FeignException.class));
+                        assertThat(e.getCause().getCause(), instanceOf(TrafficsoftException.class));
 
-                        trafficsoftExceptionRef.set((TrafficsoftException) e.getCause());
+                        trafficsoftExceptionRef.set((TrafficsoftException) e.getCause().getCause());
 
                         latch.countDown();
                     }

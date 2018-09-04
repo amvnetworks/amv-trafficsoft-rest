@@ -76,7 +76,7 @@ public class XfcdClientWithFallbackTest {
                 public HystrixCommand<List<DeliveryRestDto>> getDataAndConfirmDeliveries(long contractId, List<Long> deliveryIds) {
                     return new HystrixCommand<List<DeliveryRestDto>>(hystrixCommandGroupKey) {
                         @Override
-                        protected List<DeliveryRestDto> run() throws Exception {
+                        protected List<DeliveryRestDto> run() {
                             return Lists.newArrayList();
                         }
                     };
@@ -86,7 +86,7 @@ public class XfcdClientWithFallbackTest {
                 public HystrixCommand<List<DeliveryRestDto>> getData(long contractId) {
                     return new HystrixCommand<List<DeliveryRestDto>>(hystrixCommandGroupKey) {
                         @Override
-                        protected List<DeliveryRestDto> run() throws Exception {
+                        protected List<DeliveryRestDto> run() {
                             return Lists.newArrayList();
                         }
                     };
@@ -96,7 +96,7 @@ public class XfcdClientWithFallbackTest {
                 public HystrixCommand<Void> confirmDeliveries(long contractId, List<Long> deliveryIds) {
                     return new HystrixCommand<Void>(hystrixCommandGroupKey) {
                         @Override
-                        protected Void run() throws Exception {
+                        protected Void run() {
                             return null;
                         }
                     };
@@ -106,7 +106,7 @@ public class XfcdClientWithFallbackTest {
                 public HystrixCommand<List<NodeRestDto>> getLatestData(long contractId, List<Long> vehicleIds) {
                     return new HystrixCommand<List<NodeRestDto>>(hystrixCommandGroupKey) {
                         @Override
-                        protected List<NodeRestDto> run() throws Exception {
+                        protected List<NodeRestDto> run() {
                             return Lists.newArrayList();
                         }
                     };
