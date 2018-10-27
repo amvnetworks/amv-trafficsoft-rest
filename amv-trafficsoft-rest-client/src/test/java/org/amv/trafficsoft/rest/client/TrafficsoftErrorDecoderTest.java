@@ -2,6 +2,7 @@ package org.amv.trafficsoft.rest.client;
 
 import com.google.common.base.Charsets;
 import feign.FeignException;
+import feign.Request;
 import feign.Response;
 import feign.jackson.JacksonDecoder;
 import org.amv.trafficsoft.rest.ErrorInfo;
@@ -40,6 +41,7 @@ public class TrafficsoftErrorDecoderTest {
                 .reason("ANY_REASON")
                 .body(json, Charsets.UTF_8)
                 .headers(Collections.emptyMap())
+                .request(Request.create(Request.HttpMethod.GET, "any", Collections.emptyMap(), new byte[0], Charsets.UTF_8))
                 .build();
 
         String anyMethodKey = RandomStringUtils.randomAlphanumeric(10);
@@ -71,6 +73,7 @@ public class TrafficsoftErrorDecoderTest {
                 .reason("ANY_REASON")
                 .body(json, Charsets.UTF_8)
                 .headers(Collections.emptyMap())
+                .request(Request.create(Request.HttpMethod.GET, "any", Collections.emptyMap(), new byte[0], Charsets.UTF_8))
                 .build();
 
         String anyMethodKey = RandomStringUtils.randomAlphanumeric(10);

@@ -4,7 +4,7 @@ buildscript {
     ext {
         springBootVersion = '1.5.8.RELEASE'
         jacksonVersion = '2.8.10'
-        feignVersion = '9.5.1'
+        feignVersion = '10.0.1'
         swaggerVersion = '1.5.18'
         apacheCommonsVersion = '3.5'
     }
@@ -35,6 +35,7 @@ contacts {
 allprojects {
     apply plugin: 'maven'
     apply plugin: 'java'
+    apply plugin: 'project-report'
 
     repositories {
         jcenter()
