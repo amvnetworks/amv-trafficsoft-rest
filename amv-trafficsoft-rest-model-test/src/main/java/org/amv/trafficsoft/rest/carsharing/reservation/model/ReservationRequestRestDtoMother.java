@@ -24,6 +24,7 @@ public class ReservationRequestRestDtoMother {
                         .driverTagId(RandomStringUtils.randomNumeric(8))
                         .build())
                 .btle(ReservationRequestRestDto.Btle.builder()
+                        .version(RandomUtils.nextInt(0, Integer.MAX_VALUE))
                         .mobileSerialNumber(RandomStringUtils.randomNumeric(8))
                         .appId(RandomStringUtils.randomAlphanumeric(12))
                         .build())

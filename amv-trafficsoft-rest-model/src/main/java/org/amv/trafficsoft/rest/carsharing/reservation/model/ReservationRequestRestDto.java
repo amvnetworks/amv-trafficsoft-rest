@@ -79,6 +79,9 @@ public class ReservationRequestRestDto {
         @ApiModelProperty(name = "appId", notes = "Required. The application id.", required = true)
         private String appId;
 
+        @ApiModelProperty(name = "version", notes = "Required. The certificate version.", required = true)
+        private int version;
+
         @ApiModelProperty(name = "mobileSerialNumber",
                 notes = "Required. The mobile serial number (mosn).",
                 required = true)
