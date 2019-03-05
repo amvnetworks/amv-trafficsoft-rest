@@ -79,8 +79,9 @@ public class ReservationRequestRestDto {
         @ApiModelProperty(name = "appId", notes = "Required. The application id.", required = true)
         private String appId;
 
+        @lombok.Builder.Default
         @ApiModelProperty(name = "version", notes = "Required. The certificate version.", required = true)
-        private int version;
+        private int version = 1;
 
         @ApiModelProperty(name = "mobileSerialNumber",
                 notes = "Required. The mobile serial number (mosn).",
