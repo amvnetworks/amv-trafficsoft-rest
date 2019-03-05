@@ -27,6 +27,7 @@ import lombok.Builder.Default;
 import lombok.experimental.Accessors;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -118,7 +119,7 @@ public interface ClientConfig<T> {
     class ConfigurableClientConfig<T> implements ClientConfig<T> {
         @VisibleForTesting
         public static final ObjectMapper defaultObjectMapper = new ObjectMapper()
-                .setDateFormat(new ISO8601DateFormat())
+                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"))
                 .registerModule(new ParameterNamesModule())
                 .registerModule(new Jdk8Module())
                 .registerModule(new JavaTimeModule())

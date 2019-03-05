@@ -13,20 +13,26 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class CarSharingReservationJsonTest {
-    private final ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
+    private final ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper
+            .setTimeZone(TimeZone.getTimeZone(ZoneId.of("Europe/Berlin")));
 
     @Test
     public void testToJson() throws JsonProcessingException {
         ReservationResponseRestDto reservationResponse = ReservationResponseRestDtoMother
                 .randomBuilder()
-                .from(Date.from(Instant.now()))
+                .from(Date.from(Instant.ofEpochSecond(1551793229)))
                 .until(null)
                 .build();
 
@@ -37,7 +43,7 @@ public class CarSharingReservationJsonTest {
 
         String from = documentContext.read("from", String.class);
 
-        assertThat(from, equalTo(ISO8601Utils.format(reservationResponse.getFrom())));
+        assertThat(from, equalTo("2019-03-05T14:40:29.000+01:00"));
     }
 
     @Test
