@@ -1,18 +1,11 @@
 package org.amv.trafficsoft.rest.client.asgregister;
 
 import com.netflix.hystrix.HystrixCommand;
-import feign.CollectionFormat;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-import io.swagger.annotations.ApiOperation;
 import org.amv.trafficsoft.rest.asgregister.model.*;
 import org.amv.trafficsoft.rest.client.TrafficsoftClient;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
