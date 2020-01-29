@@ -81,6 +81,22 @@ subprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
+    String nexusPwd = credentials.nexuspwd
+
+    // ---- only use AMV internal nexus repository for dependencies
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            credentials {
+                username nexusUsername
+                password nexusPwd
+            }
+            url "${nexusUrl}/content/repositories/jcenter/"
+        }
+
+    }
+
     dependencies {
         spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.8.0'
 
@@ -92,8 +108,6 @@ subprojects {
         testCompile 'pl.pragmatists:JUnitParams:1.0.6'
         testCompile "org.apache.commons:commons-lang3:${apacheCommonsVersion}"
     }
-
-    String nexusPwd = credentials.nexuspwd
 
     gradle.taskGraph.whenReady { graph ->
         def isMinimalBuild = project.hasProperty("minimal")
