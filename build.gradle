@@ -93,6 +93,8 @@ subprojects {
         testCompile "org.apache.commons:commons-lang3:${apacheCommonsVersion}"
     }
 
+    String nexusPwd = credentials.nexuspwd
+
     gradle.taskGraph.whenReady { graph ->
         def isMinimalBuild = project.hasProperty("minimal")
 
