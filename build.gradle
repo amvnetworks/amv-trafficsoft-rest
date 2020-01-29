@@ -81,22 +81,6 @@ subprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'io.franzbecker.gradle-lombok'
 
-    String nexusPwd = credentials.nexuspwd
-
-    // ---- only use AMV internal nexus repository for dependencies
-    repositories {
-        mavenLocal()
-        jcenter()
-        maven {
-            credentials {
-                username nexusUsername
-                password nexusPwd
-            }
-            url "${nexusUrl}/content/repositories/jcenter/"
-        }
-
-    }
-
     dependencies {
         spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.8.0'
 
@@ -254,23 +238,6 @@ subprojects {
                     desc = project.description
                     vcsTag = rootProject.version
                 }
-            }
-        }
-    }
-
-    // ---- upload into Nexus
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: "${nexusUrl}/content/repositories/jcenter") {
-                    authentication(userName: nexusUsername, password: nexusPwd)
-                }
-                snapshotRepository(url: "${nexusUrl}/content/repositories/snapshots") {
-                    authentication(userName: nexusUsername, password: nexusPwd)
-                }
-                pom.version = project.version
-                pom.artifactId = project.name
-                pom.groupId = project.group
             }
         }
     }
