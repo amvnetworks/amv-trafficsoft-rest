@@ -216,28 +216,26 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    if (project.hasProperty('releaseToBintray')) {
-        if (rootProject.version.toString().contains('SNAPSHOT')) {
-            throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
-        }
+    if (rootProject.version.toString().contains('SNAPSHOT')) {
+        throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
+    }
 
-        bintray {
-            user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-            key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-            configurations = ['archives']
-            pkg {
-                repo = 'amv-trafficsoft-rest'
-                name = project.name
-                userOrg = user
-                licenses = ['Apache-2.0']
-                vcsUrl = 'https://github.com/amvnetworks/amv-trafficsoft-rest.git'
-                labels = ['amv', 'trafficsoft']
-                publicDownloadNumbers = false
-                version {
-                    name = rootProject.version
-                    desc = project.description
-                    vcsTag = rootProject.version
-                }
+    bintray {
+        user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+        key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+        configurations = ['archives']
+        pkg {
+            repo = 'amv-trafficsoft-rest'
+            name = project.name
+            userOrg = user
+            licenses = ['Apache-2.0']
+            vcsUrl = 'https://github.com/amvnetworks/amv-trafficsoft-rest.git'
+            labels = ['amv', 'trafficsoft']
+            publicDownloadNumbers = false
+            version {
+                name = rootProject.version
+                desc = project.description
+                vcsTag = rootProject.version
             }
         }
     }
