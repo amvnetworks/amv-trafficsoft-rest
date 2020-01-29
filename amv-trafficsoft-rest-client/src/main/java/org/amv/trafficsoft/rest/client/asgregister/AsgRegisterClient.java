@@ -1,11 +1,20 @@
 package org.amv.trafficsoft.rest.client.asgregister;
 
 import com.netflix.hystrix.HystrixCommand;
+import feign.CollectionFormat;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import io.swagger.annotations.ApiOperation;
 import org.amv.trafficsoft.rest.asgregister.model.*;
 import org.amv.trafficsoft.rest.client.TrafficsoftClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 
@@ -43,6 +52,13 @@ public interface AsgRegisterClient extends TrafficsoftClient {
     @RequestLine("GET /api/rest/v1/asg-register/oem/{oemCode}/series/{seriesCode}/model?contractId={contractId}")
     HystrixCommand<ModelsResponseRestDto> getModels(
             @Param("contractId") long contractId,
+            @Param("oemCode") String oemCode,
+            @Param("seriesCode") String seriesCode);
+
+    @RequestLine("GET /api/rest/v1/asg-register/oem/{oemCode}/series/{seriesCode}/model?contractId={contractId}&params={params}")
+    HystrixCommand<ModelsResponseRestDto> getModelsByParams(
+            @Param("contractId") long contractId,
+            @Param("params") List<String> params,
             @Param("oemCode") String oemCode,
             @Param("seriesCode") String seriesCode);
 }

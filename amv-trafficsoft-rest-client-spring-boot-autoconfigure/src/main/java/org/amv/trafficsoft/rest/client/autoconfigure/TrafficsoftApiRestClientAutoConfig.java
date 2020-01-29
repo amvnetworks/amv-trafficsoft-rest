@@ -87,7 +87,7 @@ public class TrafficsoftApiRestClientAutoConfig {
     @ConditionalOnMissingBean(name = "trafficsoftApiRestAsgRegisterClientConfig")
     @Bean("trafficsoftApiRestAsgRegisterClientConfig")
     public ConfigurableClientConfig<AsgRegisterClient> asgRegisterClientConfig(ClientConfig.BasicAuth basicAuth) {
-        return TrafficsoftClients.config(AsgRegisterClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth)
+        return TrafficsoftClients.config(AsgRegisterClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth, TrafficsoftClients.getListRequestInterceptor())
                 .setterFactory(setterFactory())
                 .build();
     }

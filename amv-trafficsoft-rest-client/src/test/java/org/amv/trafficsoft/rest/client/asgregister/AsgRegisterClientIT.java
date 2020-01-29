@@ -30,12 +30,14 @@ import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
-import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -57,77 +59,7 @@ public class AsgRegisterClientIT {
 
     @Before
     public void setUp() throws JsonProcessingException {
-        ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
-
-        String registerAsgResponseDtoAsJson = jsonMapper.writeValueAsString(RegisterAsgResponseRestDto.builder()
-                .vehicle(VehicleRestDto.builder()
-                        .id(ANY_VEHICLE_ID)
-                        .oemCode(ANY_OEM_CODE)
-                        .seriesCode(ANY_SERIES_CODE)
-                        .modelCode(ANY_MODEL_CODE)
-                        .build())
-                .build());
-
-        String oemsResponseDtoAsJson = jsonMapper.writeValueAsString(OemsResponseRestDto.builder()
-                .addOem(OemRestDto.builder()
-                        .oemCode(ANY_OEM_CODE)
-                        .build())
-                .build());
-
-        String seriesResponseDtoAsJson = jsonMapper.writeValueAsString(SeriesResponseRestDto.builder()
-                .addSeries(SeriesRestDto.builder()
-                        .oemCode(ANY_OEM_CODE)
-                        .seriesCode(ANY_SERIES_CODE)
-                        .build())
-                .build());
-
-        String modelResponseDtoAsJson = jsonMapper.writeValueAsString(ModelsResponseRestDto.builder()
-                .addModel(ModelRestDto.builder()
-                        .oemCode(ANY_OEM_CODE)
-                        .seriesCode(ANY_SERIES_CODE)
-                        .modelCode(ANY_MODEL_CODE)
-                        .build())
-                .build());
-
-        String vehicleResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleResponseRestDto.builder()
-                .vehicle(VehicleRestDto.builder()
-                        .oemCode(ANY_OEM_CODE)
-                        .seriesCode(ANY_SERIES_CODE)
-                        .modelCode(ANY_MODEL_CODE)
-                        .build())
-                .build());
-
-        String vehicleKeyResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleKeyResponseRestDto.builder()
-                .vehicleKey(VehicleKeyRestDto.builder()
-                        .key(ANY_VEHICLE_KEY)
-                        .vehicleId(ANY_VEHICLE_ID)
-                        .valid(true)
-                        .build())
-                .build());
-
-        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random());
-
-        MockClient mockClient = new MockClient()
-                .add(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", NON_EXISTING_CONTRACT_ID), Response.builder()
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-                        .headers(Collections.emptyMap())
-                        .body(exceptionJson, Charsets.UTF_8))
-                .ok(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", ANY_CONTRACT_ID), registerAsgResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem?contractId=%d", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series?contractId=%d", ANY_OEM_CODE, ANY_CONTRACT_ID), seriesResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehicle/%d?contractId=%d", ANY_VEHICLE_ID, ANY_CONTRACT_ID), vehicleResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehiclekey/%s?contractId=%d", ANY_VEHICLE_KEY, ANY_CONTRACT_ID), vehicleKeyResponseDtoAsJson);
-
-        Target<AsgRegisterClient> mockTarget = new MockTarget<>(AsgRegisterClient.class);
-
-        ClientConfig<AsgRegisterClient> config = ClientConfig.ConfigurableClientConfig.<AsgRegisterClient>builder()
-                .client(mockClient)
-                .target(mockTarget)
-                .build();
-
-        this.sut = TrafficsoftClients.asgRegister(config);
+        this.sut = configureAsgRegisterClient();
     }
 
     @Test
@@ -286,5 +218,110 @@ public class AsgRegisterClientIT {
         assertThat(anyModel.getModelCode(), is(notNullValue()));
         assertThat(anyModel.getSeriesCode(), is(equalTo(anySeries.getSeriesCode())));
         assertThat(anyModel.getOemCode(), is(equalTo(anySeries.getOemCode())));
+    }
+
+    @Test
+    public void itShouldLoadAllModelsForOemAndSeriesByParams() {
+        SeriesRestDto anySeries = sut.getOems(ANY_CONTRACT_ID).execute()
+                .getOems().stream()
+                .findAny()
+                .map(anyOem -> sut.getSeries(ANY_CONTRACT_ID, anyOem.getOemCode()))
+                .map(HystrixCommand::execute)
+                .flatMap(seriesResponseDto -> seriesResponseDto.getSeries().stream().findAny())
+                .orElseThrow(IllegalStateException::new);
+
+
+        ModelsResponseRestDto modelsResponseDto = this.sut
+                .getModelsByParams(ANY_CONTRACT_ID, Arrays.asList(new String[]{"kmrd", "skmrd"}), anySeries.getOemCode(), anySeries.getSeriesCode())
+                .execute();
+
+        assertThat(modelsResponseDto, is(notNullValue()));
+        assertThat(modelsResponseDto.getModels(), hasSize(greaterThan(0)));
+
+        ModelRestDto anyModel = modelsResponseDto.getModels().stream().findAny()
+                .orElseThrow(IllegalStateException::new);
+
+        assertThat(anyModel, is(notNullValue()));
+        assertThat(anyModel.getModelCode(), is(notNullValue()));
+        assertThat(anyModel.getSeriesCode(), is(equalTo(anySeries.getSeriesCode())));
+        assertThat(anyModel.getOemCode(), is(equalTo(anySeries.getOemCode())));
+    }
+
+    private static AsgRegisterClient configureAsgRegisterClient() throws JsonProcessingException {
+        ObjectMapper jsonMapper = ClientConfig.ConfigurableClientConfig.defaultObjectMapper;
+
+        String registerAsgResponseDtoAsJson = jsonMapper.writeValueAsString(RegisterAsgResponseRestDto.builder()
+                .vehicle(VehicleRestDto.builder()
+                        .id(ANY_VEHICLE_ID)
+                        .oemCode(ANY_OEM_CODE)
+                        .seriesCode(ANY_SERIES_CODE)
+                        .modelCode(ANY_MODEL_CODE)
+                        .build())
+                .build());
+
+        String oemsResponseDtoAsJson = jsonMapper.writeValueAsString(OemsResponseRestDto.builder()
+                .addOem(OemRestDto.builder()
+                        .oemCode(ANY_OEM_CODE)
+                        .build())
+                .build());
+
+        String seriesResponseDtoAsJson = jsonMapper.writeValueAsString(SeriesResponseRestDto.builder()
+                .addSeries(SeriesRestDto.builder()
+                        .oemCode(ANY_OEM_CODE)
+                        .seriesCode(ANY_SERIES_CODE)
+                        .build())
+                .build());
+
+        ModelsResponseRestDto modelResp = ModelsResponseRestDto.builder()
+                .addModel(ModelRestDto.builder()
+                        .oemCode(ANY_OEM_CODE)
+                        .seriesCode(ANY_SERIES_CODE)
+                        .modelCode(ANY_MODEL_CODE)
+                        .build())
+                .build();
+
+        String modelResponseDtoAsJson = jsonMapper.writeValueAsString(modelResp);
+
+        String vehicleResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleResponseRestDto.builder()
+                .vehicle(VehicleRestDto.builder()
+                        .oemCode(ANY_OEM_CODE)
+                        .seriesCode(ANY_SERIES_CODE)
+                        .modelCode(ANY_MODEL_CODE)
+                        .build())
+                .build());
+
+        String vehicleKeyResponseDtoAsJson = jsonMapper.writeValueAsString(VehicleKeyResponseRestDto.builder()
+                .vehicleKey(VehicleKeyRestDto.builder()
+                        .key(ANY_VEHICLE_KEY)
+                        .vehicleId(ANY_VEHICLE_ID)
+                        .valid(true)
+                        .build())
+                .build());
+
+        String exceptionJson = jsonMapper.writeValueAsString(ErrorInfoRestDtoMother.random());
+
+        MockClient mockClient = new MockClient()
+                .add(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", NON_EXISTING_CONTRACT_ID), Response.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                        .headers(Collections.emptyMap())
+                        .body(exceptionJson, Charsets.UTF_8))
+                .ok(HttpMethod.POST, String.format("/api/rest/v1/asg-register?contractId=%d", ANY_CONTRACT_ID), registerAsgResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem?contractId=%d", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series?contractId=%d", ANY_OEM_CODE, ANY_CONTRACT_ID), seriesResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d&params=kmrd,skmrd", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehicle/%d?contractId=%d", ANY_VEHICLE_ID, ANY_CONTRACT_ID), vehicleResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehiclekey/%s?contractId=%d", ANY_VEHICLE_KEY, ANY_CONTRACT_ID), vehicleKeyResponseDtoAsJson);
+
+        Target<AsgRegisterClient> mockTarget = new MockTarget<>(AsgRegisterClient.class);
+
+        ClientConfig<AsgRegisterClient> config = ClientConfig.ConfigurableClientConfig.<AsgRegisterClient>builder()
+                .requestInterceptor(TrafficsoftClients.getListRequestInterceptor())
+                .client(mockClient)
+                .target(mockTarget)
+                .build();
+
+        return TrafficsoftClients.asgRegister(config);
     }
 }

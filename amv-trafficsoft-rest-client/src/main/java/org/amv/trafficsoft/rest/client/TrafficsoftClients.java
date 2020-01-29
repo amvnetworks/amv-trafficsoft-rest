@@ -1,5 +1,7 @@
 package org.amv.trafficsoft.rest.client;
 
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 import feign.Target;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
@@ -7,6 +9,10 @@ import org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservat
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.contract.ContractClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
+
+import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -44,6 +50,28 @@ public final class TrafficsoftClients {
     }
 
     /**
+     * Provides a way to easily construct configuration builder objects.
+     *
+     * @param clazz     the client class the returned configuration object is for
+     * @param baseUrl   the base url of the api
+     * @param basicAuth the authorisation object for accessing the api
+     * @param <T>       the type of the client class the returned configuration object is for
+     * @return a builder for easy construction of custom configuration
+     */
+    public static <T> ConfigurableClientConfig.Builder<T> config(Class<T> clazz, String baseUrl, ClientConfig.BasicAuth basicAuth, RequestInterceptor requestInterceptor) {
+        requireNonNull(clazz, "`clazz` must not be null.");
+        requireNonNull(baseUrl, "`baseUrl` must not be null.");
+        requireNonNull(basicAuth, "`basicAuth` must not be null.");
+
+        Target<T> hardCodedTarget = new Target.HardCodedTarget<>(clazz, baseUrl);
+
+        return ConfigurableClientConfig.<T>builder()
+                .requestInterceptor(requestInterceptor)
+                .target(hardCodedTarget)
+                .basicAuth(basicAuth);
+    }
+
+    /**
      * Constructs a new client from a generic client configuration.
      *
      * @param clientConfig a configuration instance to configure the client
@@ -64,8 +92,32 @@ public final class TrafficsoftClients {
      * @return a AsgRegisterClient with default configuration
      */
     public static AsgRegisterClient asgRegister(String baseUrl, ClientConfig.BasicAuth basicAuth) {
-        return asgRegister(config(AsgRegisterClient.class, baseUrl, basicAuth).build());
+        return asgRegister(config(AsgRegisterClient.class, baseUrl, basicAuth)
+                .requestInterceptor(TrafficsoftClients.getListRequestInterceptor())
+                .build());
     }
+
+    public static RequestInterceptor getListRequestInterceptor(){
+        return template -> template.queries().forEach((key, value) -> {
+            if(value instanceof Collection<?>) {
+                Collection<?> collection = (Collection<?>) value;
+                StringBuilder sb = new StringBuilder();
+
+                if(collection.size() > 1) {
+                    AtomicInteger idx = new AtomicInteger();
+                    collection.stream().map(i -> {
+                        sb.append(i.toString() + (idx.getAndIncrement() < collection.size() - 1 ? "," : ""));
+                        return sb;
+                    }).collect(Collectors.toList());
+                } else {
+                    collection.stream().map(i -> sb.append(i.toString())).collect(Collectors.toList());
+                }
+
+                template.query(key, sb.toString());
+            }
+        });
+    }
+
 
     /**
      * Constructs a new AsgRegisterClient with custom configuration.
