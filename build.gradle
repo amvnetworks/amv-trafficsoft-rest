@@ -224,11 +224,11 @@ subprojects {
                 throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
             }
 
-            if (rootProject.hasProperty('bintrayUser')) {
+            if (project.hasProperty('bintrayUser')) {
                 throw new GradleException('-PbintrayUser needs to be configured')
             }
 
-            if (rootProject.hasProperty('bintrayApiKey')) {
+            if (project.hasProperty('bintrayApiKey')) {
                 throw new GradleException('-PbintrayApiKey needs to be configured')
             }
 
