@@ -215,13 +215,21 @@ subprojects {
         // testLogging.showStandardStreams = true
         finalizedBy jacocoTestReport
     }
-    
+
     bintray {
 
         if (project.hasProperty('releaseToBintray')) {
-            
+
             if (rootProject.version.toString().contains('SNAPSHOT')) {
                 throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
+            }
+
+            if (rootProject.hasProperty('bintrayUser')) {
+                throw new GradleException('-PbintrayUser needs to be configured')
+            }
+
+            if (rootProject.hasProperty('bintrayApiKey')) {
+                throw new GradleException('-PbintrayApiKey needs to be configured')
             }
 
             user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
