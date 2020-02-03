@@ -218,22 +218,22 @@ subprojects {
 
     bintray {
 
-        if (project.hasProperty('releaseToBintray')) {
+        if (rootProject.hasProperty('releaseToBintray')) {
 
             if (rootProject.version.toString().contains('SNAPSHOT')) {
                 throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
             }
 
-            if (project.hasProperty('bintrayUser')) {
+            if (rootProject.hasProperty('bintrayUser')) {
                 throw new GradleException('-PbintrayUser needs to be configured')
             }
 
-            if (project.hasProperty('bintrayApiKey')) {
+            if (rootProject.hasProperty('bintrayApiKey')) {
                 throw new GradleException('-PbintrayApiKey needs to be configured')
             }
 
-            user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-            key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+            user = rootProject.hasProperty('bintrayUser') ? rootProject.property('bintrayUser') : System.getenv('BINTRAY_USER')
+            key = rootProject.hasProperty('bintrayApiKey') ? rootProject.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
             configurations = ['archives']
             pkg {
                 repo = 'amv-trafficsoft-rest'
