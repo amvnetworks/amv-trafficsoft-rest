@@ -216,10 +216,9 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    bintray {
+    if (rootProject.hasProperty('releaseToBintray')) {
 
-        if (rootProject.hasProperty('releaseToBintray')) {
-
+        bintray {
             if (rootProject.version.toString().contains('SNAPSHOT')) {
                 throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
             }
