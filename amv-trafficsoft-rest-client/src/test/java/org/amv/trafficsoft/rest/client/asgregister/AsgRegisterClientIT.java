@@ -3,9 +3,11 @@ package org.amv.trafficsoft.rest.client.asgregister;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableList;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
+import feign.RequestInterceptor;
 import feign.Response;
 import feign.Target;
 import feign.mock.HttpMethod;
@@ -310,14 +312,14 @@ public class AsgRegisterClientIT {
                 .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem?contractId=%d", ANY_CONTRACT_ID), oemsResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series?contractId=%d", ANY_OEM_CODE, ANY_CONTRACT_ID), seriesResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
-                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d&params=kmrd,skmrd", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
+                .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/oem/%s/series/%s/model?contractId=%d&params=kmrd&params=skmrd", ANY_OEM_CODE, ANY_SERIES_CODE, ANY_CONTRACT_ID), modelResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehicle/%d?contractId=%d", ANY_VEHICLE_ID, ANY_CONTRACT_ID), vehicleResponseDtoAsJson)
                 .ok(HttpMethod.GET, String.format("/api/rest/v1/asg-register/vehiclekey/%s?contractId=%d", ANY_VEHICLE_KEY, ANY_CONTRACT_ID), vehicleKeyResponseDtoAsJson);
 
         Target<AsgRegisterClient> mockTarget = new MockTarget<>(AsgRegisterClient.class);
 
         ClientConfig<AsgRegisterClient> config = ClientConfig.ConfigurableClientConfig.<AsgRegisterClient>builder()
-                .requestInterceptor(TrafficsoftClients.getListRequestInterceptor())
+                .requestInterceptors(TrafficsoftClients.getRequestInterceptors())
                 .client(mockClient)
                 .target(mockTarget)
                 .build();

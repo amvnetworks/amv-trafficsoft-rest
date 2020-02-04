@@ -1,7 +1,8 @@
 package org.amv.trafficsoft.rest.client;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import feign.RequestInterceptor;
-import feign.RequestTemplate;
 import feign.Target;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
@@ -10,7 +11,12 @@ import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistC
 import org.amv.trafficsoft.rest.client.contract.ContractClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -58,7 +64,7 @@ public final class TrafficsoftClients {
      * @param <T>       the type of the client class the returned configuration object is for
      * @return a builder for easy construction of custom configuration
      */
-    public static <T> ConfigurableClientConfig.Builder<T> config(Class<T> clazz, String baseUrl, ClientConfig.BasicAuth basicAuth, RequestInterceptor requestInterceptor) {
+    public static <T> ConfigurableClientConfig.Builder<T> config(Class<T> clazz, String baseUrl, ClientConfig.BasicAuth basicAuth, ImmutableList<RequestInterceptor> requestInterceptors) {
         requireNonNull(clazz, "`clazz` must not be null.");
         requireNonNull(baseUrl, "`baseUrl` must not be null.");
         requireNonNull(basicAuth, "`basicAuth` must not be null.");
@@ -66,7 +72,7 @@ public final class TrafficsoftClients {
         Target<T> hardCodedTarget = new Target.HardCodedTarget<>(clazz, baseUrl);
 
         return ConfigurableClientConfig.<T>builder()
-                .requestInterceptor(requestInterceptor)
+                .requestInterceptors(requestInterceptors)
                 .target(hardCodedTarget)
                 .basicAuth(basicAuth);
     }
@@ -93,9 +99,10 @@ public final class TrafficsoftClients {
      */
     public static AsgRegisterClient asgRegister(String baseUrl, ClientConfig.BasicAuth basicAuth) {
         return asgRegister(config(AsgRegisterClient.class, baseUrl, basicAuth)
-                .requestInterceptor(TrafficsoftClients.getListRequestInterceptor())
+                .requestInterceptors(getRequestInterceptors())
                 .build());
     }
+
 
     public static RequestInterceptor getListRequestInterceptor(){
         return template -> template.queries().forEach((key, value) -> {
@@ -211,5 +218,9 @@ public final class TrafficsoftClients {
      */
     public static CarSharingReservationClient carSharingReservation(ClientConfig<CarSharingReservationClient> clientConfig) {
         return client(clientConfig);
+    }
+
+    public static ImmutableList<RequestInterceptor> getRequestInterceptors() {
+        return ImmutableList.<RequestInterceptor>builder()/*.add(TrafficsoftClients.getListRequestInterceptor())*/.build();
     }
 }

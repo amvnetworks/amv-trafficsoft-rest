@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -131,25 +131,32 @@ extends <a href="../../../../../../org/amv/trafficsoft/rest/client/TrafficsoftCl
          java.lang.String&nbsp;seriesCode)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.ModelsResponseRestDto&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/asgregister/AsgRegisterClient.html#getModelsByParams-long-java.util.List-java.lang.String-java.lang.String-">getModelsByParams</a></span>(long&nbsp;contractId,
+                 java.util.List&lt;java.lang.String&gt;&nbsp;params,
+                 java.lang.String&nbsp;oemCode,
+                 java.lang.String&nbsp;seriesCode)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.OemsResponseRestDto&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/asgregister/AsgRegisterClient.html#getOems-long-">getOems</a></span>(long&nbsp;contractId)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.SeriesResponseRestDto&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/asgregister/AsgRegisterClient.html#getSeries-long-java.lang.String-">getSeries</a></span>(long&nbsp;contractId,
          java.lang.String&nbsp;oemCode)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.VehicleResponseRestDto&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/asgregister/AsgRegisterClient.html#getVehicle-long-long-">getVehicle</a></span>(long&nbsp;contractId,
           long&nbsp;vehicleId)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.VehicleKeyResponseRestDto&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/asgregister/AsgRegisterClient.html#getVehicleKey-long-java.lang.String-">getVehicleKey</a></span>(long&nbsp;contractId,
              java.lang.String&nbsp;vehicleKey)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.RegisterAsgResponseRestDto&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/amv/trafficsoft/rest/client/asgregister/AsgRegisterClient.html#registerAsg-long-org.amv.trafficsoft.rest.asgregister.model.RegisterAsgRequestRestDto-">registerAsg</a></span>(long&nbsp;contractId,
            org.amv.trafficsoft.rest.asgregister.model.RegisterAsgRequestRestDto&nbsp;request)</code>&nbsp;</td>
@@ -221,12 +228,24 @@ extends <a href="../../../../../../org/amv/trafficsoft/rest/client/TrafficsoftCl
 <a name="getModels-long-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getModels</h4>
 <pre>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.ModelsResponseRestDto&gt;&nbsp;getModels(long&nbsp;contractId,
                                                                                                                java.lang.String&nbsp;oemCode,
                                                                                                                java.lang.String&nbsp;seriesCode)</pre>
+</li>
+</ul>
+<a name="getModelsByParams-long-java.util.List-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getModelsByParams</h4>
+<pre>com.netflix.hystrix.HystrixCommand&lt;org.amv.trafficsoft.rest.asgregister.model.ModelsResponseRestDto&gt;&nbsp;getModelsByParams(long&nbsp;contractId,
+                                                                                                                       java.util.List&lt;java.lang.String&gt;&nbsp;params,
+                                                                                                                       java.lang.String&nbsp;oemCode,
+                                                                                                                       java.lang.String&nbsp;seriesCode)</pre>
 </li>
 </ul>
 </li>

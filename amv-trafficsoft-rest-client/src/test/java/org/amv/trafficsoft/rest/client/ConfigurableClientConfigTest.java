@@ -62,14 +62,7 @@ public class ConfigurableClientConfigTest {
                         template.header("X-MyCustomHeader", "myCustomValue");
                     }
                 })
-                .requestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void apply(RequestTemplate template) {
-                        template.replaceQueryValues(ImmutableMap.<String, String>builder()
-                                .put("myQueryParam", "myQueryValue")
-                                .build());
-                    }
-                })
+                .requestInterceptor(TrafficsoftClients.getListRequestInterceptor())
                 .setterFactory(new SetterFactory() {
                     @Override
                     public HystrixCommand.Setter create(Target<?> target, Method method) {

@@ -1,10 +1,13 @@
 package org.amv.trafficsoft.rest.client.autoconfigure;
 
+import com.google.common.collect.ImmutableList;
 import com.netflix.hystrix.*;
 import feign.Feign;
+import feign.RequestInterceptor;
 import feign.hystrix.SetterFactory;
 import org.amv.trafficsoft.rest.client.ClientConfig;
 import org.amv.trafficsoft.rest.client.ClientConfig.ConfigurableClientConfig;
+import org.amv.trafficsoft.rest.client.TrafficsoftClient;
 import org.amv.trafficsoft.rest.client.TrafficsoftClients;
 import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
 import org.amv.trafficsoft.rest.client.carsharing.reservation.CarSharingReservationClient;
@@ -16,6 +19,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
 
 import static com.netflix.hystrix.HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE;
 import static java.util.Objects.requireNonNull;
@@ -87,7 +92,7 @@ public class TrafficsoftApiRestClientAutoConfig {
     @ConditionalOnMissingBean(name = "trafficsoftApiRestAsgRegisterClientConfig")
     @Bean("trafficsoftApiRestAsgRegisterClientConfig")
     public ConfigurableClientConfig<AsgRegisterClient> asgRegisterClientConfig(ClientConfig.BasicAuth basicAuth) {
-        return TrafficsoftClients.config(AsgRegisterClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth, TrafficsoftClients.getListRequestInterceptor())
+        return TrafficsoftClients.config(AsgRegisterClient.class, this.trafficsoftApiRestProperties.getBaseUrl(), basicAuth, TrafficsoftClients.getRequestInterceptors())
                 .setterFactory(setterFactory())
                 .build();
     }
