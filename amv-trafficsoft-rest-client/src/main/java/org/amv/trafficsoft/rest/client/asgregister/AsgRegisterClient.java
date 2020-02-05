@@ -48,7 +48,7 @@ public interface AsgRegisterClient extends TrafficsoftClient {
             @Param("oemCode") String oemCode,
             @Param("seriesCode") String seriesCode);
 
-    @RequestLine("GET /api/rest/v1/asg-register/oem/{oemCode}/series/{seriesCode}/model?contractId={contractId}&params={params}")
+    @RequestLine("GET /api/rest/v1/asg-register/oem/{oemCode}/series/{seriesCode}/model?contractId={contractId}")
     HystrixCommand<ModelsResponseRestDto> getModelsByParams(
             @Param("contractId") long contractId,
             @Param("params") List<String> params,
