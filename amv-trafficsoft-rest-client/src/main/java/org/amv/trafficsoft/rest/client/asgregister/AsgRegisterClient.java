@@ -1,6 +1,7 @@
 package org.amv.trafficsoft.rest.client.asgregister;
 
 import com.netflix.hystrix.HystrixCommand;
+import feign.CollectionFormat;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
@@ -48,7 +49,7 @@ public interface AsgRegisterClient extends TrafficsoftClient {
             @Param("oemCode") String oemCode,
             @Param("seriesCode") String seriesCode);
 
-    @RequestLine("GET /api/rest/v1/asg-register/oem/{oemCode}/series/{seriesCode}/model?contractId={contractId}")
+    @RequestLine(value = "GET /api/rest/v1/asg-register/oem/{oemCode}/series/{seriesCode}/model?contractId={contractId}&params={params}", collectionFormat = CollectionFormat.EXPLODED)
     HystrixCommand<ModelsResponseRestDto> getModelsByParams(
             @Param("contractId") long contractId,
             @Param("params") List<String> params,
