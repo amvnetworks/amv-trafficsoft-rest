@@ -6,6 +6,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
+import feign.RequestLine;
 import feign.Response;
 import feign.Target;
 import feign.mock.HttpMethod;
@@ -77,7 +78,13 @@ public class CarSharingWhitelistClientIT {
                         .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                         .headers(Collections.emptyMap())
                         .body(exceptionJson, Charsets.UTF_8))
+                .add(HttpMethod.GET, String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d&vehicleId", NON_EXISTING_CONTRACT_ID), Response.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .reason(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                        .headers(Collections.emptyMap())
+                        .body(exceptionJson, Charsets.UTF_8))
                 .ok(HttpMethod.GET, String.format("/api/rest/v1/car-sharing/whitelist?contractId=%d&%s", ANY_CONTRACT_ID, queryString), retrieveWhitelistResponseRestDtoAsJson);
+
 
         Target<CarSharingWhitelistClient> mockTarget = new MockTarget<>(CarSharingWhitelistClient.class);
 
@@ -160,7 +167,7 @@ public class CarSharingWhitelistClientIT {
 
         testScheduler.triggerActions();
 
-        latch.await(1, TimeUnit.SECONDS);
+        boolean result = latch.await(5, TimeUnit.SECONDS);
 
         TrafficsoftException trafficsoftException = trafficsoftExceptionRef.get();
         assertThat(trafficsoftException, is(notNullValue()));
