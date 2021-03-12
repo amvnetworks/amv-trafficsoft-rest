@@ -180,8 +180,8 @@ public interface ClientConfig<T> {
         }
 
         private static final class DefaultSetterFactory implements SetterFactory {
-            private static int DEFAULT_THREAD_POOL_SIZE = 10;
-            private static int DEFAULT_TIMEOUT_IN_MS = (int) SECONDS.toMillis(30);
+            private static final int DEFAULT_THREAD_POOL_SIZE = 10;
+            private static final int DEFAULT_TIMEOUT_IN_MS = (int) SECONDS.toMillis(30);
 
             @Override
             public HystrixCommand.Setter create(Target<?> target, Method method) {

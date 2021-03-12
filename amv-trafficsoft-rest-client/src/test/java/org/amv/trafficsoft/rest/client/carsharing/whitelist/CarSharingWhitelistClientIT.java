@@ -6,7 +6,6 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
-import feign.RequestLine;
 import feign.Response;
 import feign.Target;
 import feign.mock.HttpMethod;
