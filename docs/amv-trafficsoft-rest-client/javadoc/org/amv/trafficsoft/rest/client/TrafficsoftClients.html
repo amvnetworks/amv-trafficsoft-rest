@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -180,10 +180,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.ConfigurableClientConfig.Builder.html" title="class in org.amv.trafficsoft.rest.client">ClientConfig.ConfigurableClientConfig.Builder</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/amv/trafficsoft/rest/client/TrafficsoftClients.html#config-java.lang.Class-java.lang.String-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-feign.RequestInterceptor-">config</a></span>(java.lang.Class&lt;T&gt;&nbsp;clazz,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/amv/trafficsoft/rest/client/TrafficsoftClients.html#config-java.lang.Class-java.lang.String-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-com.google.common.collect.ImmutableList-">config</a></span>(java.lang.Class&lt;T&gt;&nbsp;clazz,
       java.lang.String&nbsp;baseUrl,
       <a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.BasicAuth.html" title="interface in org.amv.trafficsoft.rest.client">ClientConfig.BasicAuth</a>&nbsp;basicAuth,
-      feign.RequestInterceptor&nbsp;requestInterceptor)</code>
+      com.google.common.collect.ImmutableList&lt;feign.RequestInterceptor&gt;&nbsp;requestInterceptors)</code>
 <div class="block">Provides a way to easily construct configuration builder objects.</div>
 </td>
 </tr>
@@ -205,12 +205,16 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/amv/trafficsoft/rest/client/TrafficsoftClients.html#getListRequestInterceptor--">getListRequestInterceptor</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>static com.google.common.collect.ImmutableList&lt;feign.RequestInterceptor&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/amv/trafficsoft/rest/client/TrafficsoftClients.html#getRequestInterceptors--">getRequestInterceptors</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/amv/trafficsoft/rest/client/xfcd/XfcdClient.html" title="interface in org.amv.trafficsoft.rest.client.xfcd">XfcdClient</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/amv/trafficsoft/rest/client/TrafficsoftClients.html#xfcd-org.amv.trafficsoft.rest.client.ClientConfig-">xfcd</a></span>(<a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.html" title="interface in org.amv.trafficsoft.rest.client">ClientConfig</a>&lt;<a href="../../../../../org/amv/trafficsoft/rest/client/xfcd/XfcdClient.html" title="interface in org.amv.trafficsoft.rest.client.xfcd">XfcdClient</a>&gt;&nbsp;clientConfig)</code>
 <div class="block">Constructs a new XfcdClient with custom configuration.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/amv/trafficsoft/rest/client/xfcd/XfcdClient.html" title="interface in org.amv.trafficsoft.rest.client.xfcd">XfcdClient</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/amv/trafficsoft/rest/client/TrafficsoftClients.html#xfcd-java.lang.String-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-">xfcd</a></span>(java.lang.String&nbsp;baseUrl,
     <a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.BasicAuth.html" title="interface in org.amv.trafficsoft.rest.client">ClientConfig.BasicAuth</a>&nbsp;basicAuth)</code>
@@ -261,7 +265,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="config-java.lang.Class-java.lang.String-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-feign.RequestInterceptor-">
+<a name="config-java.lang.Class-java.lang.String-org.amv.trafficsoft.rest.client.ClientConfig.BasicAuth-com.google.common.collect.ImmutableList-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -270,7 +274,7 @@ extends java.lang.Object</pre>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.ConfigurableClientConfig.Builder.html" title="class in org.amv.trafficsoft.rest.client">ClientConfig.ConfigurableClientConfig.Builder</a>&lt;T&gt;&nbsp;config(java.lang.Class&lt;T&gt;&nbsp;clazz,
                                                                           java.lang.String&nbsp;baseUrl,
                                                                           <a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.BasicAuth.html" title="interface in org.amv.trafficsoft.rest.client">ClientConfig.BasicAuth</a>&nbsp;basicAuth,
-                                                                          feign.RequestInterceptor&nbsp;requestInterceptor)</pre>
+                                                                          com.google.common.collect.ImmutableList&lt;feign.RequestInterceptor&gt;&nbsp;requestInterceptors)</pre>
 <div class="block">Provides a way to easily construct configuration builder objects.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -450,7 +454,7 @@ extends java.lang.Object</pre>
 <a name="carSharingReservation-org.amv.trafficsoft.rest.client.ClientConfig-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>carSharingReservation</h4>
 <pre>public static&nbsp;<a href="../../../../../org/amv/trafficsoft/rest/client/carsharing/reservation/CarSharingReservationClient.html" title="interface in org.amv.trafficsoft.rest.client.carsharing.reservation">CarSharingReservationClient</a>&nbsp;carSharingReservation(<a href="../../../../../org/amv/trafficsoft/rest/client/ClientConfig.html" title="interface in org.amv.trafficsoft.rest.client">ClientConfig</a>&lt;<a href="../../../../../org/amv/trafficsoft/rest/client/carsharing/reservation/CarSharingReservationClient.html" title="interface in org.amv.trafficsoft.rest.client.carsharing.reservation">CarSharingReservationClient</a>&gt;&nbsp;clientConfig)</pre>
@@ -461,6 +465,15 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a CarSharingReservationClient configured with the given configuration</dd>
 </dl>
+</li>
+</ul>
+<a name="getRequestInterceptors--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getRequestInterceptors</h4>
+<pre>public static&nbsp;com.google.common.collect.ImmutableList&lt;feign.RequestInterceptor&gt;&nbsp;getRequestInterceptors()</pre>
 </li>
 </ul>
 </li>

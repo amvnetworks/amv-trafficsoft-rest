@@ -4,7 +4,7 @@ buildscript {
     ext {
         springBootVersion = '1.5.8.RELEASE'
         jacksonVersion = '2.8.10'
-        feignVersion = '10.0.1'
+        feignVersion = '11.0'
         swaggerVersion = '1.5.18'
         apacheCommonsVersion = '3.5'
     }
