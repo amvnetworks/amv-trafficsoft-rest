@@ -4,10 +4,15 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- master
+  - master
+  - develop
+  - feature/*
 
 pool:
   vmImage: ubuntu-latest
+
+variables:
+  - group: bintray
 
 steps:
 - task: Gradle@2
