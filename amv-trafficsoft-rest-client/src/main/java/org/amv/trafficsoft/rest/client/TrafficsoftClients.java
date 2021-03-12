@@ -106,18 +106,17 @@ public final class TrafficsoftClients {
 
     public static RequestInterceptor getListRequestInterceptor(){
         return template -> template.queries().forEach((key, value) -> {
-            if(value instanceof Collection<?>) {
-                Collection<?> collection = (Collection<?>) value;
+            if(value != null) {
                 StringBuilder sb = new StringBuilder();
 
-                if(collection.size() > 1) {
+                if(value.size() > 1) {
                     AtomicInteger idx = new AtomicInteger();
-                    collection.stream().map(i -> {
-                        sb.append(i.toString() + (idx.getAndIncrement() < collection.size() - 1 ? "," : ""));
+                    ((Collection<?>) value).stream().map(i -> {
+                        sb.append(i.toString() + (idx.getAndIncrement() < value.size() - 1 ? "," : ""));
                         return sb;
                     }).collect(Collectors.toList());
                 } else {
-                    collection.stream().map(i -> sb.append(i.toString())).collect(Collectors.toList());
+                    ((Collection<?>) value).stream().map(i -> sb.append(i.toString())).collect(Collectors.toList());
                 }
 
                 template.query(key, sb.toString());
