@@ -20,5 +20,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean build bintray -Prelease.stage=final -Prelease.scope=patch -PreleaseToBintray -Pminimal --refresh-dependencies -PbintrayUser=$(BINTRAY_USER) -PbintrayApiKey=$(BINTRAY_API_KEY)
+    tasks: 'clean build bintray -Prelease.stage=final -Prelease.scope=patch -PreleaseToBintray -Pminimal --refresh-dependencies -PbintrayUser=$(bintrayUser) -PbintrayApiKey=$(bintrayApiKey)
 '
+  BINTRAY_USER
