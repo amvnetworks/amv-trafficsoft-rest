@@ -25,4 +25,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean build bintray -Prelease.stage=final -Prelease.scope=patch -PreleaseToBintray -Pminimal --refresh-dependencies -PbintrayUser=$(bintrayUser) -PbintrayApiKey=$(bintrayApiKey) final --stacktrace'
+    tasks: 'clean build uploadArchives -Prelease.stage=final -Prelease.scope=patch -Pminimal --refresh-dependencies -PnexusUrl=$(nexusUrl) -PnexusUsername=$(nexusUsername) -PnexusPassword=$(nexusPassword) final --stacktrace'
