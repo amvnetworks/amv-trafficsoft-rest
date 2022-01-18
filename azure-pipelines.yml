@@ -12,7 +12,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - group: bintray
+  - group: nexus
 
 steps:
 - task: Gradle@2
