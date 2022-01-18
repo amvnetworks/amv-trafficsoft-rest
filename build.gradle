@@ -9,7 +9,7 @@ buildscript {
         apacheCommonsVersion = '3.5'
     }
     repositories {
-        jcenter()
+        mavenCentral()
     }
 }
 plugins {
@@ -38,7 +38,7 @@ allprojects {
     apply plugin: 'project-report'
 
     repositories {
-        jcenter()
+        mavenCentral()
         mavenLocal()
     }
 
