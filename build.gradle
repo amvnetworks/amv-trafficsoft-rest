@@ -217,38 +217,18 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    if (rootProject.hasProperty('releaseToBintray')) {
-
-        bintray {
-            if (rootProject.version.toString().contains('SNAPSHOT')) {
-                throw new GradleException('-PreleaseToBintray param cannot be used with SNAPSHOT versions')
-            }
-
-            if (!project.hasProperty('bintrayUser')) {
-                throw new GradleException('-PbintrayUser needs to be configured')
-            }
-
-            if (!project.hasProperty('bintrayApiKey')) {
-                throw new GradleException('-PbintrayApiKey needs to be configured')
-            }
-
-            user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-            key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-
-            configurations = ['archives']
-            pkg {
-                repo = 'amv-trafficsoft-rest'
-                name = project.name
-                userOrg = user
-                licenses = ['Apache-2.0']
-                vcsUrl = 'https://github.com/amvnetworks/amv-trafficsoft-rest.git'
-                labels = ['amv', 'trafficsoft']
-                publicDownloadNumbers = false
-                version {
-                    name = rootProject.version
-                    desc = project.description
-                    vcsTag = rootProject.version
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: "${nexusUrl}/repository/releases/") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
                 }
+                snapshotRepository(url: "${nexusUrl}/repository/snapshots/") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                pom.version = project.version
+                pom.artifactId = project.name
+                pom.groupId = project.group
             }
         }
     }
