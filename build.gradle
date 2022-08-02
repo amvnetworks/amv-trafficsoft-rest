@@ -2,7 +2,7 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 
 buildscript {
     ext {
-        springBootVersion = '1.5.8.RELEASE'
+        springBootVersion = '2.7.0'
         jacksonVersion = '2.12.2'
         feignVersion = '11.0'
         swaggerVersion = '1.5.18'
