@@ -22,3 +22,11 @@ dependencies {
     testImplementation 'commons-lang:commons-lang:2.6'
 
 }
+
+
+// Configure test JVM arguments to allow Feign to reflectively handle default interface methods on Java 21
+// Feign's DefaultMethodHandler accesses MethodHandles.Lookup.IMPL_LOOKUP which requires opening java.lang.invoke
+// Scope this only to this module's tests.
+test {
+    jvmArgs += ['--add-opens=java.base/java.lang.invoke=ALL-UNNAMED']
+}
