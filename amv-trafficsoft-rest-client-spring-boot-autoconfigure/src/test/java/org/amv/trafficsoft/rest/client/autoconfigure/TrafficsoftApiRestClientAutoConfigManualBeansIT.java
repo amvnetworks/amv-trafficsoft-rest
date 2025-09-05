@@ -30,6 +30,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
     public static class TestApplicationWithManualBeans {
 
         @Bean
+        @Primary
         public BasicAuth manualBasicAuth() {
             return ClientConfig.BasicAuthImpl.builder()
                     .username(RandomStringUtils.randomAlphanumeric(5))
@@ -69,7 +70,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
 
     @Test
     public void createsBeanOfTypeBasicAuth() {
-        final BasicAuth basicAuth = applicationContext.getBean(BasicAuth.class);
+        final BasicAuth basicAuth = applicationContext.getBean("manualBasicAuth", BasicAuth.class);
 
         assertThat(basicAuth, is(notNullValue()));
     }
@@ -105,7 +106,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
 
     @Test
     public void createsBeanOfTypeXfcdClientClient() {
-        final XfcdClient xfcdClient = applicationContext.getBean(XfcdClient.class);
+        final XfcdClient xfcdClient = applicationContext.getBean("manualXfcdClient", XfcdClient.class);
         assertThat(xfcdClient, is(notNullValue()));
     }
 
