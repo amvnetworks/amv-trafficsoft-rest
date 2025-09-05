@@ -1,22 +1,24 @@
 description = 'A Java client library for accessing the AMV Trafficsoft API'
 
 dependencies {
-    compile project(':amv-trafficsoft-rest-model')
+    implementation project(':amv-trafficsoft-rest-model')
 
-    compile "io.github.openfeign:feign-core:${feignVersion}"
-    compile "io.github.openfeign:feign-okhttp:${feignVersion}"
-    compile "io.github.openfeign:feign-hystrix:${feignVersion}"
-    compile "io.github.openfeign:feign-slf4j:${feignVersion}"
-    compile "io.github.openfeign:feign-jackson:${feignVersion}"
+    implementation "io.github.openfeign:feign-core:${feignVersion}"
+    implementation "io.github.openfeign:feign-okhttp:${feignVersion}"
+    implementation "io.github.openfeign:feign-hystrix:${feignVersion}"
+    implementation "io.github.openfeign:feign-slf4j:${feignVersion}"
+    implementation "io.github.openfeign:feign-jackson:${feignVersion}"
 
-    compile "com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
-    testCompile project(':amv-trafficsoft-rest-model-test')
-    testCompile 'com.marvinformatics.feign:feign-mock:0.7'
+    testImplementation project(':amv-trafficsoft-rest-model-test')
+    testImplementation 'com.marvinformatics.feign:feign-mock:0.7'
 
-    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
-    testCompile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    // legacy commons-lang (v2) used in tests for RandomStringUtils/RandomUtils
+    testImplementation 'commons-lang:commons-lang:2.6'
 
 }

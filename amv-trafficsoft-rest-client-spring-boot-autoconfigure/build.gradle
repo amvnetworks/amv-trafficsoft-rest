@@ -1,10 +1,15 @@
 description = 'Autoconfigure for spring based applications accessing the AMV Trafficsoft API'
 
 dependencies {
-    compile project(':amv-trafficsoft-rest-client')
+    implementation project(':amv-trafficsoft-rest-client')
+
+    // Explicit Feign/Hystrix APIs used directly in this module
+    implementation "io.github.openfeign:feign-core:${feignVersion}"
+    implementation "io.github.openfeign:feign-hystrix:${feignVersion}"
 
     compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
 
-    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation 'commons-lang:commons-lang:2.6'
 }
