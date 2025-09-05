@@ -9,20 +9,26 @@ trigger:
   - feature/*
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 variables:
-  - group: nexus
+  - group: trafficsoft
 
 steps:
-- task: Gradle@2
-  inputs:
-    workingDirectory: ''
-    gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'clean build bintray -Prelease.stage=final -Prelease.scope=patch -PreleaseToBintray -Pminimal --refresh-dependencies -PnexusUrl=$(nexusUrl) -PnexusUsername=$(nexusUsername) -PnexusPassword=$(nexusPassword) final --stacktrace'
+  - task: Gradle@3
+    inputs:
+      workingDirectory: ''
+      gradleWrapperFile: 'gradlew'
+      options: >
+        -Pminimal 
+        --refresh-dependencies
+        --no-daemon
+      gradleOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.21'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+      tasks: 'clean build publish'
+    env:
+      VSTS_MAVEN_ACCESS_TOKEN: $(PAT)
+      BUILD_VERSION: $(Build.BuildNumber)

@@ -2,14 +2,15 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 
 buildscript {
     ext {
-        springBootVersion = '2.7.0'
+        springBootVersion = '3.3.4'
         jacksonVersion = '2.12.2'
         feignVersion = '11.0'
         swaggerVersion = '1.5.18'
         apacheCommonsVersion = '3.5'
     }
     repositories {
-        jcenter()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 plugins {
@@ -24,6 +25,11 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.14.0'
 }
 
+// ---- ensure version is set; default to 0.0.0-SNAPSHOT if not provided by CI
+if (!project.hasProperty('version') || project.version == 'unspecified') {
+    version = System.getenv('BUILD_VERSION') ?: '0.0.0-SNAPSHOT'
+}
+
 contacts {
     'devlopment@amv-networks.com' {
         moniker 'AMV Networks GmbH'
@@ -36,16 +42,21 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'java'
     apply plugin: 'project-report'
+    apply plugin: 'maven-publish'
 
     repositories {
-        jcenter()
+        mavenCentral()
         mavenLocal()
+        gradlePluginPortal()
     }
 
     group = 'org.amv.trafficsoft'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
 
     configurations.all {
         resolutionStrategy {
@@ -53,6 +64,15 @@ allprojects {
             // fail eagerly on version conflict (includes transitive dependencies)
             // e.g. multiple different versions of the same dependency (group and name are equal)
             failOnVersionConflict()
+
+            dependencySubstitution {
+                substitute module('javax.validation:validation-api') with module('jakarta.validation:jakarta.validation-api:3.0.2')
+                substitute module('javax.annotation:javax.annotation-api') with module('jakarta.annotation:jakarta.annotation-api:2.1.1')
+                substitute module('javax.ws.rs:javax.ws.rs-api') with module('jakarta.ws.rs:jakarta.ws.rs-api:3.1.0')
+                substitute module('javax.servlet:javax.servlet-api') with module('jakarta.servlet:jakarta.servlet-api:6.0.0')
+                substitute module('javax.xml.bind:jaxb-api') with module('jakarta.xml.bind:jakarta.xml.bind-api:4.0.0')
+                substitute module('javax.activation:activation') with module('jakarta.activation:jakarta.activation-api:2.1.2')
+            }
 
             force 'com.netflix.archaius:archaius-core:0.6.6',
                     'org.slf4j:slf4j-api:1.7.25',
@@ -169,8 +189,41 @@ subprojects {
         from sourceSets.test.output
     }
 
+    // Package Javadoc into a jar for publishing
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        archiveClassifier.set('javadoc')
+        from javadoc.destinationDir
+    }
+
     artifacts {
         archives javadocJar, sourcesJar
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact sourcesJar
+                artifact javadocJar
+                groupId = project.group
+                artifactId = project.name
+                version = project.version
+            }
+        }
+        repositories {
+            maven {
+                name = 'trafficsoft'
+                url = uri('https://pkgs.dev.azure.com/autologg/_packaging/trafficsoft/maven/v1')
+                credentials {
+                    // Azure Artifacts requires any non-empty username and a Personal Access Token as password
+                    username = 'autologg'
+                    password = System.getenv('PAT') ?: System.getenv('VSTS_MAVEN_ACCESS_TOKEN')
+                }
+                authentication {
+                    basic(BasicAuthentication)
+                }
+            }
+        }
     }
 
     checkstyle {
@@ -217,19 +270,4 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: "${nexusUrl}/repository/releases/") {
-                    authentication(userName: nexusUsername, password: nexusPassword)
-                }
-                snapshotRepository(url: "${nexusUrl}/repository/snapshots/") {
-                    authentication(userName: nexusUsername, password: nexusPassword)
-                }
-                pom.version = project.version
-                pom.artifactId = project.name
-                pom.groupId = project.group
-            }
-        }
-    }
 }
