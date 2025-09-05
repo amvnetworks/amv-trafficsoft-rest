@@ -1,6 +1,7 @@
 package org.amv.trafficsoft.rest.carsharing.reservation.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Value;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Value
 @Builder(builderClassName = "Builder")
+@JsonDeserialize(builder = CarSharingVehicleResponseRestDto.Builder.class)
 public class CarSharingVehicleResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {

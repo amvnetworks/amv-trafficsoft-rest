@@ -21,10 +21,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
@@ -40,8 +37,6 @@ import static java.util.stream.Collectors.joining;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class CarSharingWhitelistClientIT {
     private static final long NON_EXISTING_CONTRACT_ID = -1L;
     private static final long ANY_CONTRACT_ID = RandomUtils.nextLong();

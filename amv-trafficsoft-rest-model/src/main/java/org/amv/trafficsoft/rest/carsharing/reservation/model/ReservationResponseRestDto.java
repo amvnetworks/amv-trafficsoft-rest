@@ -1,6 +1,7 @@
 package org.amv.trafficsoft.rest.carsharing.reservation.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @Value
 @Builder(builderClassName = "Builder")
+@JsonDeserialize(builder = ReservationResponseRestDto.Builder.class)
 public class ReservationResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
@@ -40,6 +42,7 @@ public class ReservationResponseRestDto {
 
     @Value
     @lombok.Builder(builderClassName = "Builder")
+    @JsonDeserialize(builder = ReservationResponseRestDto.Rfid.Builder.class)
     @ApiModel(value = "ResponseRfid", description = "The additional metadata for a reservation of type 'RFID'.")
     public static class Rfid {
         @JsonPOJOBuilder(withPrefix = "")
@@ -53,6 +56,7 @@ public class ReservationResponseRestDto {
 
     @Value
     @lombok.Builder(builderClassName = "Builder")
+    @JsonDeserialize(builder = ReservationResponseRestDto.Btle.Builder.class)
     @ApiModel(value = "ResponseBtle", description = "The additional metadata for a reservation of type 'BTLE' (Bluetooth).")
     public static class Btle {
         @JsonPOJOBuilder(withPrefix = "")

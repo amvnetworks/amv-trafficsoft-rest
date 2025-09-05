@@ -21,10 +21,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -36,8 +33,6 @@ import static java.util.stream.Collectors.toList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class CarSharingReservationClientIT {
     private static final long ANY_RESERVATION_ID = RandomUtils.nextLong();
     private static final long ANY_CONTRACT_ID = RandomUtils.nextLong();
