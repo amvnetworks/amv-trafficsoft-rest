@@ -67,7 +67,9 @@ allprojects {
             }
 
             force 'com.netflix.archaius:archaius-core:0.6.6',
-                    'org.slf4j:slf4j-api:1.7.25',
+                    'org.slf4j:slf4j-api:2.0.16',
+                    // Avoid forcing outdated slf4j-api which breaks Spring Boot logging during tests
+                    // 'org.slf4j:slf4j-api:1.7.25',
                     'com.google.guava:guava:22.0',
                     'org.reactivestreams:reactive-streams:1.0.1',
                     "io.github.openfeign:feign-core:${feignVersion}",
