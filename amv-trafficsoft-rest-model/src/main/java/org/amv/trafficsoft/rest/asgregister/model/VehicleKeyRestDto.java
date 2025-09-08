@@ -2,27 +2,27 @@ package org.amv.trafficsoft.rest.asgregister.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = VehicleKeyRestDto.Builder.class)
-@ApiModel(description = "A resource representing a vehicle key.")
+@Schema(description = "A resource representing a vehicle key.")
 public class VehicleKeyRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
     }
 
-    @ApiModelProperty(name = "key", notes = "The KEY of the vehicle.")
+    @Schema(name = "key", description = "The KEY of the vehicle.")
     private String key;
 
-    @ApiModelProperty(name = "vehicleId", notes = "The ID of the vehicle.")
+    @Schema(name = "vehicleId", description = "The ID of the vehicle.")
     private Long vehicleId;
 
-    @ApiModelProperty(name = "valid", notes = "Flag indicating whether the KEY is valid.")
+    @Schema(name = "valid", description = "Flag indicating whether the KEY is valid.")
     private boolean valid;
 }

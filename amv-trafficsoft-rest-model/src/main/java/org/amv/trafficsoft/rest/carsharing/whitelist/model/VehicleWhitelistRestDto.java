@@ -1,8 +1,9 @@
 package org.amv.trafficsoft.rest.carsharing.whitelist.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
@@ -18,10 +19,10 @@ public class VehicleWhitelistRestDto {
 
     }
 
-    @ApiModelProperty(name = "vehicleId", value = "Id of a vehicle", required = true)
+    @Schema(name = "vehicleId", description = "Id of a vehicle", required = true)
     private long vehicleId;
 
-    @ApiModelProperty(name = "whitelist", value = "A list of driver tag ids", allowEmptyValue = true)
+    @Schema(name = "whitelist", description = "A list of driver tag ids")
     @Singular(value = "addWhitelist")
     private List<String> whitelist;
 }

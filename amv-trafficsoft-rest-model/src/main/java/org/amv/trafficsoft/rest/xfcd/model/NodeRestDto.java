@@ -3,8 +3,8 @@ package org.amv.trafficsoft.rest.xfcd.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
@@ -23,52 +23,52 @@ import java.util.Optional;
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = NodeRestDto.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(description = "One data node for a vehicle - the current position and all parameters the vehicle sends for the current contract.")
+@Schema(description = "One data node for a vehicle - the current position and all parameters the vehicle sends for the current contract.")
 public class NodeRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
     }
 
-    @ApiModelProperty(name = "id", notes = "Required. The ID of the data node for getData(), the vehicle ID for getLastData().", required = true)
+    @Schema(name = "id", description = "Required. The ID of the data node for getData(), the vehicle ID for getLastData().", required = true)
     private long id;
 
-    @ApiModelProperty(name = "timestamp", notes = "Required. The time the data was generated.", required = true)
+    @Schema(name = "timestamp", description = "Required. The time the data was generated.", required = true)
     private Date timestamp;
 
-    @ApiModelProperty(name = "longitude", notes = "Optional. The longitude in decimal degree.")
+    @Schema(name = "longitude", description = "Optional. The longitude in decimal degree.")
     private BigDecimal longitude;
 
-    @ApiModelProperty(name = "latitude", notes = "Optional. The latitude in decimal degree.")
+    @Schema(name = "latitude", description = "Optional. The latitude in decimal degree.")
     private BigDecimal latitude;
 
-    @ApiModelProperty(name = "speed", notes = "Optional. The vehicle speed in km/h.")
+    @Schema(name = "speed", description = "Optional. The vehicle speed in km/h.")
     private BigDecimal speed;
 
-    @ApiModelProperty(name = "heading", notes = "Optional. The direction the car is heading in angular degree.")
+    @Schema(name = "heading", description = "Optional. The direction the car is heading in angular degree.")
     private BigDecimal heading;
 
-    @ApiModelProperty(name = "altitude", notes = "Optional. The altitude of the car in meters above sea level.")
+    @Schema(name = "altitude", description = "Optional. The altitude of the car in meters above sea level.")
     private BigDecimal altitude;
 
-    @ApiModelProperty(name = "satellites", notes = "Optional. The number of satellites currently in reach.")
+    @Schema(name = "satellites", description = "Optional. The number of satellites currently in reach.")
     private Integer satellites;
 
-    @ApiModelProperty(name = "hdop", notes = "Optional. The horizontal dilution of precision.")
+    @Schema(name = "hdop", description = "Optional. The horizontal dilution of precision.")
     private BigDecimal hdop;
 
-    @ApiModelProperty(name = "vdop", notes = "Optional. The vertical dilution of precision.")
+    @Schema(name = "vdop", description = "Optional. The vertical dilution of precision.")
     private BigDecimal vdop;
 
     @Singular("addXfcd")
-    @ApiModelProperty(name = "xfcds",
-            notes = "Optional. A list of XFCD data (e.g. kmrd, speed, or any other Trafficsoft CAN parameter) " +
+    @Schema(name = "xfcds",
+            description = "Optional. A list of XFCD data (e.g. kmrd, speed, or any other Trafficsoft CAN parameter) " +
                     "received from the car.")
     private List<ParameterRestDto> xfcds;
 
     @Singular("addState")
-    @ApiModelProperty(name = "states",
-            notes = "Optional. A list of state parameters (e.g. vbat, move, or any other Trafficsoft State parameter) " +
+    @Schema(name = "states",
+            description = "Optional. A list of state parameters (e.g. vbat, move, or any other Trafficsoft State parameter) " +
                     "received from the car.")
     private List<ParameterRestDto> states;
 

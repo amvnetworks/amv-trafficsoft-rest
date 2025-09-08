@@ -2,8 +2,8 @@ package org.amv.trafficsoft.rest.xfcd.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
@@ -19,22 +19,22 @@ import java.util.Optional;
 @Value
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = DeliveryRestDto.Builder.class)
-@ApiModel(description = "A delivery containing multiple XFCD data nodes for multiple vehicles.")
+@Schema(description = "A delivery containing multiple XFCD data nodes for multiple vehicles.")
 public class DeliveryRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
     }
 
-    @ApiModelProperty(name = "deliveryId", notes = "Required. The ID of the current delivery. " +
+    @Schema(name = "deliveryId", description = "Required. The ID of the current delivery. " +
             "Required for confirming the successful processing of the delivery.", required = true)
     private long deliveryId;
 
-    @ApiModelProperty(name = "timestamp", notes = "Required. The timestamp when the delivery was created.", required = true)
+    @Schema(name = "timestamp", description = "Required. The timestamp when the delivery was created.", required = true)
     private Date timestamp;
 
     @Singular("addTrack")
-    @ApiModelProperty(name = "track", notes = "The list of data sent by currently active vehicles with a subscription " +
+    @Schema(name = "track", description = "The list of data sent by currently active vehicles with a subscription " +
             "to the given contract. Empty list if there is no data from active vehicles at the moment.")
     private List<TrackRestDto> track;
 

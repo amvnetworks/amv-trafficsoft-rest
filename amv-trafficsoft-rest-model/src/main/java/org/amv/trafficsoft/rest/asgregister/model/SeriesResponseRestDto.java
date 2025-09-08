@@ -3,8 +3,8 @@ package org.amv.trafficsoft.rest.asgregister.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableList;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Singular;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = SeriesResponseRestDto.Builder.class)
-@ApiModel(description = "A resource representing a container for vehicle series.")
+@Schema(description = "A resource representing a container for vehicle series.")
 public class SeriesResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
@@ -20,7 +20,7 @@ public class SeriesResponseRestDto {
     }
 
     @Singular("addSeries")
-    @ApiModelProperty(name = "series", notes = "A list of vehicle series.")
+    @Schema(name = "series", description = "A list of vehicle series.")
     private List<SeriesRestDto> series;
 
     public List<SeriesRestDto> getSeries() {

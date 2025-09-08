@@ -3,8 +3,8 @@ package org.amv.trafficsoft.rest.asgregister.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableList;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Singular;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = OemsResponseRestDto.Builder.class)
-@ApiModel(description = "A resource representing a container for vehicle oems.")
+@Schema(description = "A resource representing a container for vehicle oems.")
 public class OemsResponseRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
@@ -20,7 +20,7 @@ public class OemsResponseRestDto {
     }
 
     @Singular("addOem")
-    @ApiModelProperty(name = "oems", notes = "A list of vehicle oems.")
+    @Schema(name = "oems", description = "A list of vehicle oems.")
     private List<OemRestDto> oems;
 
     public List<OemRestDto> getOems() {

@@ -2,7 +2,8 @@ package org.amv.trafficsoft.rest.carsharing.reservation.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Value;
 
@@ -17,20 +18,20 @@ public class CarSharingVehicleResponseRestDto {
 
     }
 
-    @ApiModelProperty(name = "vehicleId",
-            notes = "Required. The ID of the vehicle for which to get the reservations.",
+    @Schema(name = "vehicleId",
+            description = "Required. The ID of the vehicle for which to get the reservations.",
             required = true)
     private long vehicleId;
 
-    @ApiModelProperty(name = "alwaysPowerOn",
-            notes = "Required. The 'alwaysPowerOn' configuration for the on-board unit. " +
+    @Schema(name = "alwaysPowerOn",
+            description = "Required. The 'alwaysPowerOn' configuration for the on-board unit. " +
                     "This can be necessary for car sharing vehicles to avoid dialing-in delays.",
             required = true)
     private boolean alwaysPowerOn;
 
-    @ApiModelProperty(name = "free", notes = "Optional. True if the vehicle is available, otherwise false.")
+    @Schema(name = "free", description = "Optional. True if the vehicle is available, otherwise false.")
     private boolean free;
 
-    @ApiModelProperty(name = "reservationIds", notes = "Optional. The list of reservation IDs for this vehicle.")
+    @Schema(name = "reservationIds", description = "Optional. The list of reservation IDs for this vehicle.")
     private List<Long> reservationIds;
 }

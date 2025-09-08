@@ -2,24 +2,24 @@ package org.amv.trafficsoft.rest.asgregister.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = OemRestDto.Builder.class)
-@ApiModel(description = "A resource representing a vehicle oem.")
+@Schema(description = "A resource representing a vehicle oem.")
 public class OemRestDto {
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder {
 
     }
 
-    @ApiModelProperty(name = "oemCode", notes = "The oem CODE.")
+    @Schema(name = "oemCode", description = "The oem CODE.")
     private String oemCode;
 
-    @ApiModelProperty(name = "name", notes = "A human readable representation of the oem identifier.")
+    @Schema(name = "name", description = "A human readable representation of the oem identifier.")
     private String name;
 }
