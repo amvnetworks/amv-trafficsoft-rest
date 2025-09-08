@@ -25,16 +25,16 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.14.0'
 }
 
-// ---- ensure version is set; default to 0.0.0-SNAPSHOT if not provided by CI
-if (!project.hasProperty('version') || project.version == 'unspecified') {
-    version = System.getenv('BUILD_VERSION') ?: '0.0.0-SNAPSHOT'
-}
-
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'project-report'
     apply plugin: 'maven-publish'
+
+    // ---- ensure version is set; default to 0.0.0-SNAPSHOT if not provided by CI
+    if (!project.hasProperty('version') || project.version == 'unspecified') {
+        version = System.getenv('BUILD_VERSION') ?: '0.0.0-SNAPSHOT'
+    }
+
 
     repositories {
         mavenCentral()
@@ -98,6 +98,12 @@ subprojects {
     // apply plugin: 'nebula.project'
     // apply plugin: 'nebula.info'
     apply plugin: 'io.freefair.lombok'
+
+    // ---- ensure version is set; default to 0.0.0-SNAPSHOT if not provided by CI
+    if (!project.hasProperty('version') || project.version == 'unspecified') {
+        version = System.getenv('BUILD_VERSION') ?: '0.0.0-SNAPSHOT'
+    }
+
 
     dependencies {
         constraints {
