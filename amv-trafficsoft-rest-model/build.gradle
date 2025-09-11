@@ -1,7 +1,8 @@
 description = 'Transfer objects of the AMV Trafficsoft API'
 
 dependencies {
-    implementation "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
+    // Swagger annotations are used only for compile-time metadata on DTOs; do not export transitively
+    compileOnly "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
 
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
