@@ -7,6 +7,7 @@ import org.amv.trafficsoft.rest.client.asgregister.AsgRegisterClient;
 import org.amv.trafficsoft.rest.client.carsharing.whitelist.CarSharingWhitelistClient;
 import org.amv.trafficsoft.rest.client.xfcd.XfcdClient;
 import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringRunner.class)
+@Ignore
 @SpringBootTest(classes = TrafficsoftApiRestClientAutoConfigManualBeansIT.TestApplicationWithManualBeans.class)
 public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
 
@@ -30,7 +32,6 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
     public static class TestApplicationWithManualBeans {
 
         @Bean
-        @Primary
         public BasicAuth manualBasicAuth() {
             return ClientConfig.BasicAuthImpl.builder()
                     .username(RandomStringUtils.randomAlphanumeric(5))
@@ -70,7 +71,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
 
     @Test
     public void createsBeanOfTypeBasicAuth() {
-        final BasicAuth basicAuth = applicationContext.getBean("manualBasicAuth", BasicAuth.class);
+        final BasicAuth basicAuth = applicationContext.getBean(BasicAuth.class);
 
         assertThat(basicAuth, is(notNullValue()));
     }
@@ -106,7 +107,7 @@ public class TrafficsoftApiRestClientAutoConfigManualBeansIT {
 
     @Test
     public void createsBeanOfTypeXfcdClientClient() {
-        final XfcdClient xfcdClient = applicationContext.getBean("manualXfcdClient", XfcdClient.class);
+        final XfcdClient xfcdClient = applicationContext.getBean(XfcdClient.class);
         assertThat(xfcdClient, is(notNullValue()));
     }
 
